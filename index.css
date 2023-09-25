@@ -31,7 +31,6 @@ body {
     background-color: var(--accent-color);
     border-radius: 16px;
     max-width: fit-content;
-    margin-left: 32rem;
 }
 
 ul {
