@@ -6,14 +6,19 @@
     --accent-color: rgb(50, 50, 50);
 }
 
-p, h1 {
-    font-family: 'Inter', sans-serif;
-}
-
 body {
     height: 100%;
     width: 99%;
     background-color: var(--main-color);
+}
+
+p, h1 {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+}
+
+p {
+    display: inline-flex;
 }
 
 .titleContainer {
@@ -22,7 +27,6 @@ body {
 }
 
 .title {
-    color: var(--text-color);
     font-weight: bold;
     font-size: 48px;
 }
@@ -31,6 +35,8 @@ body {
     background-color: var(--accent-color);
     border-radius: 16px;
     max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 ul {
@@ -38,14 +44,10 @@ ul {
     padding: 4px 16px;
 }
 
-li:hover {
+li a:hover {
     opacity: 75%;
 }
 
 a {
     text-decoration: none;
-}
-
-p {
-    color: var(--text-color);
 }
