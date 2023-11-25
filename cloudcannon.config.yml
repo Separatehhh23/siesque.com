@@ -1,0 +1,18 @@
+source: src
+paths:
+  uploads: uploads
+  static: static
+  collections: ''
+  data: ''
+  layouts: src/layouts
+collections_config: {}
+_enabled_editors:
+  - visual
+  - content
+  - data
+_inputs: {}
+_select_data: {}
+_structures: {}
+_editables: {}
+data_config: {}
+timezone: Europe/Madrid
