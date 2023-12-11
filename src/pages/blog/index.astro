@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import moment from "moment";
+
+const blogEntries = await getCollection('blog');
+---
+
+<ul>
+    {blogEntries.map(blogPostEntry => (
+            <div class="card w-96 bg-base-100 shadow-xl">
+                <figure><img src={blogPostEntry.data.image} alt="Blog Post Image" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">{blogPostEntry.data.title}</h2>
+                    <p>{blogPostEntry.data.description}</p>
+                    <p>Published on: {
+                        moment(blogPostEntry.data.publishDate).utc().format('YYYY-MM-DD')
+                    }</p>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">
+                            <a href={`/blog/${blogPostEntry.data.slug}`}>Read now</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        ))}
+</ul>

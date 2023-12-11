@@ -10,131 +10,22 @@
 
 @layer base {
 	:root {
-		--text-50: #e6fdfe;
-		--text-100: #cefcfd;
-		--text-200: #9cf9fc;
-		--text-300: #6bf6fa;
-		--text-400: #39f2f9;
-		--text-500: #08eff7;
-		--text-600: #06bfc6;
-		--text-700: #059094;
-		--text-800: #036063;
-		--text-900: #023031;
-		--text-950: #011819;
-
-		--background-50: #f2f2f2;
-		--background-100: #e6e6e6;
-		--background-200: #cccccc;
-		--background-300: #b3b3b3;
-		--background-400: #999999;
-		--background-500: #808080;
-		--background-600: #666666;
-		--background-700: #4d4d4d;
-		--background-800: #333333;
-		--background-900: #1a1a1a;
-		--background-950: #0d0d0d;
-
-		--primary-50: #e6f1fe;
-		--primary-100: #cde3fe;
-		--primary-200: #9bc7fd;
-		--primary-300: #69abfc;
-		--primary-400: #378ffb;
-		--primary-500: #0573fa;
-		--primary-600: #045cc8;
-		--primary-700: #034596;
-		--primary-800: #022e64;
-		--primary-900: #011732;
-		--primary-950: #010c19;
-
-		--secondary-50: #e5f1ff;
-		--secondary-100: #cce4ff;
-		--secondary-200: #99c9ff;
-		--secondary-300: #66adff;
-		--secondary-400: #3392ff;
-		--secondary-500: #0077ff;
-		--secondary-600: #005fcc;
-		--secondary-700: #004799;
-		--secondary-800: #003066;
-		--secondary-900: #001833;
-		--secondary-950: #000c1a;
-
-		--accent-50: #ebe5ff;
-		--accent-100: #d8ccff;
-		--accent-200: #b199ff;
-		--accent-300: #8a66ff;
-		--accent-400: #6333ff;
-		--accent-500: #3c00ff;
-		--accent-600: #3000cc;
-		--accent-700: #240099;
-		--accent-800: #180066;
-		--accent-900: #0c0033;
-		--accent-950: #06001a;
-
+		--text: #011d1e;
+		--background: #dedede;
+		--primary: #0465dc;
+		--secondary: #04a6ff;
+		--accent: #3c00ff;
 	}
 	.dark {
-		--text-50: #011819;
-		--text-100: #023031;
-		--text-200: #036063;
-		--text-300: #059094;
-		--text-400: #06bfc6;
-		--text-500: #08eff7;
-		--text-600: #39f2f9;
-		--text-700: #6bf6fa;
-		--text-800: #9cf9fc;
-		--text-900: #cefcfd;
-		--text-950: #e6fdfe;
-
-		--background-50: #0d0d0d;
-		--background-100: #1a1a1a;
-		--background-200: #333333;
-		--background-300: #4d4d4d;
-		--background-400: #666666;
-		--background-500: #808080;
-		--background-600: #999999;
-		--background-700: #b3b3b3;
-		--background-800: #cccccc;
-		--background-900: #e6e6e6;
-		--background-950: #f2f2f2;
-
-		--primary-50: #010c19;
-		--primary-100: #011732;
-		--primary-200: #022e64;
-		--primary-300: #034596;
-		--primary-400: #045cc8;
-		--primary-500: #0573fa;
-		--primary-600: #378ffb;
-		--primary-700: #69abfc;
-		--primary-800: #9bc7fd;
-		--primary-900: #cde3fe;
-		--primary-950: #e6f1fe;
-
-		--secondary-50: #000c1a;
-		--secondary-100: #001833;
-		--secondary-200: #003066;
-		--secondary-300: #004799;
-		--secondary-400: #005fcc;
-		--secondary-500: #0077ff;
-		--secondary-600: #3392ff;
-		--secondary-700: #66adff;
-		--secondary-800: #99c9ff;
-		--secondary-900: #cce4ff;
-		--secondary-950: #e5f1ff;
-
-		--accent-50: #06001a;
-		--accent-100: #0c0033;
-		--accent-200: #180066;
-		--accent-300: #240099;
-		--accent-400: #3000cc;
-		--accent-500: #3c00ff;
-		--accent-600: #6333ff;
-		--accent-700: #8a66ff;
-		--accent-800: #b199ff;
-		--accent-900: #d8ccff;
-		--accent-950: #ebe5ff;
-
+		--text: #e1fdfe;
+		--background: #222222;
+		--primary: #2384fb;
+		--secondary: #003169;
+		--accent: #3a00ff;
 	}
 }
 
+/* What are this ones used for? */
 :root {
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
@@ -166,28 +57,11 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	font-size: 20px;
-	line-height: 1.7;
+
+	/* Maybe this fixes the horizontal scrollbar */
+	overflow-x: hidden;
 }
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
-}
+
 h1 {
 	font-size: 3.052em;
 }
@@ -229,11 +103,6 @@ input {
 table {
 	width: 100%;
 }
-img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
 code {
 	padding: 2px 5px;
 	background-color: rgb(var(--gray-light));
@@ -255,14 +124,6 @@ blockquote {
 hr {
 	border: none;
 	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
 }
 
 .sr-only {

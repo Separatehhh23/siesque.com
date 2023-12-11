@@ -1,0 +1,48 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import NavBar from "../components/NavBar.vue";
+import moment from "moment";
+
+const {frontmatter} = Astro.props;
+
+const date = moment(frontmatter.publishDate).utc().format('YYYY-MM-DD');
+---
+<html>
+    <head>
+        <BaseHead title={frontmatter.title} description={frontmatter.description}></BaseHead>
+    </head>
+    <body>
+
+    <NavBar></NavBar>
+
+    <main class="pl-32 pt-16">
+        <p class="text mb-1">Published on: {date}</p>
+        <h1 class="text-5xl text-primary mt-4 mb-4">{frontmatter.title}</h1>
+        <h2 class="text-xl text-secondary mt-2 mb-2">{frontmatter.description}</h2>
+
+        <!-- Do I really need to show the author? --
+        <div class="bg-neutral rounded-xl w-48 items-center h-24 border-solid border-secondary">
+            <div class="flex">
+                <div class="avatar">
+                    <div class="w-12 rounded-full m-2 mb-0">
+                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+                    </div>
+                </div>
+                <p class="m-2 mt-5 mb-0">{frontmatter.author} </p>
+            </div>
+
+            <p class="m-2">Posted on: {date}</p>
+        </div>
+        -->
+
+        <div class="flex mt-2">
+            {frontmatter.tags.map((tag) => (
+                <a href={`/tags/${tag}`} >#{tag}</a> <!-- Make it look good -->
+            ))}
+        </div>
+
+        <div class="mt-8"></div>
+        <slot /> <!-- Markdown content is injected here -->
+    </main>
+    </body>
+</html>
