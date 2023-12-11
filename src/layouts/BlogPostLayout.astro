@@ -8,9 +8,7 @@ const {frontmatter} = Astro.props;
 const date = moment(frontmatter.publishDate).utc().format('YYYY-MM-DD');
 ---
 <html>
-    <head>
-        <BaseHead title={frontmatter.title} description={frontmatter.description}></BaseHead>
-    </head>
+    <head><BaseHead title={frontmatter.title} description={frontmatter.description}></BaseHead></head>
     <body>
 
     <NavBar></NavBar>
@@ -20,7 +18,8 @@ const date = moment(frontmatter.publishDate).utc().format('YYYY-MM-DD');
         <h1 class="text-5xl text-primary mt-4 mb-4">{frontmatter.title}</h1>
         <h2 class="text-xl text-secondary mt-2 mb-2">{frontmatter.description}</h2>
 
-        <!-- Do I really need to show the author? --
+        <!-- Do I really need to show the author? -->
+        <!--
         <div class="bg-neutral rounded-xl w-48 items-center h-24 border-solid border-secondary">
             <div class="flex">
                 <div class="avatar">
@@ -36,7 +35,7 @@ const date = moment(frontmatter.publishDate).utc().format('YYYY-MM-DD');
         -->
 
         <div class="flex mt-2">
-            {frontmatter.tags.map((tag) => (
+            {frontmatter.tags.map((tag: string) => (
                 <a href={`/tags/${tag}`} >#{tag}</a> <!-- Make it look good -->
             ))}
         </div>
