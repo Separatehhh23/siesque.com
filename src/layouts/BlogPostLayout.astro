@@ -1,5 +1,5 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
+import Layout from './Layout.astro';
 import NavBar from "../components/NavBar.vue";
 import moment from "moment";
 
@@ -7,10 +7,8 @@ const {frontmatter} = Astro.props;
 
 const date = moment(frontmatter.publishDate).utc().format('YYYY-MM-DD');
 ---
-<html>
-    <head><BaseHead title={frontmatter.title} description={frontmatter.description}></BaseHead></head>
-    <body>
 
+<Layout title={frontmatter.title} description={frontmatter.description}>
     <NavBar></NavBar>
 
     <main class="pl-32 pt-16">
@@ -43,5 +41,4 @@ const date = moment(frontmatter.publishDate).utc().format('YYYY-MM-DD');
         <div class="mt-8"></div>
         <slot /> <!-- Markdown content is injected here -->
     </main>
-    </body>
-</html>
+</Layout>

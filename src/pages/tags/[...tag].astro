@@ -27,5 +27,7 @@ const { posts } = Astro.props;
 ---
 
 <ul>
-    {posts.map((post: any) => <a href={`/blog/${post.slug}`} >{post.data.title}</a>)}
+    {posts.map((post: any) =>
+            <li><a href={`/blog/${post.slug}`}>{post.data.title}</a></li>
+    )}
 </ul>

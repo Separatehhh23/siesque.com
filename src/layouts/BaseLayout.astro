@@ -1,32 +1,24 @@
 ---
-// Import globals.css so that it can be used in every page that imports BaseLayout.astro
-import '../styles/global.css';
-
-import BaseHead from '../components/BaseHead.astro';
+import Layout from './Layout.astro';
 import Footer from '../components/Footer.vue';
-import NavBar from '../components/NavBar.vue'
+import NavBar from '../components/NavBar.vue';
 
 interface Props {
-    PageTitle: string;
-    PageDescription: string;
+    title: string;
+    description: string;
 }
 
-const { PageTitle, PageDescription }: Props = Astro.props
+const {title, description }: Props = Astro.props
 ---
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <BaseHead title={PageTitle} description={PageDescription} />
-    </head>
+<Layout title={title} description={description}>
+    <NavBar />
 
-    <body>
-        <NavBar />
+    <main class="h-screen">
+        <slot />
+    </main>
 
-        <div class="h-screen">
-            <slot />
-        </div>
+    <Footer />
 
-        <Footer />
-    </body>
-</html>
+</Layout>
+
