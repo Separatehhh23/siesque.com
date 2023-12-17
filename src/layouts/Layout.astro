@@ -4,16 +4,25 @@ import '../styles/global.css';
 
 import BaseHead from '../components/BaseHead.astro';
 
+import type { HTMLTag } from "astro/types";
+import { ViewTransitions } from 'astro:transitions';
+
 interface Props {
     title: string;
     description: string;
+    head?: HTMLTag;
 }
 
-const { title, description }: Props = Astro.props;
+const { title, description, head }: Props = Astro.props;
 ---
 
 <!doctype=html>
 <html lang="en">
-    <head><BaseHead title={title} description={description} /></head>
+    <head>
+        <BaseHead title={title} description={description} />
+        <ViewTransitions />
+
+        {head}
+    </head>
     <body><slot /></body>
 </html>

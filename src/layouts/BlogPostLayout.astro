@@ -9,7 +9,7 @@ const date = moment(frontmatter.publishDate).utc().format('YYYY-MM-DD');
 ---
 
 <Layout title={frontmatter.title} description={frontmatter.description}>
-    <NavBar></NavBar>
+    <NavBar client:load trasition:persist="navbar" />
 
     <main class="pl-32 pt-16">
         <p class="text mb-1">Published on: {date}</p>
