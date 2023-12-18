@@ -11,7 +11,7 @@ export default defineConfig({
     mdx(),
     sitemap(),
     tailwind(),
-    vue({ appEntrypoint: '/src/pages/_app' })
+    vue()
   ],
   output: "hybrid",
   adapter: vercel()
