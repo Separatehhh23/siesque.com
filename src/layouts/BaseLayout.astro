@@ -8,13 +8,14 @@ import type { HTMLTag } from "astro/types";
 interface Props {
     title: string;
     description: string;
-    head?: HTMLTag;
 }
 
-const {title, description, head }: Props = Astro.props
+const {title, description }: Props = Astro.props
 ---
 
-<Layout title={title} description={description} head={head}>
+<slot slot="head" name="head" />
+
+<Layout title={title} description={description}>
     <NavBar client:load trasition:persist="navbar" />
 
     <main class="h-screen">

@@ -9,6 +9,8 @@ const uniqueTags = [...new Set(allPosts
     .map((post) => post.data.tags)
     .flat())
 ];
+
+export const prerender = true
 ---
 
 <BaseLayout title="Tag index" description="Tag index">

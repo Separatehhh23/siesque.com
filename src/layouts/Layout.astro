@@ -10,10 +10,9 @@ import { ViewTransitions } from 'astro:transitions';
 interface Props {
     title: string;
     description: string;
-    head?: HTMLTag;
 }
 
-const { title, description, head }: Props = Astro.props;
+const { title, description }: Props = Astro.props;
 ---
 
 <!doctype=html>
@@ -22,7 +21,7 @@ const { title, description, head }: Props = Astro.props;
         <BaseHead title={title} description={description} />
         <ViewTransitions />
 
-        {head}
+        <slot name="head" />
     </head>
     <body><slot /></body>
 </html>

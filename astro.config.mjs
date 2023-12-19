@@ -7,13 +7,16 @@ import vercel from "@astrojs/vercel/serverless";
 
 export default defineConfig({
   site: 'https://www.pylinker.com',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover'
+  },
   integrations: [
     mdx(),
     sitemap(),
     tailwind(),
     vue()
   ],
-  output: "hybrid",
+  output: "server",
   adapter: vercel()
 });
-

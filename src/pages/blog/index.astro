@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import moment from "moment";
 
 const blogEntries = await getCollection('blog');
+
+export const prerender = true
 ---
 
 <ul>
