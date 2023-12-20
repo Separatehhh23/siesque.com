@@ -10,6 +10,7 @@ export default {
 				'primary': 'var(--primary)',
 				'secondary': 'var(--secondary)',
 				'accent': 'var(--accent)',
+				'bg-accent': 'var()--bg-accent'
 			},
 		},
 
@@ -24,6 +25,7 @@ export default {
 					"accent": "#3c00ff",
 					"neutral": "#262626",
 					"base-100": "#dedede",
+					"bg-accent": "#444444"
 				},
 				dark: {
 					"primary": "#2384fb",
@@ -31,6 +33,7 @@ export default {
 					"accent": "#3a00ff",
 					"neutral": "#262626",
 					"base-100": "#222222",
+					"bg-accent": "#333333"
 				},
 			},
 		],
