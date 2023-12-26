@@ -6,7 +6,8 @@
 @font-face {
   font-family: 'Inter';
   font-weight: auto;
-  src: url("/fonts/Inter-VariableFont.woff2") format("woff2"),
+  src: local("Inter"),
+       url("/fonts/Inter-VariableFont.woff2") format("woff2"),
        url("/fonts/Inter-VariableFont.woff") format("woff"),
        url("/fonts/Inter-VariableFont.ttf") format("ttf");
 }
