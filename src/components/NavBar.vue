@@ -6,12 +6,12 @@ import ProfileIcon from "./ProfileIcon.vue";
   <div class="navbar">
     <!--Logo-->
     <div class="flex-1">
-      <a
-        href="https://www.pylinker.com"
-        class="btn btn-ghost text-xl text-primary hover:text-secondary"
-        >Pylinker</a
-      >
+      <a href="/" class="btn btn-ghost text-xl text-primary">Pylinker</a>
     </div>
+
+    <!--Blog-->
+    <a class="btn btn-ghost text-text" href="/blog">Blog</a>
+    <div class="ml-2"></div>
 
     <!--Search Bar-->
     <div class="flex-none gap-2">

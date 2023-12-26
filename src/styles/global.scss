@@ -3,29 +3,9 @@
 @tailwind utilities;
 @tailwind variants;
 
-@layer base {
-  :root {
-    --text: #011d1e;
-    --background: #dedede;
-    --primary: #0465dc;
-    --secondary: #04a6ff;
-    --accent: #3c00ff;
-    --bg-accent: #444444;
-  }
-  .dark {
-    --text: #e1fdfe;
-    --background: #222222;
-    --primary: #2384fb;
-    --secondary: #003169;
-    --accent: #3a00ff;
-    --bg-accent: #333333;
-  }
-}
-
 body {
   font-family: Inter, sans-serif;
-  @apply m-0 p-0 text-left
-	overflow-x-clip overflow-y-visible /* Maybe this fixes the horizontal scrollbar */;
+  @apply overflow-x-clip overflow-y-visible; /* Remove horizontal scrollbar */
 }
 
 h1 {

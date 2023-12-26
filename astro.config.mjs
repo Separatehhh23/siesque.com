@@ -5,15 +5,16 @@ import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
 import vercel from "@astrojs/vercel/serverless";
 
+// https://astro.build/config
 export default defineConfig({
   site: "https://www.pylinker.com",
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "hover",
+    defaultStrategy: "hover"
   },
   integrations: [mdx(), sitemap(), tailwind(), vue()],
   output: "server",
   adapter: vercel({
-    speedInsights: true,
-  }),
+    speedInsights: true
+  })
 });

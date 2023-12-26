@@ -12,7 +12,7 @@
       <!--Appearance-->
       <li>
         <div class="justify-between">
-          <div class="text-text-600">Appearance</div>
+          <div class="text-text">Theme</div>
           <label class="cursor-pointer grid place-items-center">
             <input
               type="checkbox"
@@ -52,8 +52,8 @@
             </svg>
           </label>
         </div>
+        <!--More dropdown items here-->
       </li>
-      <!--More dropdown items here-->
     </ul>
   </div>
 </template>
