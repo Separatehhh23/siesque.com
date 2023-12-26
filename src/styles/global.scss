@@ -4,76 +4,77 @@
 @tailwind variants;
 
 @layer base {
-	:root {
-		--text: #011d1e;
-		--background: #dedede;
-		--primary: #0465dc;
-		--secondary: #04a6ff;
-		--accent: #3c00ff;
-		--bg-accent: #444444;
-	}
-	.dark {
-		--text: #e1fdfe;
-		--background: #222222;
-		--primary: #2384fb;
-		--secondary: #003169;
-		--accent: #3a00ff;
-		--bg-accent: #333333;
-	}
+  :root {
+    --text: #011d1e;
+    --background: #dedede;
+    --primary: #0465dc;
+    --secondary: #04a6ff;
+    --accent: #3c00ff;
+    --bg-accent: #444444;
+  }
+  .dark {
+    --text: #e1fdfe;
+    --background: #222222;
+    --primary: #2384fb;
+    --secondary: #003169;
+    --accent: #3a00ff;
+    --bg-accent: #333333;
+  }
 }
 
 body {
-	font-family: Inter, sans-serif;
-	@apply m-0 p-0 text-left
-	overflow-x-clip overflow-y-visible /* Maybe this fixes the horizontal scrollbar */
+  font-family: Inter, sans-serif;
+  @apply m-0 p-0 text-left
+	overflow-x-clip overflow-y-visible /* Maybe this fixes the horizontal scrollbar */;
 }
 
 h1 {
-	@apply text-5xl
+  @apply text-5xl;
 }
 h2 {
-	@apply text-4xl
+  @apply text-4xl;
 }
 h3 {
-	@apply text-3xl
+  @apply text-3xl;
 }
 h4 {
-	@apply text-2xl
+  @apply text-2xl;
 }
 h5 {
-	@apply text-xl
+  @apply text-xl;
 }
-strong, b {
-	@apply font-bold
+strong,
+b {
+  @apply font-bold;
 }
 a {
-	@apply text-accent
+  @apply text-accent;
 }
 code {
-	@apply bg-base-200 pt-[2px] pb-[2px] pl-[5px] pr-[5px] rounded-sm
+  @apply bg-base-200 pt-[2px] pb-[2px] pl-[5px] pr-[5px] rounded-sm;
 }
 pre {
-	@apply p-[1.5em] rounded-lg
+  @apply p-[1.5em] rounded-lg;
 }
 blockquote {
-	@apply border-l-accent border-l-4 border-solid p-0 pl-[20px] text-xl
+  @apply border-l-accent border-l-4 border-solid p-0 pl-[20px] text-xl;
 }
 
 /* What is this for? */
 .sr-only {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
-	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
-	white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+  clip: rect(1px 1px 1px 1px);
+  /* maybe deprecated but we need to support legacy browsers */
+  clip: rect(1px, 1px, 1px, 1px);
+  /* modern browsers, clip-path works inwards from each corner */
+  clip-path: inset(50%);
+  /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
+  white-space: nowrap;
 }

@@ -1,26 +1,24 @@
 ---
-import Layout from './Layout.astro';
-import Footer from '../components/Footer.vue';
-import NavBar from '../components/NavBar.vue';
+import Layout from "./Layout.astro";
+import Footer from "../components/Footer.vue";
+import NavBar from "../components/NavBar.vue";
 
 interface Props {
-    title: string;
-    description: string;
+  title: string;
+  description: string;
 }
 
-const {title, description }: Props = Astro.props
+const { title, description }: Props = Astro.props;
 ---
 
 <slot slot="head" name="head" />
 
 <Layout title={title} description={description}>
-    <NavBar client:load trasition:persist="navbar" />
+  <NavBar client:load trasition:persist="navbar" />
 
-    <main class="h-screen">
-        <slot />
-    </main>
+  <main class="h-screen">
+    <slot />
+  </main>
 
-    <Footer />
-
+  <Footer />
 </Layout>
-
