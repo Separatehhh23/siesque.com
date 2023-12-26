@@ -18,5 +18,7 @@ export default defineConfig({
     vue()
   ],
   output: "server",
-  adapter: vercel()
+  adapter: vercel({
+    speedInsights: true
+  })
 });
