@@ -8,5 +8,8 @@ export default {
         parser: "astro",
       },
     },
+    {
+      files: "**/*.{mjs,cjs,js,ts}"
+    }
   ],
 };
