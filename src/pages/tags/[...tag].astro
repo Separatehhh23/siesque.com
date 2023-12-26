@@ -26,12 +26,14 @@ const { posts } = Astro.props;
 export const prerender = true;
 ---
 
-<ul>
-  {
-    posts.map((post: any) => (
-      <li>
-        <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-      </li>
-    ))
-  }
-</ul>
+<BaseLayout title={tag} description={"Posts tagged with" + tag}>
+  <ul>
+    {
+      posts.map((post: any) => (
+        <li>
+          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
