@@ -54,9 +54,6 @@ code {
 }
 pre {
 	@apply p-[1.5em] rounded-lg
-	> code {
-		all: unset;
-	}
 }
 blockquote {
 	@apply border-l-accent border-l-4 border-solid p-0 pl-[20px] text-xl
