@@ -4,6 +4,12 @@
     "strictNullChecks": true,
     "jsx": "preserve",
     "target": "esnext",
-    "module": "esnext"
-  }
+    "module": "esnext",
+    "baseUrl": ".",
+    "paths": {
+      "@c/*": ["src/components/*"],
+      "@l/*": ["src/layouts/*"],
+      "@s/*": ["src/styles/*"]
+    }
+  },
 }

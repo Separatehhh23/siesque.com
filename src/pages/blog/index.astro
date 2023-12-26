@@ -1,33 +1,34 @@
 ---
+import BaseLayout from "@l/BaseLayout.astro";
+
 import { getCollection } from "astro:content";
 import moment from "moment";
 
-const blogEntries = await getCollection("blog");
+import type { BlogEntry } from "../../types";
 
-export const prerender = true;
+const blogEntries: BlogEntry[] = await getCollection("blog");
 ---
 
-<ul>
-  {
-    blogEntries.map((entry) => (
-      <div class="card w-96 bg-base-100 shadow-xl">
-        <figure>
-          <img src={entry.data.image} alt="Blog Post Image" />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">{entry.data.title}</h2>
-          <p>{entry.data.description}</p>
-          <p>
-            Published on:{" "}
-            {moment(entry.data.publishDate).utc().format("YYYY-MM-DD")}
-          </p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary">
-              <a href={`/blog/${entry.slug}`}>Read now</a>
-            </button>
+<BaseLayout title="Blog" description="All blog posts">
+  <ul>
+    {
+      blogEntries.map((entry) => (
+        <div class="card w-96 bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h2 class="card-title">{entry.data.title}</h2>
+            <p>
+              Published on:{" "}
+              {moment(entry.data.publishDate).utc().format("YYYY-MM-DD")}
+            </p>
+            <p>{entry.data.description}</p>
+            <div class="card-actions justify-end">
+              <a class="btn btn-primary text-text" href={"/blog/" + entry.slug}>
+                Read
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    ))
-  }
-</ul>
+      ))
+    }
+  </ul>
+</BaseLayout>
