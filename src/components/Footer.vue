@@ -7,7 +7,7 @@ const blogEntries = await getCollection("blog");
 const newEntries = blogEntries.map((entry: BlogEntry) => {
     entry.slug = "/blog/" + entry.slug;
     return entry;
-}
+});
 </script>
 
 <template>
