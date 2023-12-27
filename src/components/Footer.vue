@@ -3,12 +3,7 @@ import { getCollection } from "astro:content";
 
 import type { BlogEntry } from "../types";
 
-const blogEntries = await getCollection("blog").then((entries: BlogEntry[]) =>
-  entries.map((entry: BlogEntry) => {
-    entry.slug = "/blog/" + entry.slug;
-    return entry;
-  }),
-);
+const blogEntries: BlogEntry[] = await getCollection('blog');
 </script>
 
 <template>
@@ -16,7 +11,7 @@ const blogEntries = await getCollection("blog").then((entries: BlogEntry[]) =>
     <nav>
       <header class="footer-title">Blog</header>
       <div v-for="entry in blogEntries" :key="entry.id">
-        <a class="link link-hover" :href="entry.slug">{{ entry.data.title }}</a>
+        <a class="link link-hover" :href="'/blog/'+entry.slug">{{ entry.data.title }}</a>
       </div>
     </nav>
     <nav>
