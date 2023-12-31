@@ -1,15 +1,22 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "strictNullChecks": true,
-    "jsx": "preserve",
     "target": "esnext",
     "module": "esnext",
-    "baseUrl": ".",
+    "strictNullChecks": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "@builder.io/qwik",
+    "baseUrl": "D:/pylinker-dev-dir/Pylinker",
     "paths": {
-      "@c/*": ["src/components/*"],
-      "@l/*": ["src/layouts/*"],
-      "@s/*": ["src/styles/*"]
+      "@c/*": [
+        "src/components/*"
+      ],
+      "@l/*": [
+        "src/layouts/*"
+      ],
+      "@s/*": [
+        "src/styles/*"
+      ]
     }
-  },
+  }
 }
