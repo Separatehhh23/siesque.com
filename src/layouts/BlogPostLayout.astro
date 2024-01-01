@@ -1,7 +1,6 @@
 ---
 import Layout from "./Layout.astro";
-import NavBar from "../components/NavBar.vue";
-import Footer from "@c/Footer.vue";
+import NavBar from "../components/astro/NavBar.astro";
 
 import moment from "moment";
 
@@ -11,7 +10,7 @@ const date = moment(frontmatter.publishDate).utc().format("YYYY-MM-DD");
 ---
 
 <Layout title={frontmatter.title} description={frontmatter.description}>
-  <NavBar client:load trasition:persist="navbar" />
+  <NavBar />
 
   <main class="pl-32 pt-16 prose">
     <p class="text mb-1">Published on: {date}</p>
@@ -22,7 +21,13 @@ const date = moment(frontmatter.publishDate).utc().format("YYYY-MM-DD");
       {
         frontmatter.tags.map((tag: string) => (
           <>
-            <a href={`/tags/${tag}`}>#{tag}</a>
+            <a
+              class="link link-hover"
+              href={"/tags/" + tag}
+              data-astro-prefetch="false"
+            >
+              #{tag}
+            </a>
             <div class="ml-2" />
           </>
         ))

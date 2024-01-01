@@ -2,16 +2,17 @@
 // Import globals.css so that it can be used in every page that imports BaseLayout.astro
 import "../styles/global.scss";
 
-import BaseHead from "../components/BaseHead.astro";
-
+import BaseHead from "../components/astro/BaseHead.astro";
 import { ViewTransitions } from "astro:transitions";
+import type { HTMLTag } from "astro/types";
 
 interface Props {
   title: string;
   description: string;
+  head?: HTMLTag;
 }
 
-const { title, description }: Props = Astro.props;
+const { title, description, head }: Props = Astro.props;
 ---
 
 <!doctype html>
@@ -20,7 +21,7 @@ const { title, description }: Props = Astro.props;
     <BaseHead title={title} description={description} />
     <ViewTransitions />
 
-    <slot name="head" />
+    {head}
   </head>
   <body><slot /></body>
 </html>

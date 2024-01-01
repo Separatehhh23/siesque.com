@@ -1,19 +1,22 @@
 ---
-import BaseLayout from "@l/BaseLayout.astro";
-
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import moment from "moment";
-
 import type { BlogEntry } from "../../types";
 
 const blogEntries: BlogEntry[] = await getCollection("blog");
 ---
 
 <BaseLayout title="Blog" description="All blog posts">
-  <ul>
+  <div
+    class="grid grid-cols-1 gap-4 grid-flow-row-dense
+           md:grid-cols-2 md:gap-8
+           lg:grid-cols-3
+           xl:grid-cols-4"
+  >
     {
-      blogEntries.map((entry) => (
-        <div class="card w-96 bg-base-100 shadow-xl">
+      blogEntries.map((entry: BlogEntry) => (
+        <div class="card w-96 shadow-xl bg-base-100">
           <div class="card-body">
             <h2 class="card-title">{entry.data.title}</h2>
             <p>
@@ -22,7 +25,7 @@ const blogEntries: BlogEntry[] = await getCollection("blog");
             </p>
             <p>{entry.data.description}</p>
             <div class="card-actions justify-end">
-              <a class="btn btn-primary text-text" href={"/blog/" + entry.slug}>
+              <a class="btn btn-primary text-text" href={`/blog/${entry.slug}`}>
                 Read
               </a>
             </div>
@@ -30,5 +33,35 @@ const blogEntries: BlogEntry[] = await getCollection("blog");
         </div>
       ))
     }
-  </ul>
+    <div class="card w-96 shadow-xl bg-base-100">
+      <div class="card-body">
+        <h2 class="card-title">Hello world</h2>
+        <p>Published on: 15-2-2012</p>
+        <p>Hello description but longer than usual</p>
+        <div class="card-actions justify-end">
+          <a class="btn btn-primary text-text" href="/"> Read</a>
+        </div>
+      </div>
+    </div>
+    <div class="card w-96 shadow-xl bg-base-100">
+      <div class="card-body">
+        <h2 class="card-title">Hello world</h2>
+        <p>Published on: 15-2-2012</p>
+        <p>Hello description but longer than usual</p>
+        <div class="card-actions justify-end">
+          <a class="btn btn-primary text-text" href="/"> Read</a>
+        </div>
+      </div>
+    </div>
+    <div class="card w-96 shadow-xl bg-base-100">
+      <div class="card-body">
+        <h2 class="card-title">Hello world</h2>
+        <p>Published on: 15-2-2012</p>
+        <p>Hello description but longer than usual</p>
+        <div class="card-actions justify-end">
+          <a class="btn btn-primary text-text" href="/"> Read</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
