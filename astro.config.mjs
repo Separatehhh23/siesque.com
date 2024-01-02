@@ -3,8 +3,8 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel/serverless";
-import qwikdev from "@qwikdev/astro";
-import { qwikReact } from '@builder.io/qwik-react/vite';
+
+import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,13 +13,9 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "hover"
   },
-  integrations: [mdx(), sitemap(), tailwind(), qwikdev()],
+  integrations: [mdx(), sitemap(), tailwind(), svelte()],
   output: "server",
   adapter: vercel({
     speedInsights: true
-  }),
-  vite: {
-    // vite.config.js
-    plugins: [qwikReact()]
-  }
+  })
 });
