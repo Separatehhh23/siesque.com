@@ -1,11 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
     "strictNullChecks": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "@builder.io/qwik",
     "baseUrl": "./",
     "paths": {
       // Old aliases
@@ -16,5 +12,6 @@
       // New alias
       "@/*": ["src/*"]
     }
-  }
+  },
+  "include": ["**/*.{astro,tsx,svelte,vue,ts}"]
 }

@@ -3,7 +3,6 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel/serverless";
-
 import svelte from "@astrojs/svelte";
 
 // https://astro.build/config
@@ -17,5 +16,12 @@ export default defineConfig({
   output: "server",
   adapter: vercel({
     speedInsights: true
-  })
-});
+  }),
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ["sharp"]
+      }
+    }
+  }
+})

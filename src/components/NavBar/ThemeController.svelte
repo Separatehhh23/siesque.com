@@ -1,6 +1,6 @@
 <script lang="ts">
-let isDark = JSON.parse(<string>localStorage.getItem("isdark"))
-$: JSON.stringify(localStorage.setItem("isdark", isDark))
+let isDark = JSON.parse(<string>localStorage.getItem("isdark"));
+$: localStorage.setItem("isdark", JSON.stringify(isDark));
 </script>
 
 <li>
@@ -10,6 +10,8 @@ $: JSON.stringify(localStorage.setItem("isdark", isDark))
             <input
                     type="checkbox"
                     value="dark"
+                    bind:checked={isDark}
+                    on:change={() => isDark = !isDark}
                     class="toggle theme-controller bg-base-content row-start-1 col-start-1 col-span-2"
             />
             <svg

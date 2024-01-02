@@ -1,24 +1,32 @@
 ---
 import Layout from "./Layout.astro";
-import Footer from "../components/astro/Footer.astro";
-import NavBar from "../components/astro/NavBar.astro";
+import Footer from "../components/Footer.astro";
+import NavBar from "../components/NavBar/NavBar.astro";
 import type { HTMLTag } from "astro/types";
 
 interface Props {
   title: string;
   description: string;
   head?: HTMLTag;
+  isFixed?: boolean;
 }
 
-const { title, description, head }: Props = Astro.props;
+const { title, description, head, isFixed = true }: Props = Astro.props;
+
+const isFixedClass = (): string => {
+  if (isFixed) return "pt-16";
+  return "";
+};
 ---
 
 <Layout title={title} description={description} head={head}>
-  <NavBar />
+  <NavBar isFixed={isFixed} />
 
-  <main class="min-h-screen">
-    <slot />
-  </main>
+  <div class={isFixedClass()}>
+    <main class="min-h-screen">
+      <slot />
+    </main>
 
-  <Footer />
+    <Footer />
+  </div>
 </Layout>
