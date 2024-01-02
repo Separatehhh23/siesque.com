@@ -6,17 +6,15 @@
     "strictNullChecks": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@builder.io/qwik",
-    "baseUrl": "D:/pylinker-dev-dir/Pylinker",
+    "baseUrl": "./",
     "paths": {
-      "@c/*": [
-        "src/components/*"
-      ],
-      "@l/*": [
-        "src/layouts/*"
-      ],
-      "@s/*": [
-        "src/styles/*"
-      ]
+      // Old aliases
+      "@c/*": ["src/components/*"],
+      "@l/*": ["src/layouts/*"],
+      "@s/*": ["src/styles/*"],
+
+      // New alias
+      "@/*": ["src/*"]
     }
   }
 }
