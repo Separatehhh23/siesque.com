@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (accessToken && refreshToken) {
+  return redirect("/");
+}
+---
+
+<BaseLayout title="Sign in">
+  <h1>Sign in</h1>
+  <p>New here? <a href="/register">Create an account</a></p>
+  <form action="/api/auth/signin" method="post" type="submit">
+    Sign in with GitHub
+  </form>
+</BaseLayout>
