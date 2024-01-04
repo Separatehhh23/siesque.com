@@ -10,7 +10,7 @@ $: localStorage.setItem("isdark", JSON.stringify(isDark));
             <input
                     type="checkbox"
                     value="dark"
-                    bind:checked={isDark}
+                    checked={isDark}
                     on:change={() => isDark = !isDark}
                     class="toggle theme-controller bg-base-content row-start-1 col-start-1 col-span-2"
             />
