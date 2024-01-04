@@ -3,15 +3,23 @@ import Layout from "./Layout.astro";
 import Footer from "../components/Footer.astro";
 import NavBar from "../components/NavBar/NavBar.astro";
 import type { HTMLTag } from "astro/types";
+import { twMerge } from "tailwind-merge";
 
 interface Props {
   title: string;
   description: string;
   head?: HTMLTag;
   isFixed?: boolean;
+  className?: string;
 }
 
-const { title, description, head, isFixed = true }: Props = Astro.props;
+const {
+  title,
+  description,
+  head,
+  className,
+  isFixed = true,
+}: Props = Astro.props;
 
 const isFixedClass = (): string => {
   if (isFixed) return "pt-16";
@@ -23,7 +31,7 @@ const isFixedClass = (): string => {
   <NavBar isFixed={isFixed} />
 
   <div class={isFixedClass()}>
-    <main class="min-h-screen">
+    <main class={twMerge("min-h-screen", className)}>
       <slot />
     </main>
 

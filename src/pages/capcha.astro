@@ -1,48 +1,23 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import CapchaImage from "@/components/CapchaImage.astro";
 ---
 
 <BaseLayout title="Capcha" description="Eres un castor?">
-  <div>
-    <h1>Pulsa todos los semaforos para comprobar que no eres un castor</h1>
-    <div class="grid grid-cols-3 grid-rows-3-3">
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-        onclick="alert('Mentira! eres un castor')"
-      />
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-      />
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-      />
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-      />
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-      />
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-      />
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-      />
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-      />
-      <img
-        src="https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fstatic1.squarespace.com%2Fstatic%2F58594172893fc07d5b88dd15%2Ft%2F5acf3555f950b77b26f0ef7c%2F1523529051523%2Ftraffic-lights.jpg&sp=1704394558T9477e99b6cb7ce40112fd869d53cfb84c60754a1baca1c3c24f8b4c066ccff1c"
-        alt="semaforo"
-      />
+  <h1 class="flex justify-center items-center">
+    Pulsa todos los semaforos para comprobar que no eres un castor
+  </h1>
+  <div class="flex flex-row min-h-screen justify-center items-center">
+    <div class="grid grid-cols-3 grid-rows-3 size-96">
+      <CapchaImage />
+      <CapchaImage />
+      <CapchaImage />
+      <CapchaImage />
+      <CapchaImage />
+      <CapchaImage />
+      <CapchaImage />
+      <CapchaImage />
+      <CapchaImage />
     </div>
   </div>
 </BaseLayout>
