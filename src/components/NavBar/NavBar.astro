@@ -2,10 +2,11 @@
 import ProfileIcon from "./ProfileIcon.astro";
 import { twMerge } from "tailwind-merge";
 
-interface Props {
+const {
+  isFixed = true,
+}: {
   isFixed?: boolean;
-}
-const { isFixed = true }: Props = Astro.props;
+} = Astro.props;
 
 const isFixedClass = (): string => {
   if (isFixed) return "fixed";
@@ -20,7 +21,7 @@ const isFixedClass = (): string => {
   </div>
 
   <!--Blog-->
-  <a class="btn btn-ghost text-text" href="/blog">Blog</a>
+  <a class="text-text btn btn-ghost" href="/blog">Blog</a>
   <div class="ml-2"></div>
 
   <!--Search Bar-->
@@ -29,7 +30,7 @@ const isFixedClass = (): string => {
       <input
         type="text"
         placeholder="Search"
-        class="input input-bordered w-24 text-text md:w-auto"
+        class="text-text input input-bordered w-24 md:w-auto"
       />
     </div>
 

@@ -15,13 +15,17 @@ const posts = await getCollection("blog").then(
 <BaseLayout title={tag} description={`Posts tagged with ${tag}`}>
   <ul>
     {
-      posts.map((post: BlogEntry) => (
-        <li>
-          <a class="link link-hover" href={`/blog/${post.slug}`}>
-            {post.data.title}
-          </a>
-        </li>
-      ))
+      posts ? (
+        posts.map((post: BlogEntry) => (
+          <li>
+            <a class="link-hover link" href={`/blog/${post.slug}`}>
+              {post.data.title}
+            </a>
+          </li>
+        ))
+      ) : (
+        <h1>No there are no posts tagged with {tag}</h1>
+      )
     }
   </ul>
 </BaseLayout>

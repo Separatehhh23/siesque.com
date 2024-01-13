@@ -27,7 +27,7 @@ const blogEntries: BlogEntry[] = await getCollection("blog");
               <p>{entry.data.description}</p>
               <div class="card-actions justify-end">
                 <a
-                  class="btn btn-primary text-text"
+                  class="btn btn-primary text-text rounded-xl"
                   href={`/blog/${entry.slug}`}
                 >
                   Read
@@ -37,36 +37,23 @@ const blogEntries: BlogEntry[] = await getCollection("blog");
           </div>
         ))
       }
-      <div class="card w-96 shadow-xl bg-base-100">
-        <div class="card-body">
-          <h2 class="card-title">Hello world</h2>
-          <p>Published on: 15-2-2012</p>
-          <p>Hello description but longer than usual</p>
-          <div class="card-actions justify-end">
-            <a class="btn btn-primary text-text" href="/"> Read</a>
+      {
+        new Array(5).map(() => (
+          <div class="card w-96 shadow-xl bg-base-100">
+            <div class="card-body">
+              <h2 class="card-title">Hello world</h2>
+              <p>Published on: 15-2-2012</p>
+              <p>Hello description but longer than usual</p>
+              <div class="card-actions justify-end">
+                <a class="btn btn-primary text-text" href=`/post-${Math.random() >= 0.5 ? '1' : '2'}`>
+                  {" "}
+                  Read
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="card w-96 shadow-xl bg-base-100">
-        <div class="card-body">
-          <h2 class="card-title">Hello world</h2>
-          <p>Published on: 15-2-2012</p>
-          <p>Hello description but longer than usual</p>
-          <div class="card-actions justify-end">
-            <a class="btn btn-primary text-text" href="/"> Read</a>
-          </div>
-        </div>
-      </div>
-      <div class="card w-96 shadow-xl bg-base-100">
-        <div class="card-body">
-          <h2 class="card-title">Hello world</h2>
-          <p>Published on: 15-2-2012</p>
-          <p>Hello description but longer than usual</p>
-          <div class="card-actions justify-end">
-            <a class="btn btn-primary text-text" href="/"> Read</a>
-          </div>
-        </div>
-      </div>
+        ))
+      }
     </div>
   </div>
 </BaseLayout>

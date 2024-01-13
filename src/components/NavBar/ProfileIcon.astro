@@ -3,15 +3,18 @@ import ThemeController from "./ThemeController.svelte";
 ---
 
 <div class="dropdown dropdown-end">
-  <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+  <label tabindex="0" class="avatar btn btn-circle btn-ghost">
     <div class="w-10 rounded-full">
       <!-- Profile Icon Here -->
     </div>
   </label>
   <ul
     tabindex="0"
-    class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+    class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
   >
-    <ThemeController client:only="svelte" />
+    <a href={Astro.url.pathname} data-astro-reload
+      ><ThemeController client:only="svelte" /></a
+    >
+    {/* Dropdown items */}
   </ul>
 </div>

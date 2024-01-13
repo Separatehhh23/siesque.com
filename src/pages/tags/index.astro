@@ -8,7 +8,7 @@ const uniqueTags: string[] = await getCollection('blog').then((posts: BlogEntry[
 
 <BaseLayout title="Tag index" description="Tag index">
     <ul>{uniqueTags.map((tag: string) => <li>
-        <a href=`tags/${tag}`>
+        <a href=`/${tag}`>
         <p>{tag}</p>
         </a>
     </li>)}</ul>

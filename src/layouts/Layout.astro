@@ -6,22 +6,26 @@ import BaseHead from "../components/BaseHead.astro";
 import { ViewTransitions } from "astro:transitions";
 import type { HTMLTag } from "astro/types";
 
-interface Props {
+const {
+  title,
+  description,
+  head,
+  image,
+}: {
   title: string;
   description: string;
   head?: HTMLTag;
-}
-
-const { title, description, head }: Props = Astro.props;
+  image?: string;
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" id="app">
   <head>
-    <BaseHead title={title} description={description} />
+    <script src="../lib/themeApplier.ts"></script>
+    <BaseHead title={title} description={description} image={image} />
     <ViewTransitions />
-
-    {head}
+    <Fragment set:html={head} />
   </head>
   <body><slot /></body>
 </html>

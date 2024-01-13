@@ -3,21 +3,23 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import CapchaImage from "../components/CapchaImage.svelte";
 ---
 
-<BaseLayout title="Capcha" description="Eres un castor?">
-  <h1 class="flex justify-center items-center">
-    Pulsa todos los semaforos para comprobar que no eres un castor
-  </h1>
-  <div class="flex flex-row min-h-screen justify-center items-center">
-    <div class="grid grid-cols-3 grid-rows-3">
-      <CapchaImage client:load />
-      <CapchaImage client:load />
-      <CapchaImage client:load />
-      <CapchaImage client:load />
-      <CapchaImage client:load />
-      <CapchaImage client:load />
-      <CapchaImage client:load />
-      <CapchaImage client:load />
-      <CapchaImage client:load />
+<BaseLayout
+  title="Capcha"
+  description="Eres un castor?"
+  image="trafficLight.jpeg"
+>
+  <div class="mt-8 flex flex-col items-center justify-center">
+    <h2 class="mb-8 text-secondary">
+      Pulsa todos los semaforos para comprobar que no eres un castor
+    </h2>
+    <div class="grid h-[500px] w-[750px] grid-cols-3 grid-rows-3">
+      {
+        Array.from({ length: 9 }, (value, index) => index).map(() => (
+          <div class="border-2 border-solid border-white">
+            <CapchaImage client:load />
+          </div>
+        ))
+      }
     </div>
   </div>
 </BaseLayout>

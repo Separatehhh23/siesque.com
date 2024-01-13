@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Counter from "@/components/Counter.svelte";
 ---
 
 <BaseLayout title="Pylinker" description="Welcome to my blog">
   <h1>Hello World</h1>
+  <Counter client:only="svelte" />
 </BaseLayout>
