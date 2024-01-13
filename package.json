@@ -20,6 +20,7 @@
     "@astrojs/vercel": "^6.1.0",
     "@supabase/supabase-js": "^2.39.2",
     "@tailwindcss/typography": "^0.5.10",
+    "@vercel/speed-insights": "^1.0.3",
     "astro": "^4.0.6",
     "moment": "^2.29.4",
     "nanostores": "^0.9.5",

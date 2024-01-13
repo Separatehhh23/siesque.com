@@ -5,6 +5,7 @@ import "../styles/global.scss";
 import BaseHead from "../components/BaseHead.astro";
 import { ViewTransitions } from "astro:transitions";
 import type { HTMLTag } from "astro/types";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 const {
   title,
@@ -25,6 +26,7 @@ const {
     <script src="../lib/themeApplier.ts"></script>
     <BaseHead title={title} description={description} image={image} />
     <ViewTransitions />
+    <SpeedInsights />
     <Fragment set:html={head} />
   </head>
   <body><slot /></body>
