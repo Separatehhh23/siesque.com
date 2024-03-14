@@ -1,0 +1,35 @@
+---
+import type { HTMLTag } from "astro/types";
+import BaseLayout from "./BaseLayout.astro";
+
+const {
+  title,
+  description,
+  head,
+  className,
+  isFixed = true,
+  image,
+}: {
+  title?: string;
+  description?: string;
+  head?: HTMLTag;
+  isFixed?: boolean;
+  className?: string;
+  image?: string;
+} = Astro.props;
+
+// TODO: Make this reject the request instead of crashing
+const authorized = Astro.cookies.get("password").value === "hornitorrinco";
+if (!authorized) return Astro.redirect("/rili");
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  head={head}
+  className={className}
+  isFixed={isFixed}
+  image={image}
+>
+  <slot />
+</BaseLayout>

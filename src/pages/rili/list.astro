@@ -1,11 +1,11 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import RiliLayout from "@/layouts/RiliLayout.astro";
 import { db, Rili } from "astro:db";
 
 const riliList = await db.select().from(Rili);
 ---
 
-<BaseLayout title="Lista rili" description="Lista rili">
+<RiliLayout title="Lista rili" description="Lista rili">
   <h2>Lista rili</h2>
 
   {
@@ -16,4 +16,4 @@ const riliList = await db.select().from(Rili);
       </div>
     ))
   }
-</BaseLayout>
+</RiliLayout>

@@ -28,16 +28,10 @@ const isFixedClass = (): string => (isFixed ? "pt-16" : "");
   <NavBar isFixed={isFixed} />
 
   <div class={isFixedClass()}>
-    <main class={twMerge("main--235vkl", className)}>
+    <main class={twMerge("min-h-screen h-full", className)}>
       <slot />
     </main>
 
     <Footer />
   </div>
 </Layout>
-
-<style>
-  .main--235vkl {
-    height: calc(100vh - 4rem);
-  }
-</style>

@@ -3,6 +3,7 @@
 
 interface ImportMetaEnv {
   readonly PUBLIC_ENV: "beta" | "dev" | "prod" | "local";
+  readonly RILI_PASSWORD: string;
 }
 
 interface ImportMeta {
