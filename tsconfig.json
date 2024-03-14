@@ -2,7 +2,7 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "strictNullChecks": true,
-    "baseUrl": "D:/pylinker-dev-dir/Pylinker",
+    "baseUrl": ".",
     "paths": {
       "@c/*": [
         "src/components/*"
@@ -13,7 +13,7 @@
       "@s/*": [
         "src/styles/*"
       ],
-
+      // Only use this ↓
       "@/*": [
         "src/*"
       ]
