@@ -2,16 +2,26 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "strictNullChecks": true,
-    "baseUrl": "./",
+    "baseUrl": "D:/pylinker-dev-dir/Pylinker",
     "paths": {
-      // Old aliases
-      "@c/*": ["src/components/*"],
-      "@l/*": ["src/layouts/*"],
-      "@s/*": ["src/styles/*"],
+      "@c/*": [
+        "src/components/*"
+      ],
+      "@l/*": [
+        "src/layouts/*"
+      ],
+      "@s/*": [
+        "src/styles/*"
+      ],
 
-      // New alias
-      "@/*": ["src/*"]
-    }
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
-  "include": ["**/*.{astro,tsx,svelte,vue,ts}"]
+  "include": [
+    "**/*.{astro,tsx,svelte,vue,ts}"
+  ]
 }

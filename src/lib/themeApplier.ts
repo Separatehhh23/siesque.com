@@ -1,11 +1,29 @@
-document.addEventListener("astro:page-load", () => {
-  const app = <HTMLElement>document.getElementById("app");
+const app = <HTMLElement>document.getElementById("app");
+let theme: string;
 
-  let theme: string;
-  if (JSON.parse(<string>localStorage.getItem("isdark"))) {
-    theme = "night";
-  } else {
-    theme = "emerald";
+document.addEventListener("astro:page-load", async () => {
+  try {
+    if (
+      typeof JSON.parse(<string>localStorage.getItem("isdark")) === "undefined"
+    ) {
+      localStorage.setItem(
+        "isdark",
+        JSON.stringify(
+          window.matchMedia("(prefers-color-scheme: dark)").matches,
+        ),
+      );
+    } else {
+      if (JSON.parse(<string>localStorage.getItem("isdark"))) {
+        theme = "dark";
+      } else {
+        theme = "light";
+      }
+    }
+  } finally {
+    app.setAttribute(
+      "data-theme",
+      // @ts-ignore
+      theme,
+    );
   }
-  app.setAttribute("data-theme", theme);
 });

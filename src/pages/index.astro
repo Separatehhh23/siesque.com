@@ -1,9 +1,16 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Counter from "@/components/Counter.svelte";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CaptchaController from "@/components/Captcha/CaptchaController.svelte";
+import Captcha from "../components/Captcha/Captcha.svelte";
+import { BackgroundBeams } from "../components/ui/background-beams";
 ---
 
-<BaseLayout title="Pylinker" description="Welcome to my blog">
+<BaseLayout title="Sieske" description="Welcome to my blog">
   <h1>Hello World</h1>
-  <Counter client:only="svelte" />
+  <!--
+  <CaptchaController client:only="svelte" />
+  <Captcha client:only="svelte" />
+  -->
 </BaseLayout>
+
+<BackgroundBeams client:load />

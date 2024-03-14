@@ -1,5 +1,5 @@
 ---
-import ProfileIcon from "./ProfileIcon.astro";
+import ThemeController from "./ThemeController.svelte";
 import { twMerge } from "tailwind-merge";
 
 const {
@@ -34,6 +34,6 @@ const isFixedClass = (): string => {
       />
     </div>
 
-    <ProfileIcon />
+    <ThemeController client:only="svelte" />
   </div>
 </nav>

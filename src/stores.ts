@@ -13,3 +13,5 @@ export function resetCount() {
   count.set(0);
   localStorage.setItem("count", JSON.stringify(count.get()));
 }
+
+export const capchaOpen = atom(false);

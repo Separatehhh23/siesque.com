@@ -4,6 +4,8 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel/serverless";
 import svelte from "@astrojs/svelte";
+import alpinejs from "@astrojs/alpinejs";
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,7 +14,7 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "hover"
   },
-  integrations: [mdx(), sitemap(), tailwind(), svelte()],
+  integrations: [mdx(), sitemap(), tailwind(), svelte(), alpinejs(), react()],
   output: "server",
   adapter: vercel({
     speedInsights: true

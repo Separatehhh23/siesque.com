@@ -1,13 +1,14 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Capcha from "@/components/Capcha.svelte";
+import Capcha from "@/components/Captcha/Captcha.svelte";
+import CaptchaController from "@/components/Captcha/CaptchaController.svelte";
 ---
 
 <BaseLayout
   title="Capcha"
   description="Eres un castor?"
   image="trafficLight.jpeg"
-  className="flex flex-col items-center justify-center"
 >
-  <Capcha client:load />
+  <CaptchaController client:only="svelte" />
+  <Capcha client:only="svelte" />
 </BaseLayout>
