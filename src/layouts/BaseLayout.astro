@@ -13,8 +13,8 @@ const {
   isFixed = true,
   image,
 }: {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   head?: HTMLTag;
   isFixed?: boolean;
   className?: string;
@@ -28,10 +28,16 @@ const isFixedClass = (): string => (isFixed ? "pt-16" : "");
   <NavBar isFixed={isFixed} />
 
   <div class={isFixedClass()}>
-    <main class={twMerge("min-h-screen", className)}>
+    <main class={twMerge("main--235vkl", className)}>
       <slot />
     </main>
 
     <Footer />
   </div>
 </Layout>
+
+<style>
+  .main--235vkl {
+    height: calc(100vh - 4rem);
+  }
+</style>

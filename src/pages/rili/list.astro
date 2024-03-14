@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { db, Rili } from "astro:db";
+
+const riliList = await db.select().from(Rili);
+---
+
+<BaseLayout title="Lista rili" description="Lista rili">
+  <h2>Lista rili</h2>
+
+  {
+    riliList.map(({ name, amount }) => (
+      <div class="card-compact">
+        <p class="card-title">{name}</p>
+        <p class="card-body">{amount}</p>
+      </div>
+    ))
+  }
+</BaseLayout>

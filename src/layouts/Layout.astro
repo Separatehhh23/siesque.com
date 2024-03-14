@@ -7,23 +7,25 @@ import { ViewTransitions } from "astro:transitions";
 import type { HTMLTag } from "astro/types";
 import SpeedInsights from "@vercel/speed-insights/astro";
 
-const {
+let {
   title,
   description,
   head,
   image,
 }: {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   head?: HTMLTag;
   image?: string;
 } = Astro.props;
+
+if (typeof title !== "string") title = "Sieske";
+if (typeof description !== "string") description = title;
 ---
 
 <!doctype html>
 <html lang="en" id="app">
   <head>
-    <script src="../lib/themeApplier.ts"></script>
     <BaseHead title={title} description={description} image={image} />
     <ViewTransitions />
     <SpeedInsights />

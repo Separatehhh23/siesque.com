@@ -13,6 +13,7 @@
   "dependencies": {
     "@astrojs/alpinejs": "^0.3.2",
     "@astrojs/check": "^0.3.3",
+    "@astrojs/db": "^0.8.2",
     "@astrojs/mdx": "^2.0.1",
     "@astrojs/react": "^3.0.10",
     "@astrojs/rss": "^4.0.1",

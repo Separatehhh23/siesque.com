@@ -15,7 +15,7 @@ export default {
     addVariablesForColors
   ],
   daisyui: {
-    themes: ["light", "dark"],
+    themes: ["dark"],
     base: true,
     styled: true,
     logs: false

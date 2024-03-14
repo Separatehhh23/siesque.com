@@ -1,5 +1,4 @@
 ---
-import ThemeController from "./ThemeController.svelte";
 import { twMerge } from "tailwind-merge";
 
 const {
@@ -14,7 +13,7 @@ const isFixedClass = (): string => {
 };
 ---
 
-<nav class={twMerge("navbar bg-base-200", isFixedClass())}>
+<nav class={twMerge("navbar bg-base-200 absolute", isFixedClass())}>
   <!--Logo-->
   <div class="flex-1">
     <a href="/" class="btn btn-ghost text-xl text-primary">Pylinker</a>
@@ -33,7 +32,5 @@ const isFixedClass = (): string => {
         class="text-text input input-bordered w-24 md:w-auto"
       />
     </div>
-
-    <ThemeController client:only="svelte" />
   </div>
 </nav>
