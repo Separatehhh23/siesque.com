@@ -22,9 +22,11 @@ const {
 if (Astro.cookies.has("password")) {
   const cookie = Astro.cookies.get("password");
 
-  if (cookie.value !== "hornitorrinco") return Astro.redirect("/rili");
+  if (cookie.value !== "hornitorrinco") {
+    return (Astro.response.status = 401);
+  }
 } else {
-  return Astro.redirect("/rili");
+  return (Astro.response.status = 401);
 }
 ---
 
