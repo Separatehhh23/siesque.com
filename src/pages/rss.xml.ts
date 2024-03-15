@@ -1,4 +1,5 @@
 import rss from "@astrojs/rss";
+// @ts-ignore
 import { getCollection } from "astro:content";
 import type { BlogEntry } from "../types";
 

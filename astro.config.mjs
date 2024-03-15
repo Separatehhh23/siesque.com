@@ -16,7 +16,18 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "hover"
   },
-  integrations: [mdx(), sitemap(), tailwind(), svelte(), alpinejs(), react(), db()],
+  integrations: [
+    sitemap({ filter: (page) =>
+      page !== 'https://www.pylinker.com/rili' &&
+      page !== 'https://www.pylinker.com/rili/list'
+    }),
+    tailwind(),
+    mdx(),
+    svelte(),
+    alpinejs(),
+    react(),
+    db()
+  ],
   output: "server",
   adapter: vercel({
     speedInsights: true

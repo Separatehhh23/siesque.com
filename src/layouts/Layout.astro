@@ -27,8 +27,10 @@ if (typeof description !== "string") description = title;
 <html lang="en" id="app">
   <head>
     <BaseHead title={title} description={description} image={image} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <ViewTransitions />
     <SpeedInsights />
+
     <Fragment set:html={head} />
   </head>
   <body><slot /></body>

@@ -1,19 +1,11 @@
 ---
-import RiliLayout from "@/layouts/RiliLayout.astro";
 import { db, Rili } from "astro:db";
+import RiliLayout from "@/layouts/RiliLayout.astro";
+import RiliList from "@/components/Rili/RiliList";
 
 const riliList = await db.select().from(Rili);
 ---
 
 <RiliLayout title="Lista rili" description="Lista rili">
-  <h2>Lista rili</h2>
-
-  {
-    riliList.map(({ name, amount }) => (
-      <div class="card-compact">
-        <p class="card-title">{name}</p>
-        <p class="card-body">{amount}</p>
-      </div>
-    ))
-  }
+  <RiliList rilis={riliList} />
 </RiliLayout>
