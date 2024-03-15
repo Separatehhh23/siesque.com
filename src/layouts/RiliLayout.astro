@@ -18,9 +18,13 @@ const {
   image?: string;
 } = Astro.props;
 
-// TODO: Make this reject the request instead of crashing
-const authorized = Astro.cookies.get("password").value === "hornitorrinco";
-if (!authorized) return Astro.redirect("/rili");
+if (Astro.cookies.has("password")) {
+  const cookie = Astro.cookies.get("password");
+
+  if (cookie !== "hornitorrinco") Astro.redirect("/rili");
+} else {
+  Astro.redirect("/rili");
+}
 ---
 
 <BaseLayout

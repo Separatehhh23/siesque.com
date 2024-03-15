@@ -2,7 +2,9 @@
   let password: string;
 
   async function submit() {
-    const res = await fetch("/api/authorizeRili", {
+    if (!password) return;
+
+    await fetch("/api/authorizeRili", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -11,14 +13,6 @@
         password: password,
       }),
     });
-
-    if (res.status !== 200) return;
-
-    const cookie: Promise<string> = await res
-      .json()
-      .then((data) => data.cookie);
-
-    document.cookie = `password=${cookie}; expires=Never; SameSite=None; secure=true; path=/`;
   }
 </script>
 
