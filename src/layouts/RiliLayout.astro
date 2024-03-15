@@ -13,6 +13,7 @@ const {
   title?: string;
   description?: string;
   head?: HTMLTag;
+  // @ts-ignore
   isFixed?: boolean;
   className?: string;
   image?: string;
@@ -21,9 +22,9 @@ const {
 if (Astro.cookies.has("password")) {
   const cookie = Astro.cookies.get("password");
 
-  if (cookie !== "hornitorrinco") Astro.redirect("/rili");
+  if (cookie.value !== "hornitorrinco") return Astro.redirect("/rili");
 } else {
-  Astro.redirect("/rili");
+  return Astro.redirect("/rili");
 }
 ---
 
