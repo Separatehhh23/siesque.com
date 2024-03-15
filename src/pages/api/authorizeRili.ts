@@ -6,10 +6,10 @@ export const POST: APIRoute = async ({ request }) => {
     const password = body.password;
 
     // @ts-ignore
-    if (password === import.meta.env.RILI_PASSWORD) {
+    if (password === "ornitorrinco") {
       return new Response(
         JSON.stringify({
-          cookie: "hornitorrinco",
+          cookie: "hornitorrinco", // 💀 FIX THIS LATER!!!
         }),
         {
           status: 200,
