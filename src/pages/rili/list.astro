@@ -2,8 +2,9 @@
 import { db, Rili } from "astro:db";
 import RiliLayout from "@/layouts/RiliLayout.astro";
 import RiliList from "@/components/Rili/RiliList";
+import type { RiliArray } from "@/types";
 
-const riliList = await db.select().from(Rili);
+const riliList: RiliArray = await db.select().from(Rili);
 ---
 
 <RiliLayout title="Lista rili" description="Lista rili">
