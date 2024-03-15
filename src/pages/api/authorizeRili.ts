@@ -11,7 +11,7 @@ export const POST: APIRoute = async ({ request }) => {
         status: 200,
         headers: {
           "Set-Cookie":
-            "password=hornitorrinco; Expires=Sat, 31 Oct 2037 00:00:00 UTC; SameSite=Lax; Domain=pylinker.com; Path=/",
+            "password=hornitorrinco; Expires=Sat, 31 Oct 2037 00:00:00 UTC; SameSite=Lax; Path=/",
         },
       });
     } else {
