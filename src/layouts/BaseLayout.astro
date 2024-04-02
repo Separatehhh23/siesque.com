@@ -27,12 +27,12 @@ const isFixedClass = (): string => (isFixed ? "pt-16" : "");
 <Layout title={title} description={description} head={head} image={image}>
   <NavBar isFixed={isFixed} />
 
-  <div class={isFixedClass()}>
-    <main class={twMerge("min-h-screen h-full", className)}>
+  <div class={twMerge("flex flex-col", isFixedClass())}>
+    <main class={twMerge("min-h-screen h-full justify-self-start", className)}>
       <slot />
     </main>
 
-    <div class="absolute flex h-screen w-screen flex-col justify-end">
+    <div class="justify-self-end">
       <Footer />
     </div>
   </div>

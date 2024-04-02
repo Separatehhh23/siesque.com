@@ -1,4 +1,4 @@
-import type { RiliArray } from "@/types";
+import type { RiliArray, RiliObject } from "@/types";
 import { TracingBeam } from "../ui/tracing-beam";
 import "@/styles/RiliList.scss";
 
@@ -8,6 +8,10 @@ interface Props {
 
 export default function RiliList(props: Props) {
   const rilis = props.rilis;
+
+  rilis.sort((r1, r2) =>
+    r1.amount < r2.amount ? 1 : r1.amount > r2.amount ? -1 : 0,
+  );
 
   return (
     <>
@@ -20,7 +24,7 @@ export default function RiliList(props: Props) {
       </div>
       <TracingBeam>
         {/*<div className="flex h-screen w-screen flex-row justify-center pt-32">*/}
-        <div className="custom--main-list relative mx-auto max-w-2xl pt-4 antialiased">
+        <div className="relative mx-auto max-w-2xl pt-4 antialiased">
           <div className="min-w-1/4 rounded-xl">
             <div className="overflow-x-auto">
               <table className="table">

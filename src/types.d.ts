@@ -19,6 +19,11 @@ interface ModalElement extends HTMLElement {
   showModal(): void;
 }
 
-type RiliArray = Array<Object<number, string, number>>;
+interface RiliObject {
+  id: number;
+  name: string;
+  amount: number;
+}
+type RiliArray = RiliObject[];
 
-export type { BlogEntry, Params, ModalElement, RiliArray };
+export type { BlogEntry, Params, ModalElement, RiliObject, RiliArray };
