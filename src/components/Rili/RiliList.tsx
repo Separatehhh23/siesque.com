@@ -37,7 +37,7 @@ export default function RiliList(props: Props) {
                 <tbody>
                   {rilis.map((rili, index) => (
                     <tr key={index}>
-                      <th className="text-secondary">{index}</th>
+                      <th className="text-secondary">{index + 1}</th>
                       <td>{rili.name}</td>
                       <td>{rili.amount}</td>
                     </tr>
