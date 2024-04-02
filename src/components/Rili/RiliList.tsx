@@ -1,6 +1,5 @@
 import type { RiliArray, RiliObject } from "@/types";
 import { TracingBeam } from "../ui/tracing-beam";
-import "@/styles/RiliList.scss";
 
 interface Props {
   rilis: RiliArray;
@@ -36,9 +35,9 @@ export default function RiliList(props: Props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {rilis.map((rili) => (
-                    <tr>
-                      <th className="text-secondary">{rili.id}</th>
+                  {rilis.map((rili, index) => (
+                    <tr key={index}>
+                      <th className="text-secondary">{index}</th>
                       <td>{rili.name}</td>
                       <td>{rili.amount}</td>
                     </tr>
