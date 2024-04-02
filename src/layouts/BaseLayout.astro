@@ -32,6 +32,8 @@ const isFixedClass = (): string => (isFixed ? "pt-16" : "");
       <slot />
     </main>
 
-    <Footer />
+    <div class="absolute flex h-screen w-screen flex-col justify-end">
+      <Footer />
+    </div>
   </div>
 </Layout>
