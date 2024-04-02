@@ -1,4 +1,4 @@
-import type { RiliArray, RiliObject } from "@/types";
+import type { RiliArray } from "@/types";
 import { TracingBeam } from "../ui/tracing-beam";
 
 interface Props {
