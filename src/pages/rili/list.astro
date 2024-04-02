@@ -8,5 +8,5 @@ const riliList: RiliArray = await db.select().from(Rili);
 ---
 
 <RiliLayout title="Lista rili" description="Lista rili">
-  <RiliList rilis={riliList} />
+  <RiliList rilis={riliList} client:load />
 </RiliLayout>
