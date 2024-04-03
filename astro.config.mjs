@@ -19,7 +19,11 @@ export default defineConfig({
   integrations: [
     sitemap({ filter: (page) =>
       page !== 'https://www.pylinker.com/rili' &&
-      page !== 'https://www.pylinker.com/rili/list'
+      page !== 'https://www.pylinker.com/rili/list' &&
+      page !== 'https://beta.pylinker.com/rili' &&
+      page !== 'https://beta.pylinker.com/rili/list' &&
+      page !== 'https://dev.pylinker.com/rili' &&
+      page !== 'https://dev.pylinker.com/rili/list'
     }),
     tailwind(),
     mdx(),
