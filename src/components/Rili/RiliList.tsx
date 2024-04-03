@@ -22,8 +22,10 @@ export default function RiliList(props: Props) {
         </div>
       </div>
       <TracingBeam>
-        {/*<div className="flex h-screen w-screen flex-row justify-center pt-32">*/}
-        <div className="relative mx-auto max-w-2xl pt-4 antialiased">
+        <div
+          className="relative mx-auto max-w-2xl pt-4 antialiased"
+          style={{ minHeight: "calc(100vh - 30px)" }}
+        >
           <div className="min-w-1/4 rounded-xl">
             <div className="overflow-x-auto">
               <table className="table">
@@ -36,7 +38,7 @@ export default function RiliList(props: Props) {
                 </thead>
                 <tbody>
                   {rilis.map((rili, index) => (
-                    <tr key={index}>
+                    <tr key={rili.id}>
                       <th className="text-secondary">{index + 1}</th>
                       <td>{rili.name}</td>
                       <td>{rili.amount}</td>

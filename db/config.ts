@@ -7,7 +7,7 @@ const Comment = defineTable({
     post: column.number(),
     author: column.text(),
     body: column.text(),
-    published: column.date(),
+    published: column.text(),
   },
 });
 const Rili = defineTable({

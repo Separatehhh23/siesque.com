@@ -19,10 +19,14 @@ const {
   image?: string;
 } = Astro.props;
 
+// Better auth (hopefully)
+const secretStr =
+  "0PqxxoNmRBwZj3eZ9ud8hYgLEKcUHfqRHOeMZW0UTKm1fvMEXZNJlWkzpcqc251FezBq89ILkBq3v7YqdPnDrnVBpAFmLWVXjxSoglaUjJsFwvALfgvGSiAI9infpLIa";
+
 if (Astro.cookies.has("password")) {
   const cookie = Astro.cookies.get("password");
 
-  if (cookie.value !== "hornitorrinco") {
+  if (cookie.value !== secretStr) {
     return (Astro.response.status = 401);
   }
 } else {
