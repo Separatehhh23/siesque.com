@@ -1,8 +1,5 @@
 import type { APIRoute } from "astro";
 
-import pkg from "@fullerstack/nax-ipware";
-const { Ipware } = pkg;
-
 export const POST: APIRoute = async ({ request }) => {
   if (request.headers.get("Content-Type") === "application/json") {
     const body = await request.json();
