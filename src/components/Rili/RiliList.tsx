@@ -26,6 +26,9 @@ export default function RiliList(props: Props) {
           className="relative mx-auto max-w-2xl pt-4 antialiased"
           style={{ minHeight: "calc(100vh - 30px)" }}
         >
+          <h1 className="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text pb-4 text-9xl font-extrabold text-transparent">
+            Lista Rili
+          </h1>
           <div className="min-w-1/4 rounded-xl">
             <div className="overflow-x-auto">
               <table className="table">
