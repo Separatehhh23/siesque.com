@@ -1,24 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { BackgroundBeams } from "../components/ui/background-beams";
+import GradientTitle from "../components/GradientTitle";
 ---
 
 <BaseLayout title="Sieske" description="Welcome to my site">
   <div class="absolute flex h-screen w-screen flex-row justify-center">
     <div class="flex flex-col justify-center">
-      <div
-        class="flex w-[125%] flex-col bg-gradient-to-br from-cyan-500 to-indigo-500 bg-clip-text text-transparent"
-      >
-        <div class="inline-flex justify-start">
-          <h1 class="inline-block text-[10rem] font-extrabold">NAH</h1>
-        </div>
-        <div class="inline-flex justify-center">
-          <h1 class="inline-block text-[10rem] font-extrabold">SIESQUE</h1>
-        </div>
-        <div class="inline-flex justify-end">
-          <h1 class="inline-block text-[10rem] font-extrabold">RILI</h1>
-        </div>
-      </div>
+      <GradientTitle title={["NAH", "SIESQUE", "RILI"]} />
     </div>
   </div>
 

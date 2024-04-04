@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TracingBeam } from "../ui/tracing-beam";
+import type { Dispatch, SetStateAction, FC, ReactNode } from "react";
 import type { RiliArray, ModalElement } from "@/types";
 
 interface Props {
+  children?: ReactNode;
   rilis: RiliArray;
 }
 
 type ModModes = "a" | "b" | "o";
-
 interface ModState {
   active: boolean;
-  mode: ModModes;
+  mode: ModModes | null;
 }
 
-export default function RiliList(props: Props) {
+const RiliList: FC<Props> = ({ children, rilis }: Props) => {
   const [isPlus, setIsPlus] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMod, setIsMod] = useState({ active: false, mode: null });
+  const [isMod, setIsMod]: [ModState, Dispatch<SetStateAction<ModState>>] =
+    useState({ active: false, mode: null } as ModState);
 
   let password: string;
   let mode: ModModes;
 
-  const rilis = props.rilis;
   rilis.sort((r1, r2) =>
     r1.amount < r2.amount ? 1 : r1.amount > r2.amount ? -1 : 0,
   );
@@ -170,4 +171,6 @@ export default function RiliList(props: Props) {
       </TracingBeam>
     </>
   );
-}
+};
+
+export default RiliList;
