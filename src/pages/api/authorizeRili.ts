@@ -24,5 +24,5 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(null, { status: 401 });
     }
   }
-  return new Response(null, { status: 400 });
+  return new Response("Invalid content type", { status: 400 });
 };
