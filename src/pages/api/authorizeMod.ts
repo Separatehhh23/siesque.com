@@ -6,18 +6,18 @@ export const POST: APIRoute = async ({ request }) => {
     const password: string | null = body.password;
 
     // @ts-ignore
-    if (password !== null && password === import.meta.env.RILI_PASSWORD) {
-      const DateInSeconds = Date.now() + 60 * 30 * 1000; // 30 minutes
-      const date = new Date(DateInSeconds);
+    if (password !== null && password === import.meta.env.ALPHA_PASSWORD) {
+      const dateInSeconds = Date.now() + 60 * 15 * 1000; // 15 minutes
+      const date = new Date(dateInSeconds);
 
       // Better auth (hopefully)
       const cookie =
-        "0PqxxoNmRBwZj3eZ9ud8hYgLEKcUHfqRHOeMZW0UTKm1fvMEXZNJlWkzpcqc251FezBq89ILkBq3v7YqdPnDrnVBpAFmLWVXjxSoglaUjJsFwvALfgvGSiAI9infpLIa";
+        "UuwzEmfPi3agCbQ2epTBeoWhx6DDNkCuSk0yNJAXjMnNWdYMzk6tDtLAiNGIXWjYydvchbLKJo3TUk7u6Pizbh60rctVTjB09wnOSu7tMDv7aqjTOOH0ciTHQaVchDud";
 
       return new Response("OK", {
         status: 200,
         headers: {
-          "Set-Cookie": `password=${cookie}; Expires=${date}; SameSite=Lax; Path=/`,
+          "Set-Cookie": `modPassword=${cookie}; Expires=${date}; SameSite=Lax; Path=/`,
         },
       });
     } else {

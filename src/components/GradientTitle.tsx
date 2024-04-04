@@ -26,7 +26,9 @@ const GradientTitle: FC<Props> = ({ text, className }) => {
 const Title: FC<TitleProps> = ({ children, className }) => {
   return (
     <div className={cn("inline-flex", className)}>
-      <h1 className="inline-block text-[10rem] font-extrabold">{children}</h1>
+      <h1 className="inline-block font-extrabold sm:text-4xl md:text-8xl xl:text-[10rem]">
+        {children}
+      </h1>
     </div>
   );
 };

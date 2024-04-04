@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TracingBeam } from "../ui/tracing-beam";
-import type { FC } from "react";
+import type { FC, FormEvent } from "react";
 import type { RiliArray, ModalElement } from "@/types";
 
 interface Props {
@@ -29,9 +29,21 @@ const RiliList: FC<Props> = ({ rilis }: Props) => {
     console.log(password);
   }, [password]);
 
-  function handlePasswordSubmit() {
-    setIsMod(true);
-  }
+  const handlePasswordSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/authorizeMod", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ password: password }),
+    });
+
+    if (res.status === 200) {
+      setIsMod(true);
+    }
+  };
 
   return (
     <>
@@ -44,7 +56,7 @@ const RiliList: FC<Props> = ({ rilis }: Props) => {
             </button>
           </form>
           <h3 className="text-lg font-bold">Password</h3>
-          <form onSubmit={() => handlePasswordSubmit()}>
+          <form onSubmit={(e) => handlePasswordSubmit(e)}>
             <label className="input input-bordered flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
