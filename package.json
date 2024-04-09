@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev --remote",
     "start": "astro dev",
-    "build": "lint && astro check && astro build --remote",
+    "build": "npm run lint && astro check && astro build --remote",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint \"src/**/*.{js,astro}\" --fix && npx stylelint \"**/*.scss\" --fix"
