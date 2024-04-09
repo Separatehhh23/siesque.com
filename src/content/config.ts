@@ -11,6 +11,16 @@ const blogCollection = defineCollection({
   }),
 });
 
+const riliDocsCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    tags: z.array(z.string()),
+    otherScore: z.number().min(0).max(100),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
+  riliDocs: riliDocsCollection,
 };

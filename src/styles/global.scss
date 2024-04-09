@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
-  font-family: 'Inter';
+  font-family: Inter;
   font-weight: auto;
   src: local("Inter"),
   url("/fonts/Inter-VariableFont.woff") format("woff"),
@@ -12,38 +11,48 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;;
+  font-family: Inter, sans-serif;;
+
   @apply overflow-x-clip overflow-y-visible; /* Remove horizontal scrollbar */
 }
 
 h1 {
   @apply text-5xl;
 }
+
 h2 {
   @apply text-4xl;
 }
+
 h3 {
   @apply text-3xl;
 }
+
 h4 {
   @apply text-2xl;
 }
+
 h5 {
   @apply text-xl;
 }
+
 strong,
 b {
   @apply font-bold;
 }
+
 a {
   @apply text-accent;
 }
+
 code {
   @apply bg-base-200 pt-[2px] pb-[2px] pl-[5px] pr-[5px] rounded-sm;
 }
+
 pre {
   @apply p-[1.5em] rounded-lg;
 }
+
 blockquote {
   @apply border-l-accent border-l-4 border-solid p-0 pl-[20px] text-xl;
 }
@@ -57,12 +66,16 @@ blockquote {
   height: 1px;
   width: 1px;
   overflow: hidden;
+
   /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
   clip: rect(1px 1px 1px 1px);
+
   /* maybe deprecated but we need to support legacy browsers */
   clip: rect(1px, 1px, 1px, 1px);
+
   /* modern browsers, clip-path works inwards from each corner */
   clip-path: inset(50%);
+
   /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
   white-space: nowrap;
 }

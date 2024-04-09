@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { TracingBeam } from "../ui/tracing-beam";
-import type { FC, FormEvent } from "react";
-import type { RiliArray, ModalElement } from "@/types";
+import type {
+  FC,
+  FormEvent,
+  MutableRefObject,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import type { RiliArray, RiliObject } from "@/types";
+import Title from "../Title";
 
 interface Props {
   rilis: RiliArray;
@@ -12,10 +19,18 @@ const RiliList: FC<Props> = ({ rilis }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMod, setIsMod] = useState(false);
   const [password, setPassword] = useState("");
+  const [newRilis, setNewRilis]: [
+    RiliArray,
+    Dispatch<SetStateAction<RiliArray>>,
+  ] = useState(
+    rilis.map((rili, index) => {
+      return { id: rili.id, name: rili.name, amount: 0 };
+    }),
+  );
 
-  const modal = document.getElementById("modal") as ModalElement;
+  const modalRef: MutableRefObject<HTMLDialogElement | null> = useRef(null);
 
-  rilis.sort((r1, r2) =>
+  const sortedRilis = rilis.toSorted((r1, r2) =>
     r1.amount < r2.amount ? 1 : r1.amount > r2.amount ? -1 : 0,
   );
 
@@ -25,12 +40,10 @@ const RiliList: FC<Props> = ({ rilis }: Props) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(password);
-  }, [password]);
-
   const handlePasswordSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    modalRef.current?.close();
 
     const res = await fetch("/api/authorizeMod", {
       method: "POST",
@@ -43,12 +56,28 @@ const RiliList: FC<Props> = ({ rilis }: Props) => {
     if (res.status === 200) {
       setIsMod(true);
     }
+
+    setIsMenuOpen(false);
+  };
+
+  const handleMod = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    await fetch("/api/modifyRilis", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ rilis: newRilis }),
+    });
+
+    setIsMod(false);
   };
 
   return (
     <>
       {/* Pop-up */}
-      <dialog id="modal" className="modal">
+      <dialog className="modal" ref={modalRef}>
         <div className="modal-box">
           <form method="dialog">
             <button className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">
@@ -84,36 +113,45 @@ const RiliList: FC<Props> = ({ rilis }: Props) => {
         </div>
       </dialog>
 
-      {/* Edit button */}
-      <div className="absolute z-20 flex w-screen flex-row justify-end">
+      <div className="absolute z-20 flex h-screen w-screen flex-row justify-end">
         <div className="flex flex-col pr-8 pt-2">
+          {/* Edit button */}
           <button
             className="btn btn-ghost cursor-pointer rounded-md bg-base-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <p className="p-0.5 text-primary accent-accent">Change</p>
           </button>
+
+          {/* Dropdown */}
           {isMenuOpen && (
             <div className="join join-vertical pt-2">
               <button
                 className="btn join-item text-sky-600"
-                onClick={() => modal.showModal()}
+                onClick={() => modalRef.current?.showModal()}
               >
                 Alpha
               </button>
               <button
                 className="btn join-item text-blue-600"
-                onClick={() => modal.showModal()}
+                onClick={() => modalRef.current?.showModal()}
               >
                 Beta
               </button>
               <button
                 className="btn join-item text-indigo-600"
-                onClick={() => modal.showModal()}
+                onClick={() => modalRef.current?.showModal()}
               >
                 Omega
               </button>
             </div>
+          )}
+
+          {/* Submit button */}
+          {isMod && (
+            <form onSubmit={(e) => handleMod(e)}>
+              <button className="btn btn-outline btn-primary">Primary</button>
+            </form>
           )}
         </div>
       </div>
@@ -124,9 +162,7 @@ const RiliList: FC<Props> = ({ rilis }: Props) => {
           className="relative mx-auto max-w-2xl pt-4 antialiased"
           style={{ minHeight: "calc(100vh - 30px)" }}
         >
-          <h1 className="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text pb-4 text-9xl font-extrabold text-transparent">
-            {`Lista Rili${isPlus ? "+" : ""}`}
-          </h1>
+          <Title className="pb-4">{`Lista Rili${isPlus ? "+" : ""}`}</Title>
           <div className="min-w-1/4 rounded-xl">
             <div className="overflow-x-auto">
               <table className="table">
@@ -139,7 +175,7 @@ const RiliList: FC<Props> = ({ rilis }: Props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {rilis.map((rili, index) => (
+                  {sortedRilis.map((rili, index) => (
                     <tr key={rili.id}>
                       <th className="text-secondary">{index + 1}</th>
                       <td>{rili.name}</td>
