@@ -7,6 +7,7 @@ const {
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  mode: "jit",
   darkMode: ["class"],
   content: ["./src/**/*.{astro,errors,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   exclude: ["./node_modules/**/*"],
