@@ -1,8 +1,9 @@
 ---
 // Import globals.css so that it can be used in every page that imports BaseLayout.astro
-import "../styles/global.scss";
+import "@/styles/global.scss";
+import "@/styles/shadcn-global.scss";
 
-import BaseHead from "../components/BaseHead.astro";
+import BaseHead from "@/components/BaseHead.astro";
 import { ViewTransitions } from "astro:transitions";
 import type { HTMLTag } from "astro/types";
 import SpeedInsights from "@vercel/speed-insights/astro";

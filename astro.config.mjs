@@ -25,7 +25,7 @@ export default defineConfig({
       page !== 'https://beta.pylinker.com/rili' &&
       page !== 'https://beta.pylinker.com/rili/list'
     }),
-    tailwind(),
+    tailwind({ applyBaseStyles: false }),
     mdx(),
     svelte(),
     alpinejs(),

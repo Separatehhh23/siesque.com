@@ -21,3 +21,5 @@ const Rili = defineTable({
 export default defineDb({
   tables: { Comment, Rili },
 });
+
+export { Comment, Rili };

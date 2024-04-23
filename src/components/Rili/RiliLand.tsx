@@ -1,67 +1,91 @@
-import type { FC } from "react";
-import { useRef } from "react";
+import type { FC, ReactNode } from "react";
+import React, { useRef, forwardRef, useState } from "react";
 import Draggable from "react-draggable";
 import Xarrow, { useXarrow } from "react-xarrows";
+import { cn } from "@/lib/utils";
 import { BackgroundGradient } from "../ui/background-gradient";
 import Title from "../Title";
+// @ts-ignore
+import { ReactComponent as RililandLogo } from "public/RililandLogo.svg";
 
 const RiliLand: FC = () => {
+  const [showLogo, setShowLogo] = useState(false);
+
   const updateXarrow = useXarrow();
 
   const titleRef = useRef<HTMLDivElement>(null);
-  const riliListRef = useRef<HTMLDivElement>(null);
-  const riliDictRef = useRef<HTMLDivElement>(null);
-  const riliDocsRef = useRef<HTMLDivElement>(null);
+
+  const refArray = new Array(3).map(() => useRef<HTMLDivElement>(null));
 
   return (
-    <>
-      <div className="flex min-h-screen items-center justify-center">
-        <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
-          <div ref={titleRef} className="cursor-pointer">
-            <BackgroundGradient>
-              <div className="rounded-3xl bg-base-100 p-4">
-                <Title className="text-2xl">RiliLand</Title>
-              </div>
-            </BackgroundGradient>
-          </div>
-        </Draggable>
+    <div className="flex min-h-screen items-center justify-center">
+      <Draggable onDrag={updateXarrow} onStop={updateXarrow}>
         <div
-          ref={riliListRef}
-          className="absolute right-[20rem] top-[14rem] cursor-pointer"
+          ref={titleRef}
+          className="cursor-pointer"
+          onMouseOver={() => setShowLogo(!showLogo)}
         >
-          <a href="/rili/list">
-            <div className="rounded-3xl border-4 border-accent p-4">
-              <p className="text-text text-md">Lista Rili</p>
+          {showLogo && <RililandLogo />}
+          <BackgroundGradient>
+            <div className="rounded-3xl bg-base-100 p-4">
+              <Title className="text-2xl">RiliLand</Title>
             </div>
-          </a>
+          </BackgroundGradient>
         </div>
-        <div
-          ref={riliDictRef}
-          className="absolute bottom-[15rem] right-[22rem] cursor-pointer"
-        >
-          <a href="/rili/dictionary">
-            <div className="rounded-3xl border-4 border-accent p-4">
-              <p className="text-text text-md">Diccionario de otros</p>
-            </div>
-          </a>
-        </div>
-        <div
-          ref={riliDocsRef}
-          className="absolute bottom-[16rem] left-[25rem] cursor-pointer"
-        >
-          <a href="/rili/docs">
-            <div className="rounded-3xl border-4 border-accent p-4">
-              <p className="text-text text-md">Documentos rili</p>
-            </div>
-          </a>
-        </div>
+      </Draggable>
 
-        <Xarrow start={titleRef} end={riliListRef} />
-        <Xarrow start={titleRef} end={riliDictRef} />
-        <Xarrow start={titleRef} end={riliDocsRef} />
-      </div>
-    </>
+      <LinkBox
+        ref={refArray[0]}
+        link="/rili/list"
+        className="right-[20rem] top-[14rem]"
+      >
+        Lista Rili
+      </LinkBox>
+      <LinkBox
+        ref={refArray[1]}
+        link="/rili/dictionary"
+        className="bottom-[15rem] right-[22rem]"
+      >
+        Diccionario rili
+      </LinkBox>
+      <LinkBox
+        ref={refArray[2]}
+        link="/rili/docs"
+        className="bottom-[16rem] left-[25rem]"
+      >
+        Documentos rili
+      </LinkBox>
+
+      {refArray.map((ref, index) => (
+        <Xarrow
+          start={titleRef}
+          end={ref}
+          curveness={0.4}
+          showHead={false}
+          color="#009688"
+          key={index}
+        />
+      ))}
+    </div>
   );
 };
+
+interface LinkBoxProps {
+  children: ReactNode;
+  link: string;
+  className?: string;
+}
+
+const LinkBox = forwardRef<HTMLDivElement, LinkBoxProps>(
+  ({ children, link, className }: LinkBoxProps, ref) => (
+    <div ref={ref} className={cn("absolute cursor-pointer", className)}>
+      <a href={link}>
+        <div className="rounded-3xl border-4 border-accent p-4">
+          <p className="text-text text-md">{children}</p>
+        </div>
+      </a>
+    </div>
+  ),
+);
 
 export default RiliLand;
