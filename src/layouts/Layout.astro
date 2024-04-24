@@ -1,7 +1,6 @@
 ---
 // Import globals.css so that it can be used in every page that imports BaseLayout.astro
 import "@/styles/global.scss";
-import "@/styles/shadcn-global.scss";
 
 import BaseHead from "@/components/BaseHead.astro";
 import { ViewTransitions } from "astro:transitions";
@@ -25,7 +24,7 @@ if (typeof description !== "string") description = title;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <BaseHead title={title} description={description} image={image} />
     <link rel="sitemap" href="/sitemap-index.xml" />

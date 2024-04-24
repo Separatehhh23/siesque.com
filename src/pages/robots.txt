@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://www.pylinker.com/sitemap-index.xml
-Sitemap: https://dev.pylinker.com/sitemap-index.xml
-Sitemap: https://beta.pylinker.com/sitemap-index.xml

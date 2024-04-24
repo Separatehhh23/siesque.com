@@ -17,9 +17,13 @@ const Rili = defineTable({
     amount: column.number(),
   },
 });
-
-export default defineDb({
-  tables: { Comment, Rili },
+const RiliDocs = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    data: column.json(),
+  },
 });
 
-export { Comment, Rili };
+export default defineDb({
+  tables: { Comment, Rili, RiliDocs },
+});

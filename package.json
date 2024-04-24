@@ -12,7 +12,6 @@
     "lint": "eslint \"src/**/*.{js,astro}\" --fix && npx stylelint \"**/*.scss\" --fix"
   },
   "dependencies": {
-    "@astrojs/alpinejs": "^0.3.2",
     "@astrojs/check": "^0.3.3",
     "@astrojs/db": "^0.8.2",
     "@astrojs/mdx": "^2.0.1",
@@ -22,13 +21,12 @@
     "@astrojs/svelte": "^5.0.3",
     "@astrojs/tailwind": "^5.0.3",
     "@astrojs/vercel": "^6.1.0",
+    "@nanostores/persistent": "^0.10.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.10",
-    "@types/alpinejs": "^3.13.6",
-    "@types/react": "^18.2.58",
-    "@types/react-dom": "^18.2.19",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "@vercel/speed-insights": "^1.0.3",
-    "alpinejs": "^3.13.3",
     "astro": "^4.5.3",
     "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.0",
@@ -64,6 +62,7 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "stylelint": "^16.3.1",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-standard-scss": "^13.1.0"
+    "stylelint-config-standard-scss": "^13.1.0",
+    "vite-plugin-svgr": "^4.2.0"
   }
 }

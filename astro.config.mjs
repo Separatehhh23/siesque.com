@@ -5,9 +5,9 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel/serverless";
 import svelte from "@astrojs/svelte";
-import alpinejs from "@astrojs/alpinejs";
 import react from "@astrojs/react";
 import db from "@astrojs/db";
+import svgr from "vite-plugin-svgr";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,18 +17,10 @@ export default defineConfig({
     defaultStrategy: "hover"
   },
   integrations: [
-    sitemap({ filter: (page) =>
-      page !== 'https://www.pylinker.com/rili' &&
-      page !== 'https://www.pylinker.com/rili/list' &&
-      page !== 'https://dev.pylinker.com/rili' &&
-      page !== 'https://dev.pylinker.com/rili/list'&&
-      page !== 'https://beta.pylinker.com/rili' &&
-      page !== 'https://beta.pylinker.com/rili/list'
-    }),
     tailwind({ applyBaseStyles: false }),
+    sitemap(),
     mdx(),
     svelte(),
-    alpinejs(),
     react(),
     db()
   ],
@@ -37,6 +29,7 @@ export default defineConfig({
     speedInsights: true
   }),
   vite: {
+    plugins: [svgr()],
     build: {
       rollupOptions: {
         external: ["sharp"]

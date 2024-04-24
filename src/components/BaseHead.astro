@@ -5,24 +5,7 @@ interface Props {
   image?: string;
 }
 
-let url = "https://www.pylinker.com";
-switch (import.meta.env.PUBLIC_ENV) {
-  case "local":
-    url = "https://localhost:4321";
-    break;
-  case "beta":
-    url = "https://beta.pylinker.com";
-    break;
-  case "dev":
-    url = "https://dev.pylinker.com";
-    break;
-  case "prod":
-    break;
-  default:
-    break;
-}
-
-const canonicalURL = new URL(Astro.url.pathname, url);
+const canonicalURL = new URL(Astro.url.pathname, "https://www.pylinker.com");
 
 const { title, description, image = "/image.png" } = Astro.props;
 ---
@@ -56,14 +39,20 @@ const { title, description, image = "/image.png" } = Astro.props;
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={url} />
+<meta property="og:url" content={"https://www.pylinker.com"} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, url)} />
+<meta
+  property="og:image"
+  content={new URL(image, "https://www.pylinker.com")}
+/>
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={url} />
+<meta property="twitter:url" content={"https://www.pylinker.com"} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, url)} />
+<meta
+  property="twitter:image"
+  content={new URL(image, "https://www.pylinker.com")}
+/>
