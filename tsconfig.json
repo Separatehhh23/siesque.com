@@ -2,6 +2,26 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "strictNullChecks": true,
-    "jsx": "preserve"
-  }
+    "baseUrl": ".",
+    "paths": {
+      "@c/*": [
+        "src/components/*"
+      ],
+      "@l/*": [
+        "src/layouts/*"
+      ],
+      "@s/*": [
+        "src/styles/*"
+      ],
+      // Only use this ↓
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  },
+  "include": [
+    "**/*.{astro,tsx,svelte,vue,ts}"
+  ]
 }

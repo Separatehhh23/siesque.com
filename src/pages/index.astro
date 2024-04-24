@@ -1,7 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { BackgroundBeams } from "../components/ui/background-beams";
+import GradientTitle from "../components/GradientTitle";
 ---
 
-<BaseLayout PageTitle="Pylinker" PageDescription="Welcome to my blog">
-    <h1>Hello World</h1>
+<BaseLayout title="Sieske" description="Welcome to my site">
+  <div class="absolute flex h-screen w-screen flex-row justify-center">
+    <div class="flex flex-col justify-center">
+      <GradientTitle text={["NAH", "SIESQUE", "RILI"]} client:load />
+    </div>
+  </div>
+
+  <BackgroundBeams client:load />
 </BaseLayout>

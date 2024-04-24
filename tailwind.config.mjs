@@ -1,96 +1,64 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
+const colors = require("tailwindcss/colors");
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
+
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-	theme: {
-		extend: {},
-		colors: {
-			'text': {
-				50: 'var(--text-50)',
-				100: 'var(--text-100)',
-				200: 'var(--text-200)',
-				300: 'var(--text-300)',
-				400: 'var(--text-400)',
-				500: 'var(--text-500)',
-				600: 'var(--text-600)',
-				700: 'var(--text-700)',
-				800: 'var(--text-800)',
-				900: 'var(--text-900)',
-				950: 'var(--text-950)',
-			},
-			'background': {
-				50: 'var(--background-50)',
-				100: 'var(--background-100)',
-				200: 'var(--background-200)',
-				300: 'var(--background-300)',
-				400: 'var(--background-400)',
-				500: 'var(--background-500)',
-				600: 'var(--background-600)',
-				700: 'var(--background-700)',
-				800: 'var(--background-800)',
-				900: 'var(--background-900)',
-				950: 'var(--background-950)',
-			},
-			'primary': {
-				50: 'var(--primary-50)',
-				100: 'var(--primary-100)',
-				200: 'var(--primary-200)',
-				300: 'var(--primary-300)',
-				400: 'var(--primary-400)',
-				500: 'var(--primary-500)',
-				600: 'var(--primary-600)',
-				700: 'var(--primary-700)',
-				800: 'var(--primary-800)',
-				900: 'var(--primary-900)',
-				950: 'var(--primary-950)',
-			},
-			'secondary': {
-				50: 'var(--secondary-50)',
-				100: 'var(--secondary-100)',
-				200: 'var(--secondary-200)',
-				300: 'var(--secondary-300)',
-				400: 'var(--secondary-400)',
-				500: 'var(--secondary-500)',
-				600: 'var(--secondary-600)',
-				700: 'var(--secondary-700)',
-				800: 'var(--secondary-800)',
-				900: 'var(--secondary-900)',
-				950: 'var(--secondary-950)',
-			},
-			'accent': {
-				50: 'var(--accent-50)',
-				100: 'var(--accent-100)',
-				200: 'var(--accent-200)',
-				300: 'var(--accent-300)',
-				400: 'var(--accent-400)',
-				500: 'var(--accent-500)',
-				600: 'var(--accent-600)',
-				700: 'var(--accent-700)',
-				800: 'var(--accent-800)',
-				900: 'var(--accent-900)',
-				950: 'var(--accent-950)',
-			},
-		},
+  mode: "jit",
+  darkMode: ["class"],
+  content: ["./src/**/*.{astro,errors,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  exclude: ["./node_modules/**/*"],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
+  },
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("daisyui"),
+    require("@tailwindcss/aspect-ratio"),
+    require("tailwindcss-animate"),
+    addVariablesForColors
+  ],
+  daisyui: {
+    themes: ["dark"],
+    base: true,
+    styled: true,
+    logs: false
+  },
+};
 
-	},
-	plugins: [require("daisyui")],
-	daisyui: {
-		themes: [
-			{
-				light: {
-					"primary": "#0465dc",
-					"secondary": "#94c6ff",
-					"accent": "#3c00ff",
-					"neutral": "#262626",
-					"base-100": "#dedede",
-				},
-				dark: {
-					"primary": "#2384fb",
-					"secondary": "#003169",
-					"accent": "#3a00ff",
-					"neutral": "#262626",
-					"base-100": "#222222",
-				},
-			},
-		],
-	},
+function addVariablesForColors({ addBase, theme }: any) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+      Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
 }

@@ -1,0 +1,15 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { BlogEntry } from "../../types";
+
+const uniqueTags: string[] = await getCollection('blog').then((posts: BlogEntry[]) => [...new Set(posts.map((post: BlogEntry) => post.data.tags).flat())]);
+---
+
+<BaseLayout title="Tag index" description="Tag index">
+    <ul>{uniqueTags.map((tag: string) => <li>
+        <a href=`/${tag}`>
+        <p>{tag}</p>
+        </a>
+    </li>)}</ul>
+</BaseLayout>

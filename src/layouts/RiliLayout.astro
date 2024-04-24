@@ -1,0 +1,57 @@
+---
+import type { HTMLTag } from "astro/types";
+import BaseLayout from "./BaseLayout.astro";
+import Error from "../components/errors/Rili/401.astro";
+
+const {
+  title,
+  description,
+  head,
+  className,
+  isFixed = true,
+  image,
+}: {
+  title?: string;
+  description?: string;
+  head?: HTMLTag;
+  // @ts-ignore
+  isFixed?: boolean;
+  className?: string;
+  image?: string;
+} = Astro.props;
+
+// Better auth (hopefully)
+const secretStr =
+  "0PqxxoNmRBwZj3eZ9ud8hYgLEKcUHfqRHOeMZW0UTKm1fvMEXZNJlWkzpcqc251FezBq89ILkBq3v7YqdPnDrnVBpAFmLWVXjxSoglaUjJsFwvALfgvGSiAI9infpLIa";
+
+let access = false;
+
+if (Astro.cookies.has("password")) {
+  const cookie = Astro.cookies.get("password");
+
+  if (cookie.value !== secretStr) {
+    Astro.response.status = 401;
+  } else {
+    access = true;
+  }
+} else {
+  Astro.response.status = 401;
+}
+---
+
+{
+  access ? (
+    <BaseLayout
+      title={title}
+      description={description}
+      head={head}
+      className={className}
+      isFixed={isFixed}
+      image={image}
+    >
+      <slot />
+    </BaseLayout>
+  ) : (
+    <Error />
+  )
+}

@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import moment from "moment";
+import type { BlogEntry } from "../../types";
+
+const blogEntries: BlogEntry[] = await getCollection("blog");
+---
+
+<BaseLayout title="Blog" description="All blog posts" isFixed={false}>
+  <div class="flex items-center justify-center">
+    <div
+      class="grid grid-cols-1 gap-4 grid-flow-row-dense pt-2
+           md:grid-cols-2 md:gap-8
+           lg:grid-cols-3
+           xl:grid-cols-4"
+    >
+      {
+        blogEntries.map((entry: BlogEntry) => (
+          <div class="card w-96 shadow-xl bg-base-100">
+            <div class="card-body">
+              <h2 class="card-title">{entry.data.title}</h2>
+              <p>
+                Published on:{" "}
+                {moment(entry.data.publishDate).utc().format("YYYY-MM-DD")}
+              </p>
+              <p>{entry.data.description}</p>
+              <div class="card-actions justify-end">
+                <a
+                  class="btn btn-primary text-text rounded-xl"
+                  href={`/blog/${entry.slug}`}
+                >
+                  Read
+                </a>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+      {
+        new Array(5).map(() => (
+          <div class="card w-96 shadow-xl bg-base-100">
+            <div class="card-body">
+              <h2 class="card-title">Hello world</h2>
+              <p>Published on: 15-2-2012</p>
+              <p>Hello description but longer than usual</p>
+              <div class="card-actions justify-end">
+                <a class="btn btn-primary text-text" href=`/post-${Math.random() >= 0.5 ? '1' : '2'}`>
+                  {" "}
+                  Read
+                </a>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

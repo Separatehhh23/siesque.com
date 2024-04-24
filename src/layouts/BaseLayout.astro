@@ -1,32 +1,39 @@
 ---
-// Import globals.css so that it can be used in every page that imports BaseLayout.astro
-import '../styles/global.css';
+import Layout from "./Layout.astro";
+import Footer from "../components/Footer.astro";
+import NavBar from "../components/NavBar/NavBar.astro";
+import type { HTMLTag } from "astro/types";
+import { twMerge } from "tailwind-merge";
 
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.vue';
-import NavBar from '../components/NavBar.vue'
+const {
+  title,
+  description,
+  head,
+  className,
+  isFixed = true,
+  image,
+}: {
+  title?: string;
+  description?: string;
+  head?: HTMLTag;
+  isFixed?: boolean;
+  className?: string;
+  image?: string;
+} = Astro.props;
 
-interface Props {
-    PageTitle: string;
-    PageDescription: string;
-}
-
-const { PageTitle, PageDescription }: Props = Astro.props
+const isFixedClass = (): string => (isFixed ? "pt-16" : "");
 ---
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <BaseHead title={PageTitle} description={PageDescription} />
-    </head>
+<Layout title={title} description={description} head={head} image={image}>
+  <NavBar isFixed={isFixed} />
 
-    <body>
-        <NavBar />
+  <div class={twMerge("flex flex-col", isFixedClass())}>
+    <main class={twMerge("min-h-screen h-full justify-self-start", className)}>
+      <slot />
+    </main>
 
-        <div class="h-screen">
-            <slot />
-        </div>
-
-        <Footer />
-    </body>
-</html>
+    <div class="justify-self-end">
+      <Footer />
+    </div>
+  </div>
+</Layout>

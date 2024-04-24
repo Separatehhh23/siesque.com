@@ -1,0 +1,16 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { BackgroundBeams } from "@/components/ui/background-beams";
+import PasswordSubmit from "@/components/Rili/PasswordSubmit.svelte";
+---
+
+<BaseLayout title="Documentos Rili" description="Super secret page">
+  <div class="absolute z-10">
+    <div class="flex h-screen w-screen flex-col justify-center">
+      <div class="flex flex-row justify-center">
+        <PasswordSubmit client:load />
+      </div>
+    </div>
+  </div>
+  <BackgroundBeams client:load />
+</BaseLayout>
