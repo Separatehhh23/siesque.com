@@ -87,7 +87,7 @@ const LinkBox = forwardRef<HTMLAnchorElement, LinkBoxProps>(
     >
       <a href={link} ref={ref}>
         <div className="flex flex-row justify-center rounded-3xl border-4 border-accent p-8">
-          <p className="text-text text-wrap sm:text-sm md:text-xl">
+          <p className="text-text min-w-0 text-wrap sm:text-sm md:text-xl">
             {children}
           </p>
         </div>
