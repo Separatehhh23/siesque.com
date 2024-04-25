@@ -1,5 +1,6 @@
 ---
 import { twMerge } from "tailwind-merge";
+import { version } from "@/consts";
 
 const {
   isFixed = true,
@@ -37,7 +38,7 @@ const isFixedClass = (): string => {
     <div class="form-control">
       <input
         type="text"
-        placeholder="Search"
+        placeholder={`Version: ${version}`}
         class="text-text input input-bordered w-24 md:w-auto"
       />
     </div>

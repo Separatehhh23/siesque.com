@@ -1,9 +1,23 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro"
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import TitleScrollableTable from "@/components/TitleScrollableTable";
+
+const tableData = [
+  ["El otro", "-->", "Al-el-varo"],
+  ["El otro", "-->", "Al-el-varo"],
+  ["El otro", "-->", "Al-el-varo"],
+  ["El otro", "-->", "Al-el-varo"],
+];
 ---
 
-<BaseLayout title="Rili Dictionary" description="Dictionary for knowing what rili words mean">
-    <div class="flex flex-row justify-center">
-        
-    </div>
+<BaseLayout
+  title="Rili Dictionary"
+  description="Dictionary for knowing what rili words mean"
+>
+  <TitleScrollableTable
+    title="Diccionario Rili"
+    tableData={tableData}
+    tableHead={["Rili Word", "", "Word"]}
+    client:load
+  />
 </BaseLayout>
