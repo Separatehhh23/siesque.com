@@ -1,8 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import RiliLand from "@/components/Rili/RiliLand";
+import { Image } from "astro:assets";
+import RiliLandLogo from "@/assets/RililandLogoNoBg.png";
 ---
 
 <BaseLayout title="RiliLand" description="The riliest place on uranus">
-  <RiliLand client:only="react" />
+  <RiliLand client:only="react">
+    <Image src={RiliLandLogo} alt="RiliLand logo" />
+  </RiliLand>
 </BaseLayout>

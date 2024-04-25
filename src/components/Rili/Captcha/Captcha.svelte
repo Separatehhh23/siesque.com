@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { capchaOpen } from "../../stores";
+  import { capchaOpen } from "@/stores";
 
   let clicked = false;
 
