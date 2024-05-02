@@ -1,17 +1,22 @@
 import { TracingBeam } from "./ui/tracing-beam";
 import Title from "./Title";
-import type { FC } from "react";
+import { cn } from "@/lib/utils";
+import type { FC, ReactNode } from "react";
 
 interface Props {
   title: string;
   tableData: string[][];
   tableHead: string[];
+  hasPrimaryKey?: boolean;
+  children?: ReactNode;
 }
 
 const TitleScrollableTable: FC<Props> = ({
   title,
   tableData,
   tableHead,
+  hasPrimaryKey = false,
+  children,
 }: Props) => (
   <TracingBeam>
     <div
@@ -35,8 +40,14 @@ const TitleScrollableTable: FC<Props> = ({
               {tableData.map((rowData, index) => (
                 <tr key={index}>
                   {rowData.map((text, index) => (
-                    <td key={index}>{text}</td>
+                    <td
+                      key={index}
+                      className={cn(hasPrimaryKey && "text-secondary")}
+                    >
+                      {text}
+                    </td>
                   ))}
+                  {children}
                 </tr>
               ))}
             </tbody>

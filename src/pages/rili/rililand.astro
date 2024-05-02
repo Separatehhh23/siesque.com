@@ -5,7 +5,11 @@ import { Image } from "astro:assets";
 import RiliLandLogo from "@/assets/RililandLogoNoBg.png";
 ---
 
-<BaseLayout title="RiliLand" description="The riliest place on uranus">
+<BaseLayout
+  title="RiliLand"
+  description="The riliest place on uranus"
+  image="/RililandLogoNoBg.png"
+>
   <RiliLand client:only="react">
     <Image src={RiliLandLogo} alt="RiliLand logo" />
   </RiliLand>
