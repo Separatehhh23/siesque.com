@@ -1,3 +1,16 @@
 ---
-
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import RiliDocsBar from "@/components/Rili/RiliDocsBar.astro";
 ---
+
+<BaseLayout title="Rili Documents" description="Rili Documents. TOP SECRET">
+  <RiliDocsBar />
+  <div class="flex flex-row justify-center">
+    <h1
+      class="glass inline-block bg-red-600 bg-clip-text text-9xl font-extrabold text-transparent shadow-none"
+    >
+      TOP SECRET
+    </h1>
+  </div>
+  <RiliDocsBar />
+</BaseLayout>

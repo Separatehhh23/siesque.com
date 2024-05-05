@@ -5,8 +5,9 @@ import TitleScrollableTable from "@/components/TitleScrollableTable";
 const tableData = [
   ["El otro", "-->", "Al-el-varo"],
   ["El otro otro", "-->", "Island Stork"],
-  ["El otro otro otro", "-->", "Al-el-no-tan-varo"],
-  ["El otro otro otro otro", "-->", "Al-el-aun-menos-varo"],
+  ["El otro otro otro", "-->", "La Piedra"],
+  ["El otro otro otro otro", "-->", "Mucho"],
+  ["El este", "--->", "Nicosia"],
 ];
 ---
 
@@ -17,7 +18,7 @@ const tableData = [
   <TitleScrollableTable
     title="Diccionario Rili"
     tableData={tableData}
-    tableHead={["Rili Word", "", "Word"]}
+    tableHead={["Rili Word", "-->", "Word"]}
     client:load
   />
 </BaseLayout>
