@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { elOtroPurchase, buyElOtro } from "@/stores";
+import RiliTest from "@/components/Rili/RIliTest";
 ---
 
 <BaseLayout
   title="Rili test"
-  description="Are you rili enough to acces the rili docs?"
-/>
+  description="Are you rili enough to access the rili docs?"
+>
+  <RiliTest client:load />
+</BaseLayout>
