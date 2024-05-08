@@ -32,7 +32,8 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
           <BackgroundGradient>
             <div
               className="rounded-3xl bg-base-100 p-4"
-              onMouseDown={() => setIsHovering(!isHovering)}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
             >
               {!isHovering ? (
                 <Title className="text-2xl">RiliLand</Title>

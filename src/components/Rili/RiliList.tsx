@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import type { FC, ReactNode, MouseEventHandler } from "react";
 import type { RiliArray } from "@/types";
 import { TracingBeam } from "../ui/tracing-beam";

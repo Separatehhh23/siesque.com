@@ -13,12 +13,6 @@ const RiliTest: FC = () => {
     }
   }, [accepted]);
 
-  useEffect(() => {
-    if (accepted) {
-      console.log("accepted");
-    }
-  }, [accepted]);
-
   return (
     <div className="flex h-screen flex-row justify-center">
       {stage === 0 && (
