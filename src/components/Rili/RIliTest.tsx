@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { BackgroundGradient } from "../ui/background-gradient";
 import type { FC, ReactNode, MouseEventHandler } from "react";
 
 const RiliTest: FC = () => {
   const [stage, setStage] = useState(0);
   const [accepted, setAccepted] = useState(false);
+
+  useEffect(() => {
+    if (accepted) {
+      setStage(-1);
+    }
+  }, [accepted]);
 
   useEffect(() => {
     if (accepted) {
@@ -31,6 +38,13 @@ const RiliTest: FC = () => {
           <RiliAnswer onClick={() => setStage(3)}>No</RiliAnswer>
         </RiliQuestion>
       )}
+      {accepted && (
+        <RiliQuestion question="Eres un rili">
+          <a href="/rili/docs">
+            <RiliAnswer>Ok</RiliAnswer>
+          </a>
+        </RiliQuestion>
+      )}
     </div>
   );
 };
@@ -42,7 +56,26 @@ interface RiliQuestionProps {
 
 const RiliQuestion: FC<RiliQuestionProps> = ({ question, children }) => {
   return (
-    <div className="flex flex-col justify-center sm:h-full md:h-2/3">
+    <motion.div
+      variants={{
+        initial: {
+          x: 200,
+          opacity: 0,
+        },
+        animate: {
+          x: 0,
+          opacity: 1,
+        },
+        exit: {
+          x: -200,
+          opacity: 0,
+        },
+      }}
+      animate="animate"
+      initial="initial"
+      exit="exit"
+      className="flex flex-col justify-center sm:h-full md:h-2/3"
+    >
       <BackgroundGradient>
         <form
           className="rounded-3xl bg-base-200 p-16"
@@ -52,7 +85,7 @@ const RiliQuestion: FC<RiliQuestionProps> = ({ question, children }) => {
           {children}
         </form>
       </BackgroundGradient>
-    </div>
+    </motion.div>
   );
 };
 
