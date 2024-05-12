@@ -1,7 +1,8 @@
 ---
 import Layout from "./Layout.astro";
-import Footer from "../components/Footer.astro";
-import NavBar from "../components/NavBar/NavBar.astro";
+import Footer from "@/components/Footer.astro";
+import NavBar from "@/components/NavBar/NavBar.astro";
+import ElOtroPurchaseCard from "@/components/Rili/ElOtroPurchaseCard.svelte";
 import type { HTMLTag } from "astro/types";
 import { twMerge } from "tailwind-merge";
 
@@ -35,5 +36,9 @@ const isFixedClass = (): string => (isFixed ? "pt-16" : "");
     <div class="justify-self-end">
       <Footer />
     </div>
+  </div>
+
+  <div class="absolute bottom-2 right-2">
+    <ElOtroPurchaseCard client:only="svelte" />
   </div>
 </Layout>
