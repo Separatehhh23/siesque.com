@@ -17,8 +17,8 @@ export function resetCount() {
 
 export const capchaOpen = atom(false);
 
-type elOtroPurchaseLocation = "vigo" | "sahara";
-interface buyElOtroType {
+export type elOtroPurchaseLocation = "vigo" | "sahara";
+export interface buyElOtroType {
   hasBoughtElOtro: boolean;
   deal?: {
     location: elOtroPurchaseLocation;
@@ -42,4 +42,8 @@ export function buyElOtro(location: elOtroPurchaseLocation) {
     hasBoughtElOtro: true,
     deal: { location: location, when: new Date(dateInMs) },
   });
+}
+
+export function clearElOtroPurchase() {
+  elOtroPurchase.set({ hasBoughtElOtro: false, deal: undefined });
 }
