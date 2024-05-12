@@ -1,5 +1,11 @@
 import type { FC, ReactNode } from "react";
-import React, { useRef, forwardRef, useState, useEffect } from "react";
+import React, {
+  useRef,
+  forwardRef,
+  useState,
+  useEffect,
+  Suspense,
+} from "react";
 import Draggable from "react-draggable";
 import Xarrow, { useXarrow } from "react-xarrows";
 import { cn } from "@/lib/utils";
@@ -38,7 +44,11 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
               {!isHovering ? (
                 <Title className="text-2xl">RiliLand</Title>
               ) : (
-                children
+                <Suspense
+                  fallback={<Title className="text-2xl">RiliLand</Title>}
+                >
+                  {children}
+                </Suspense>
               )}
             </div>
           </BackgroundGradient>
