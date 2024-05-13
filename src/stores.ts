@@ -1,5 +1,8 @@
 import { atom } from "nanostores";
 import { persistentAtom } from "@nanostores/persistent";
+import { QueryClient } from "@tanstack/react-query";
+
+export const queryClient = new QueryClient();
 
 export const count = atom<number>(
   JSON.parse(<string>localStorage.getItem("count")) || 0,
@@ -46,4 +49,27 @@ export function buyElOtro(location: elOtroPurchaseLocation) {
 
 export function clearElOtroPurchase() {
   elOtroPurchase.set({ hasBoughtElOtro: false, deal: undefined });
+}
+
+export const riliDocsAccess = persistentAtom(
+  "riliDocsAccess",
+  { access: false },
+  {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+  },
+);
+
+export function accessRiliDocs() {
+  riliDocsAccess.set({ access: true });
+}
+
+export const isShowingCard = atom(true);
+
+export function showCard() {
+  isShowingCard.set(true);
+}
+
+export function hideCard() {
+  isShowingCard.set(false);
 }

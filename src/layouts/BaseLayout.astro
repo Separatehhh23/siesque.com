@@ -13,6 +13,7 @@ const {
   className,
   isFixed = true,
   image,
+  footer = true,
 }: {
   title?: string;
   description?: string;
@@ -20,6 +21,7 @@ const {
   isFixed?: boolean;
   className?: string;
   image?: string;
+  footer?: boolean;
 } = Astro.props;
 
 const isFixedClass = (): string => (isFixed ? "pt-16" : "");
@@ -29,13 +31,22 @@ const isFixedClass = (): string => (isFixed ? "pt-16" : "");
   <NavBar isFixed={isFixed} />
 
   <div class={twMerge("flex flex-col", isFixedClass())}>
-    <main class={twMerge("min-h-screen h-full justify-self-start", className)}>
+    <main
+      class={twMerge(
+        "min-h-[calc(100vh-64px)] h-full justify-self-start",
+        className,
+      )}
+    >
       <slot />
     </main>
 
-    <div class="justify-self-end">
-      <Footer />
-    </div>
+    {
+      footer && (
+        <div class="justify-self-end">
+          <Footer />
+        </div>
+      )
+    }
   </div>
 
   <div class="absolute bottom-2 right-2">

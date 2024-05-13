@@ -1,6 +1,6 @@
 <script lang="ts">
   import moment from "moment";
-  import { elOtroPurchase } from "@/stores";
+  import { elOtroPurchase, isShowingCard, hideCard } from "@/stores";
 
   const time = moment(
     new Date(String($elOtroPurchase.deal?.when)).getTime() -
@@ -18,7 +18,7 @@
   );
 </script>
 
-{#if $elOtroPurchase.hasBoughtElOtro}
+{#if $elOtroPurchase.hasBoughtElOtro && !$isShowingCard}
   <div class="card w-96 bg-base-200 shadow-xl">
     <div class="card-body">
       <h2 class="card-title">
@@ -37,6 +37,7 @@
           >{`${days} dias, ${hours} horas, ${minutes} minutos y ${seconds} segundos`}</span
         >
       </p>
+      <button class="btn btn-secondary" on:click={hideCard}>Close</button>
     </div>
   </div>
 {/if}
