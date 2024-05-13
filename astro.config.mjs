@@ -30,6 +30,9 @@ export default defineConfig({
   }),
   vite: {
     plugins: [svgr()],
+    define: {
+      "process.env.IS_PREACT": JSON.stringify("false"),
+    },
     build: {
       rollupOptions: {
         external: ["sharp"]
