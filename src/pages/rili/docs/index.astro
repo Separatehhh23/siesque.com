@@ -1,29 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import RiliDocsBar from "@/components/Rili/RiliDocsBar.astro";
-import DocsPasswordSubmit from "@/components/Rili/DocsPasswordSubmit.svelte";
+import RiliDocs from "@/components/Rili/RiliDocs";
 ---
 
-<BaseLayout title="Rili Documents" description="Rili Documents. TOP SECRET">
-  <RiliDocsBar />
-  <div class="flex flex-row justify-center">
-    <h1
-      class="glass inline-block bg-red-600 bg-clip-text text-9xl font-extrabold text-transparent shadow-none"
-    >
-      TOP SECRET
-    </h1>
-  </div>
-  <RiliDocsBar />
-  <div class="flex flex-row justify-center pt-20">
-    <div class="flex w-1/2 flex-col border-opacity-50">
-      <div class="card grid h-20 place-items-center rounded-box">
-        Rili Password <br />
-        <DocsPasswordSubmit client:load />
-      </div>
-      <div class="divider">OR</div>
-      <div class="card grid h-20 place-items-center rounded-box">
-        <a href="/rili/test" class="underline">Rili test</a>
-      </div>
-    </div>
-  </div>
+<BaseLayout
+  title="Rili Documents"
+  description="Rili Documents. TOP SECRET"
+  footer={false}
+>
+  <RiliDocs client:only="react" />
 </BaseLayout>

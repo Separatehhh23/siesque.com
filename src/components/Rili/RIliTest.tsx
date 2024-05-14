@@ -8,6 +8,7 @@ import {
   elOtroPurchase as $elOtroPurchase,
   buyElOtro,
   clearElOtroPurchase,
+  accessRiliDocs,
 } from "@/stores";
 import type {
   FC,
@@ -28,7 +29,7 @@ const RiliTest: FC = () => {
   useEffect(() => {
     if (camellos > 0) {
       setTimeout(() => {
-        setStage(4);
+        if (!accepted) setStage(4);
       }, 2000);
     }
   }, [camellos]);
@@ -36,6 +37,7 @@ const RiliTest: FC = () => {
   useEffect(() => {
     if (accepted) {
       setStage(-1); // (-1) -> Not rendered
+      accessRiliDocs();
     } else {
       setStage(0);
     }
@@ -100,7 +102,7 @@ const RiliTest: FC = () => {
         )}
         {stage === 6 && (
           <RiliQuestion question="Otra oportunidad?">
-            <RiliAnswer>Ok</RiliAnswer>
+            <RiliAnswer onClick={() => setStage(4)}>Ok</RiliAnswer>
             <RiliAnswer onClick={accept}>
               <p className="inline-block">
                 Como que la otra?!?!{" "}
@@ -211,7 +213,7 @@ const RiliAnswer: FC<RiliAnswerProps> = ({
     <a href={href}>
       {inputType === "button" && (
         <button
-          className="m-4 h-12 w-48 rounded-xl border-2 border-accent"
+          className="m-4 h-12 min-w-48 rounded-xl border-2 border-accent p-2"
           onClick={(e) => onClick && onClick(e)}
         >
           {children}
