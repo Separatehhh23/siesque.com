@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: Inter;
+  font-weight: auto;
+  src: local("Inter"),
+  url("/fonts/Inter-VariableFont.woff") format("woff"),
+  url("/fonts/Inter-VariableFont.ttf") format("ttf");
+}
+
+// Default
+body {
+  font-family: Inter, sans-serif;
+
+  @apply overflow-x-clip overflow-y-visible; /* Remove horizontal scrollbar */
+}
+
+h1 {
+  @apply text-5xl;
+}
+
+h2 {
+  @apply text-4xl;
+}
+
+h3 {
+  @apply text-3xl;
+}
+
+h4 {
+  @apply text-2xl;
+}
+
+h5 {
+  @apply text-xl;
+}
+
+strong,
+b {
+  @apply font-bold;
+}
+
+a {
+  @apply text-accent;
+}

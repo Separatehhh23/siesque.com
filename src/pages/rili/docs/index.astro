@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import RiliDocs from "@/components/Rili/RiliDocs";
+---
+
+<BaseLayout
+  title="Rili Documents"
+  description="Rili Documents. TOP SECRET"
+  footer={false}
+>
+  <RiliDocs client:only="react" />
+</BaseLayout>

@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import RiliTest from "@/components/Rili/RIliTest";
+---
+
+<BaseLayout
+  title="Rili test"
+  description="Are you rili enough to access the rili docs?"
+>
+  <RiliTest client:only="react" />
+</BaseLayout>

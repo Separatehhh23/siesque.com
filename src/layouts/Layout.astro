@@ -1,0 +1,37 @@
+---
+// Import globals.css so that it can be used in every page that imports BaseLayout.astro
+import "@/styles/global.scss";
+
+import BaseHead from "@/components/BaseHead.astro";
+import { ViewTransitions } from "astro:transitions";
+import type { HTMLTag } from "astro/types";
+import SpeedInsights from "@vercel/speed-insights/astro";
+
+let {
+  title,
+  description,
+  head,
+  image,
+}: {
+  title?: string;
+  description?: string;
+  head?: HTMLTag;
+  image?: string;
+} = Astro.props;
+
+if (typeof title !== "string") title = "Siesque";
+if (typeof description !== "string") description = title;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <BaseHead title={title} description={description} image={image} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <ViewTransitions />
+    <SpeedInsights />
+
+    <Fragment set:html={head} />
+  </head>
+  <body><slot /></body>
+</html>

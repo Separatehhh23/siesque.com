@@ -1,0 +1,31 @@
+---
+// @ts-nocheck
+// It would be too hard to make typescript work in this file
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { BlogEntry } from "../../types";
+const { tag } = Astro.params;
+
+const posts = await getCollection("blog").then(
+  (allPosts: BlogEntry[]): BlogEntry[] =>
+    allPosts.filter((post: BlogEntry) => post?.data.tags.includes(tag)),
+);
+---
+
+<BaseLayout title={tag} description={`Posts tagged with ${tag}`}>
+  <ul>
+    {
+      posts ? (
+        posts.map((post: BlogEntry) => (
+          <li>
+            <a class="link-hover link" href={`/blog/${post.slug}`}>
+              {post.data.title}
+            </a>
+          </li>
+        ))
+      ) : (
+        <h1>No there are no posts tagged with {tag}</h1>
+      )
+    }
+  </ul>
+</BaseLayout>

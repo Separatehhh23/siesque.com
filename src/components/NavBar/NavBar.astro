@@ -1,0 +1,46 @@
+---
+import { twMerge } from "tailwind-merge";
+import { version } from "@/consts";
+
+const {
+  isFixed = true,
+}: {
+  isFixed?: boolean;
+} = Astro.props;
+
+const isFixedClass = (): string => {
+  if (isFixed) return "fixed";
+  return "";
+};
+---
+
+<nav class={twMerge("navbar bg-base-200 absolute z-40", isFixedClass())}>
+  <!--Logo-->
+  <div class="flex-1">
+    <a href="/" class="btn btn-ghost text-xl text-primary">Siesque</a>
+  </div>
+
+  <a class="btn btn-ghost text-secondary" href="/rili/rililand">RiliLand</a>
+  <div class="ml-2"></div>
+  <a class="btn btn-ghost text-secondary" href="/rili/">Log In</a>
+  <div class="ml-2"></div>
+
+  {
+    /*
+  <!--Blog-->
+  <a class="text-text btn btn-ghost" href="/blog">Blog</a>
+  <div class="ml-2"></div>
+    */
+  }
+
+  <!--Search Bar-->
+  <div class="flex-none gap-2">
+    <div class="form-control">
+      <input
+        type="text"
+        placeholder={`Version: ${version}`}
+        class="text-text input input-bordered w-24 md:w-auto"
+      />
+    </div>
+  </div>
+</nav>

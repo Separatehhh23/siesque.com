@@ -1,0 +1,55 @@
+---
+import Layout from "./Layout.astro";
+import Footer from "@/components/Footer.astro";
+import NavBar from "@/components/NavBar/NavBar.astro";
+import ElOtroPurchaseCard from "@/components/Rili/ElOtroPurchaseCard.svelte";
+import type { HTMLTag } from "astro/types";
+import { twMerge } from "tailwind-merge";
+
+const {
+  title,
+  description,
+  head,
+  className,
+  isFixed = true,
+  image,
+  footer = true,
+}: {
+  title?: string;
+  description?: string;
+  head?: HTMLTag;
+  isFixed?: boolean;
+  className?: string;
+  image?: string;
+  footer?: boolean;
+} = Astro.props;
+
+const isFixedClass = (): string => (isFixed ? "pt-16" : "");
+---
+
+<Layout title={title} description={description} head={head} image={image}>
+  <NavBar isFixed={isFixed} />
+
+  <div class={twMerge("flex flex-col", isFixedClass())}>
+    <main
+      class={twMerge(
+        "min-h-[calc(100vh-64px)] h-full justify-self-start",
+        className,
+      )}
+    >
+      <slot />
+    </main>
+
+    {
+      footer && (
+        <div class="justify-self-end">
+          <Footer />
+        </div>
+      )
+    }
+  </div>
+
+  <div class="absolute bottom-2 right-2">
+    <ElOtroPurchaseCard client:only="svelte" />
+  </div>
+</Layout>
