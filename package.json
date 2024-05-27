@@ -24,6 +24,7 @@
     "@excalidraw/excalidraw": "^0.17.6",
     "@nanostores/persistent": "^0.10.1",
     "@nanostores/react": "^0.7.2",
+    "@radix-ui/react-checkbox": "^1.0.4",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.10",
     "@tanstack/react-query": "^5.36.0",

@@ -1,4 +1,3 @@
-// @ts-ignore
 import { defineDb, defineTable, column } from "astro:db";
 
 const Comment = defineTable({
@@ -17,13 +16,15 @@ const Rili = defineTable({
     amount: column.number(),
   },
 });
-const RiliDocs = defineTable({
+const Notes = defineTable({
   columns: {
-    id: column.text({ primaryKey: true }),
-    data: column.json(),
+    id: column.number({ primaryKey: true }),
+    title: column.text(),
+    body: column.text(),
+    tick: column.boolean(),
   },
 });
 
 export default defineDb({
-  tables: { Comment, Rili, RiliDocs },
+  tables: { Comment, Rili, Notes },
 });

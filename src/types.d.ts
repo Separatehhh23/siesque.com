@@ -26,4 +26,18 @@ interface RiliObject {
 }
 type RiliArray = RiliObject[];
 
-export type { BlogEntry, Params, ModalElement, RiliObject, RiliArray };
+interface RiliTask {
+  id: number;
+  title: string;
+  body: string;
+  tick: boolean;
+}
+
+export type {
+  BlogEntry,
+  Params,
+  ModalElement,
+  RiliObject,
+  RiliArray,
+  RiliTask,
+};

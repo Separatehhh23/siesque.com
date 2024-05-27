@@ -1,0 +1,19 @@
+---
+import { db, Notes } from "astro:db";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import RiliNotes from "@/components/Rili/RiliNotes";
+import type { RiliTask } from "@/types";
+
+const tableFromDb = (await db.select().from(Notes)) as RiliTask[];
+
+const untickedRiliTasks = tableFromDb.filter(
+  (riliTask: RiliTask) => !riliTask.tick,
+);
+---
+
+<BaseLayout
+  title="Rili notes"
+  description={`Rili things to do later. ${untickedRiliTasks.length !== 0 ? untickedRiliTasks.length : 0} unticked`}
+>
+  <RiliNotes tasks={tableFromDb} />
+</BaseLayout>
