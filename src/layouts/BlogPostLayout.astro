@@ -1,6 +1,6 @@
 ---
 import Layout from "./Layout.astro";
-import NavBar from "../components/NavBar/NavBar.astro";
+import NavBar from "../components/NavBar.astro";
 
 import moment from "moment";
 
@@ -12,17 +12,17 @@ const date = moment(frontmatter.publishDate).utc().format("YYYY-MM-DD");
 <Layout title={frontmatter.title} description={frontmatter.description}>
   <NavBar />
 
-  <main class="pl-32 pt-16 prose">
+  <main class="prose pl-32 pt-16">
     <p class="text mb-1">Published on: {date}</p>
-    <h1 class="text-5xl text-primary mt-4 mb-4">{frontmatter.title}</h1>
-    <h2 class="text-xl text-secondary mt-2 mb-2">{frontmatter.description}</h2>
+    <h1 class="mb-4 mt-4 text-5xl text-primary">{frontmatter.title}</h1>
+    <h2 class="mb-2 mt-2 text-xl text-secondary">{frontmatter.description}</h2>
 
-    <div class="flex mt-2">
+    <div class="mt-2 flex">
       {
         frontmatter.tags.map((tag: string) => (
           <>
             <a
-              class="link link-hover"
+              class="link-hover link"
               href={"/tags/" + tag}
               data-astro-prefetch="false"
             >
