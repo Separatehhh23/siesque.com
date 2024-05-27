@@ -31,7 +31,7 @@
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
     "@vercel/speed-insights": "^1.0.3",
-    "astro": "^4.8.2",
+    "astro": "^4.9.1",
     "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
