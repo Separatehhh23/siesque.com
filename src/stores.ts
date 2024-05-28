@@ -73,3 +73,13 @@ export function showCard() {
 export function hideCard() {
   isShowingCard.set(false);
 }
+
+export const highScore = persistentAtom(
+  "highScore",
+  { score: 0 },
+  { encode: JSON.stringify, decode: JSON.parse },
+);
+
+export function setHighScore(score: number) {
+  highScore.set({ score: score });
+}

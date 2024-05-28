@@ -1,7 +1,8 @@
-import type { Dispatch, SetStateAction } from "react";
+import { Graphics } from "@pixi/react";
+import type { ComponentProps } from "react";
 import type { CollectionEntry } from "astro:content";
 
-interface BlogEntry extends CollectionEntry<"blog">, ArrayFunctions {
+interface BlogEntry extends CollectionEntry<"blog"> {
   id: string;
   slug: string;
   body: string;
@@ -26,4 +27,13 @@ interface RiliObject {
 }
 type RiliArray = RiliObject[];
 
-export type { BlogEntry, Params, ModalElement, RiliObject, RiliArray };
+type DrawGraphics = ComponentProps<typeof Graphics>["draw"];
+
+export type {
+  BlogEntry,
+  Params,
+  ModalElement,
+  RiliObject,
+  RiliArray,
+  DrawGraphics,
+};
