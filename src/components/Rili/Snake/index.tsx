@@ -5,24 +5,34 @@ import {
   useContext,
   createContext,
 } from "react";
-import { Stage, Sprite } from "@pixi/react";
+import { Stage, Sprite, useTick } from "@pixi/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useStore } from "@nanostores/react";
 import { highScore, setHighScore } from "@/stores";
 import { Repeat } from "lucide-react";
 import TileGrid from "./TileGrid";
+import type { Position, SetState } from "@/types";
 import type { FC } from "react";
+
+type CastakeMovement = {
+  direction: "x" | "y";
+  sign: "+" | "-";
+} | null;
 
 const UIContext = createContext({ score: 0, highScore: { score: 0 } });
 
 const CastorSnake: FC = () => {
-  const [castakePos, setCastakePos] = useState({ x: 100, y: 200 });
-  const [applePosition, setApplePosition] = useState({ x: 0, y: 0 });
+  const [castakePos, setCastakePos] = useState<Position>({ x: 100, y: 200 });
+  const [applePosition, setApplePosition] = useState<Position>({ x: 0, y: 0 });
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [castakeMovement, setCastakeMovement] = useState<CastakeMovement>(null);
+  const [speed, setSpeed] = useState(2);
+  const [isUsingAltMovement, setIsUsingAltMovement] = useState(true);
 
   const _highScore = useStore(highScore);
 
+  // Constant pointers to constants
   const cols = 16 as const;
   const rows = 16 as const;
   const tileSize = 50 as const;
@@ -42,8 +52,16 @@ const CastorSnake: FC = () => {
     setApplePosition(generateRandomPosition());
   }, []);
 
+  useEffect(() => {
+    if (score % 5 === 0) {
+      setSpeed(speed + 0.5);
+      console.log("Speed:", speed + 0.5);
+    }
+  }, [score]);
+
   const handleKeyDown = (event: KeyboardEvent) => {
     const { key } = event;
+    /*
     setCastakePos((prevPosition) => {
       switch (key) {
         case "w":
@@ -58,6 +76,21 @@ const CastorSnake: FC = () => {
           return prevPosition;
       }
     });
+    */
+    setCastakeMovement(() => {
+      switch (key) {
+        case "w":
+          return { direction: "y", sign: "-" };
+        case "a":
+          return { direction: "x", sign: "-" };
+        case "s":
+          return { direction: "y", sign: "+" };
+        case "d":
+          return { direction: "x", sign: "+" };
+        default:
+          return null;
+      }
+    });
   };
 
   useEffect(() => {
@@ -65,14 +98,16 @@ const CastorSnake: FC = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  interface Position {
-    x: number;
-    y: number;
+  function round(num: number): number {
+    return Math.round(num / tileSize) * tileSize;
   }
 
   const checkCollision = (a: Position, b: Position) => {
-    //console.log(a, b);
-    if (a.x === b.x && a.y === b.y) {
+    // console.log("A, B", a, b);
+    const ar = { x: round(a.x), y: round(a.y) };
+    const br = { x: round(b.x), y: round(b.y) };
+    // console.log("AR, BR", ar, br);
+    if (ar.x === br.x && ar.y === br.y) {
       return true;
     }
   };
@@ -80,9 +115,22 @@ const CastorSnake: FC = () => {
   const retry = () => {
     setCastakePos({ x: 100, y: 200 });
     setApplePosition(generateRandomPosition());
+    setCastakeMovement(null);
     setScore(0);
+    setSpeed(2);
     setIsGameOver(false);
   };
+
+  useEffect(() => {
+    if (isUsingAltMovement) {
+      setCastakePos((prevPos) => {
+        return {
+          x: round(prevPos.x),
+          y: round(prevPos.y),
+        };
+      });
+    }
+  }, [castakeMovement]);
 
   useEffect(() => {
     if (checkCollision(castakePos, applePosition)) {
@@ -107,6 +155,12 @@ const CastorSnake: FC = () => {
 
   return (
     <UIContext.Provider value={{ score: score, highScore: _highScore }}>
+      <button
+        className="btn btn-ghost absolute left-2 top-[74px]"
+        onClick={() => setIsUsingAltMovement(!isUsingAltMovement)}
+      >
+        Switch movement
+      </button>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
         {isGameOver && (
           <div className="card absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transform bg-base-200 p-6">
@@ -153,14 +207,11 @@ const CastorSnake: FC = () => {
                 />
 
                 {!isGameOver && (
-                  /* Beaver icon created by Freepik - Flaticon || https://www.flaticon.com/free-icons/beaver */
-                  <Sprite
-                    x={castakePos.x}
-                    y={castakePos.y}
-                    anchor={-0.1}
-                    width={40}
-                    height={40}
-                    image="../beaver.png"
+                  <Castake
+                    castakeMovement={castakeMovement}
+                    castakePos={castakePos}
+                    setCastakePos={setCastakePos}
+                    speed={speed}
                   />
                 )}
               </Stage>
@@ -207,5 +258,52 @@ const CenteredImage: FC<CenteredImageProps> = ({ href, alt, number }) => (
     </div>
   </div>
 );
+
+interface CastakeProps {
+  castakeMovement: CastakeMovement;
+  castakePos: Position;
+  setCastakePos: SetState<Position>;
+  speed: number;
+}
+
+const Castake: FC<CastakeProps> = ({
+  castakeMovement,
+  setCastakePos,
+  speed,
+  castakePos,
+}) => {
+  useTick((deltaTime) => {
+    if (castakeMovement) {
+      const { direction, sign } = castakeMovement;
+      if (direction === "x") {
+        setCastakePos((prevPosition) => {
+          return {
+            ...prevPosition,
+            x: prevPosition.x + parseInt(sign + speed) * deltaTime,
+          };
+        });
+      } else {
+        setCastakePos((prevPosition) => {
+          return {
+            ...prevPosition,
+            y: prevPosition.y + parseInt(sign + speed) * deltaTime,
+          };
+        });
+      }
+    }
+  });
+
+  return (
+    /* Beaver icon created by Freepik - Flaticon || https://www.flaticon.com/free-icons/beaver */
+    <Sprite
+      x={castakePos.x}
+      y={castakePos.y}
+      anchor={-0.1}
+      width={40}
+      height={40}
+      image="../beaver.png"
+    />
+  );
+};
 
 export default CastorSnake;
