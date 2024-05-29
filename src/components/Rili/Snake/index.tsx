@@ -5,7 +5,7 @@ import {
   useContext,
   createContext,
 } from "react";
-import { Stage, Sprite, useTick, AppProvider } from "@pixi/react";
+import { Stage, Sprite, useTick } from "@pixi/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useStore } from "@nanostores/react";
 import { highScore, setHighScore } from "@/stores";
