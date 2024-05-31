@@ -8,11 +8,15 @@ import {
 import { Stage, Sprite, useTick } from "@pixi/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useStore } from "@nanostores/react";
-import { highScore, setHighScore } from "@/stores";
 import { Repeat } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+import { highScore, setHighScore } from "@/stores";
 import TileGrid from "./TileGrid";
-import type { Position, SetState } from "@/types";
+
 import type { FC } from "react";
+import type { Position, SetState } from "@/types";
 
 type CastakeMovement = {
   direction: "x" | "y";
@@ -179,9 +183,11 @@ const CastorSnake: FC = () => {
             </div>
           </div>
         )}
-        <Suspense fallback={<p className="text-primary">Loading castake...</p>}>
-          <ErrorBoundary
-            fallback={<p className="text-error">Error loading castake</p>}
+        <ErrorBoundary
+          fallback={<p className="text-error">Error loading castake</p>}
+        >
+          <Suspense
+            fallback={<p className="text-primary">Loading castake...</p>}
           >
             <TopUI />
             <div className="h-[460px] w-[460px] bg-[#568a35]">
@@ -216,8 +222,8 @@ const CastorSnake: FC = () => {
                 )}
               </Stage>
             </div>
-          </ErrorBoundary>
-        </Suspense>
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </UIContext.Provider>
   );

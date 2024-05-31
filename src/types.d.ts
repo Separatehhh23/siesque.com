@@ -38,6 +38,10 @@ type Position = Vector2;
 
 type SetState<T> = Dispatch<SetStateAction<T>>;
 
+type Experiments = {
+  queryDevtools: boolean;
+};
+
 export type {
   BlogEntry,
   Params,
@@ -48,4 +52,5 @@ export type {
   Position,
   Vector2,
   SetState,
+  Experiments,
 };
