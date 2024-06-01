@@ -17,13 +17,21 @@ const Rili = defineTable({
     amount: column.number(),
   },
 });
-const RiliDocs = defineTable({
+const Notes = defineTable({
   columns: {
-    id: column.text({ primaryKey: true }),
-    data: column.json(),
+    id: column.number({ primaryKey: true }),
+    title: column.text(),
+    body: column.text(),
+    tick: column.boolean(),
+  },
+});
+const CastakeLeaderboard = defineTable({
+  columns: {
+    username: column.text({ primaryKey: true }),
+    score: column.number(),
   },
 });
 
 export default defineDb({
-  tables: { Comment, Rili, RiliDocs },
+  tables: { Comment, Rili, Notes, CastakeLeaderboard },
 });

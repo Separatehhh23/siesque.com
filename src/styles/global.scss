@@ -45,3 +45,8 @@ b {
 a {
   @apply text-accent;
 }
+
+// Utils
+.center {
+  @apply flex items-center justify-center h-full w-full
+}

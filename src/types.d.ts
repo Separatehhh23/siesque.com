@@ -29,14 +29,21 @@ type RiliArray = RiliObject[];
 
 type DrawGraphics = ComponentProps<typeof Graphics>["draw"];
 
-interface Vector2 {
+interface Position {
   x: number;
   y: number;
 }
 
-type Position = Vector2;
-
 type SetState<T> = Dispatch<SetStateAction<T>>;
+
+interface Experiments {
+  queryDevtools: boolean;
+}
+
+type CastakeLeaderboard = {
+  username: string;
+  score: number;
+};
 
 export type {
   BlogEntry,
@@ -46,6 +53,7 @@ export type {
   RiliArray,
   DrawGraphics,
   Position,
-  Vector2,
   SetState,
+  Experiments,
+  CastakeLeaderboard,
 };
