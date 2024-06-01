@@ -5,27 +5,57 @@ import {
   useContext,
   createContext,
 } from "react";
+import {
+  useQuery,
+  QueryClientProvider,
+  useMutation,
+} from "@tanstack/react-query";
 import { Stage, Sprite, useTick } from "@pixi/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useStore } from "@nanostores/react";
-import { Repeat } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { Repeat, Check, Rat } from "lucide-react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { highScore, setHighScore } from "@/stores";
+import {
+  highScore,
+  setHighScore,
+  experiments,
+  queryClient,
+  username,
+  setUsername,
+} from "@/stores";
 import TileGrid from "./TileGrid";
+import { Table } from "../../Table";
+import { BackgroundGradient } from "../../ui/background-gradient";
+import { cn } from "@/lib/utils";
 
-import type { FC } from "react";
-import type { Position, SetState } from "@/types";
+import type { FormEvent, CSSProperties, ReactNode } from "react";
+import type { UseQueryResult } from "@tanstack/react-query";
+import type { Position, SetState, CastakeLeaderboard } from "@/types";
 
 type CastakeMovement = {
   direction: "x" | "y";
   sign: "+" | "-";
 } | null;
 
-const UIContext = createContext({ score: 0, highScore: { score: 0 } });
+// This is some REAL type gymnastics
+type LeaderboardQuery = UseQueryResult<
+  Response & { body: ReadableStream<Array<CastakeLeaderboard>> }
+>;
 
-const CastorSnake: FC = () => {
+type TUiContext = {
+  score: number;
+  highScore: number;
+  username: string | null;
+};
+
+const UiContext = createContext<TUiContext>({
+  score: 0,
+  highScore: 0,
+  username: null,
+});
+
+const CastorSnake = () => {
   const [castakePos, setCastakePos] = useState<Position>({ x: 100, y: 200 });
   const [applePosition, setApplePosition] = useState<Position>({ x: 0, y: 0 });
   const [score, setScore] = useState(0);
@@ -33,13 +63,64 @@ const CastorSnake: FC = () => {
   const [castakeMovement, setCastakeMovement] = useState<CastakeMovement>(null);
   const [speed, setSpeed] = useState(2);
   const [isUsingAltMovement, setIsUsingAltMovement] = useState(true);
+  const [leaderboardData, setLeaderboardData] = useState<
+    Array<CastakeLeaderboard>
+  >([]);
 
   const _highScore = useStore(highScore);
+  const _experiments = useStore(experiments);
+  const _username = useStore(username);
 
   // Constant pointers to constants
   const cols = 16 as const;
   const rows = 16 as const;
   const tileSize = 50 as const;
+
+  const leaderboardQuery: LeaderboardQuery = useQuery(
+    {
+      queryKey: ["leaderboard"],
+      queryFn: () => fetch("/api/getCastakeLeaderboard", { method: "GET" }),
+    },
+    queryClient,
+  );
+
+  const updateLeaderboard = useMutation(
+    {
+      mutationFn: ({ username, score }: { username: string; score: number }) =>
+        fetch("/api/updateCastakeLeaderboard", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: username, score: score }),
+        }),
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["leaderboard"],
+        });
+      },
+    },
+    queryClient,
+  );
+
+  useEffect(() => {
+    (async () => {
+      if (leaderboardQuery.isSuccess) {
+        setLeaderboardData(await leaderboardQuery.data.json());
+      }
+    })();
+  }, [leaderboardQuery.isLoading]);
+
+  const submitToLeaderboard = async (score: number) => {
+    if (_username.name && leaderboardQuery.isSuccess) {
+      const bestScore = leaderboardData.filter(
+        (entry: CastakeLeaderboard) => entry.username === _username.name,
+      );
+      if (bestScore?.length === 0) {
+        updateLeaderboard.mutate({ username: _username.name, score: score });
+      } else if (bestScore[0].score < score) {
+        updateLeaderboard.mutate({ username: _username.name, score: score });
+      }
+    }
+  };
 
   const generateRandomPosition = (): { x: number; y: number } => {
     const x = Math.floor(Math.random() * cols) * tileSize;
@@ -138,11 +219,14 @@ const CastorSnake: FC = () => {
 
   useEffect(() => {
     if (checkCollision(castakePos, applePosition)) {
+      const newScore = score + 1;
+
       setApplePosition(generateRandomPosition());
-      setScore(score + 1);
-      if (score + 1 > _highScore.score) {
-        setHighScore(score + 1);
+      setScore(newScore);
+      if (newScore > _highScore.score) {
+        setHighScore(newScore);
       }
+      submitToLeaderboard(newScore);
     }
   }, [applePosition, castakePos]);
 
@@ -158,109 +242,152 @@ const CastorSnake: FC = () => {
   }, [castakePos]);
 
   return (
-    <UIContext.Provider value={{ score: score, highScore: _highScore }}>
-      <button
-        className="btn btn-ghost absolute left-2 top-[74px]"
-        onClick={() => setIsUsingAltMovement(!isUsingAltMovement)}
+    <QueryClientProvider client={queryClient}>
+      <UiContext.Provider
+        value={{
+          score: score,
+          highScore: _highScore.score,
+          username: _username.name,
+        }}
       >
-        Switch movement
-      </button>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-        {isGameOver && (
-          <div className="card absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transform bg-base-200 p-6">
-            <h1 className="card-title text-6xl text-primary">Perdiste</h1>
-            <h2 className="text-3xl text-secondary">Eres tan rili</h2>
-            <div className="card-actions">
-              <div className="flex flex-row">
-                <p className="pr-1 text-2xl">Otra vez?</p>
-                <button
-                  onClick={retry}
-                  className="flex items-center justify-center rounded-xl bg-secondary p-1 text-white"
-                >
-                  <Repeat height={20} width={20} />
-                </button>
+        <UsernameSelect setUsername={setUsername} />
+        <div className="absolute left-2 top-[74px]">
+          <button
+            className={cn("border-1 btn btn-ghost", {
+              "border-green-500": isUsingAltMovement,
+              "border-blue-500": !isUsingAltMovement,
+            })}
+            onClick={() => setIsUsingAltMovement(!isUsingAltMovement)}
+          >
+            <p>
+              Cambiar movimiento, actual:{" "}
+              <span
+                className={cn({
+                  "text-green-500": isUsingAltMovement,
+                  "text-blue-500": !isUsingAltMovement,
+                })}
+              >
+                {isUsingAltMovement ? "Assist" : "Libre"}
+              </span>
+            </p>
+          </button>
+          <Leaderboard data={leaderboardData} className="bg-base-200" />
+        </div>
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          {isGameOver && (
+            <div className="card absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transform bg-base-200 p-6">
+              <h1 className="card-title text-6xl text-primary">Perdiste</h1>
+              <h2 className="text-3xl text-secondary">Eres tan rili</h2>
+              <div className="card-actions">
+                <div className="flex flex-row">
+                  <p className="pr-1 text-2xl">Otra vez?</p>
+                  <button
+                    onClick={retry}
+                    className="flex items-center justify-center rounded-xl bg-secondary p-1 text-white"
+                  >
+                    <Repeat height={20} width={20} />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        <ErrorBoundary
-          fallback={<p className="text-error">Error loading castake</p>}
-        >
-          <Suspense
-            fallback={<p className="text-primary">Loading castake...</p>}
+          )}
+          <ErrorBoundary
+            fallback={<p className="text-error">Error loading castake</p>}
           >
-            <TopUI />
-            <div className="h-[460px] w-[460px] bg-[#568a35]">
-              <Stage
-                width={400}
-                height={400}
-                className="left-0 top-0 translate-x-[30px] translate-y-[30px] transform"
-              >
-                <TileGrid
-                  tileSize={tileSize}
-                  cols={cols}
-                  rows={rows}
-                  colors={[0xa9d751, 0xa2d049]}
-                />
-
-                <Sprite
-                  image="https://www.google.com/logos/fnbx/snake_arcade/v17/apple_00.png"
-                  x={applePosition.x}
-                  y={applePosition.y}
-                  width={40}
-                  height={40}
-                  anchor={-0.1}
-                />
-
-                {!isGameOver && (
-                  <Castake
-                    castakeMovement={castakeMovement}
-                    castakePos={castakePos}
-                    setCastakePos={setCastakePos}
-                    speed={speed}
+            <Suspense
+              fallback={<p className="text-primary">Loading castake...</p>}
+            >
+              <TopUI />
+              <div className="h-[460px] w-[460px] bg-[#568a35]">
+                <Stage
+                  width={400}
+                  height={400}
+                  className="left-0 top-0 translate-x-[30px] translate-y-[30px] transform"
+                >
+                  <TileGrid
+                    tileSize={tileSize}
+                    cols={cols}
+                    rows={rows}
+                    colors={[0xa9d751, 0xa2d049]}
                   />
-                )}
-              </Stage>
-            </div>
-          </Suspense>
-        </ErrorBoundary>
-      </div>
-    </UIContext.Provider>
+
+                  <Sprite
+                    image="https://www.google.com/logos/fnbx/snake_arcade/v17/apple_00.png"
+                    x={applePosition.x}
+                    y={applePosition.y}
+                    width={40}
+                    height={40}
+                    anchor={-0.1}
+                  />
+
+                  {!isGameOver && (
+                    <Castake
+                      castakeMovement={castakeMovement}
+                      castakePos={castakePos}
+                      setCastakePos={setCastakePos}
+                      speed={speed}
+                    />
+                  )}
+                </Stage>
+              </div>
+            </Suspense>
+          </ErrorBoundary>
+        </div>
+      </UiContext.Provider>
+      {_experiments.queryDevtools && <ReactQueryDevtools />}
+    </QueryClientProvider>
   );
 };
 
-const TopUI: FC = () => {
-  const _UIContext = useContext(UIContext);
+const TopUI = () => {
+  const _UiContext = useContext(UiContext);
 
   return (
     <div className="flex h-[70px] flex-row justify-evenly bg-[#4a752d]">
       <CenteredImage
-        href="https://www.google.com/logos/fnbx/snake_arcade/v17/apple_00.png"
-        alt="Apple"
-        number={_UIContext.score}
-      />
+        imageSrc="https://www.google.com/logos/fnbx/snake_arcade/v17/apple_00.png"
+        imageAlt="Apple"
+      >
+        {_UiContext.score}
+      </CenteredImage>
       <CenteredImage
-        href="https://www.google.com/logos/fnbx/snake_arcade/v18/trophy_00.png"
-        alt="Trophy"
-        number={_UIContext.highScore.score}
-      />
+        imageSrc="https://www.google.com/logos/fnbx/snake_arcade/v18/trophy_00.png"
+        imageAlt="Trophy"
+      >
+        {_UiContext.highScore}
+      </CenteredImage>
+      <CenteredImage icon={<Rat className="relative h-[38px] w-[38px]" />}>
+        {_UiContext.username ?? "Un otro"}
+      </CenteredImage>
     </div>
   );
 };
 
-interface CenteredImageProps {
-  href: string;
-  alt: string;
-  number?: number;
-}
+type CenteredImageProps = {
+  imageSrc?: string;
+  imageAlt?: string;
+  icon?: ReactNode;
+  children?: ReactNode;
+};
 
-const CenteredImage: FC<CenteredImageProps> = ({ href, alt, number }) => (
+const CenteredImage = ({
+  imageSrc,
+  imageAlt,
+  icon,
+  children,
+}: CenteredImageProps) => (
   <div className="flex flex-col justify-center justify-self-start">
     <div className="flex flex-row">
-      <img src={href} alt={alt} className="relative h-[38px] w-[38px]" />
-      {typeof number === "number" && (
-        <p className="pt-2 text-xl text-white">{number}</p>
-      )}
+      {imageSrc && imageAlt ? (
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className="relative h-[38px] w-[38px]"
+        />
+      ) : icon ? (
+        icon
+      ) : null}
+      <p className="pt-2 text-xl text-white">{children}</p>
     </div>
   </div>
 );
@@ -272,12 +399,12 @@ interface CastakeProps {
   speed: number;
 }
 
-const Castake: FC<CastakeProps> = ({
+const Castake = ({
   castakeMovement,
   setCastakePos,
   speed,
   castakePos,
-}) => {
+}: CastakeProps) => {
   useTick((deltaTime) => {
     if (castakeMovement) {
       const { direction, sign } = castakeMovement;
@@ -311,5 +438,92 @@ const Castake: FC<CastakeProps> = ({
     />
   );
 };
+
+interface UsernameSelectProps {
+  setUsername: typeof setUsername;
+}
+
+const UsernameSelect = ({ setUsername }: UsernameSelectProps) => {
+  const [hide, setHide] = useState(false);
+  const [currentText, setCurrentText] = useState("");
+
+  const _UiContext = useContext(UiContext);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (currentText) {
+      setUsername(currentText);
+      setHide(true);
+    } else {
+      setHide(true);
+    }
+  }
+
+  return (
+    <>
+      {!hide ? (
+        <div className="center absolute z-20">
+          <BackgroundGradient>
+            <form
+              onSubmit={(e) => handleSubmit(e)}
+              className="flex flex-row space-x-2 rounded-3xl bg-base-200 p-5"
+            >
+              <input
+                type="text"
+                placeholder="Nombre"
+                className="input input-bordered w-full max-w-xs"
+                onChange={(e) => setCurrentText(e.target.value)}
+              />
+              <button className="rounded-lg bg-primary p-2">
+                <Check />
+              </button>
+            </form>
+          </BackgroundGradient>
+        </div>
+      ) : null}
+    </>
+  );
+};
+
+interface LeaderboardProps {
+  data: Array<CastakeLeaderboard>;
+  className?: string;
+  style?: CSSProperties;
+}
+
+const Leaderboard = ({ data, className, style }: LeaderboardProps) => {
+  return (
+    <ErrorBoundary fallback={<p>Error loading leaderboard</p>}>
+      <Suspense fallback={<p>Loading leaderboard...</p>}>
+        <Table className={className} style={style}>
+          <Table.Head>
+            <Table.HeadItem>Posicion</Table.HeadItem>
+            <Table.HeadItem>Nombre</Table.HeadItem>
+            <Table.HeadItem>Puntos</Table.HeadItem>
+          </Table.Head>
+          {data.length !== 0 ? (
+            data.map((data, index) => (
+              <Table.Body key={index}>
+                <Table.BodyItem>{index + 1}</Table.BodyItem>
+                <Table.BodyItem>{data.username}</Table.BodyItem>
+                <Table.BodyItem>{data.score}</Table.BodyItem>
+              </Table.Body>
+            ))
+          ) : (
+            <AltLeaderboardBody key="The only item in the array but react is react" />
+          )}
+        </Table>
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
+const AltLeaderboardBody = () => (
+  <Table.Body>
+    <Table.BodyItem>N/A</Table.BodyItem>
+    <Table.BodyItem>N/A</Table.BodyItem>
+    <Table.BodyItem>N/A</Table.BodyItem>
+  </Table.Body>
+);
 
 export default CastorSnake;

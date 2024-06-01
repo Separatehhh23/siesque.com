@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+// @ts-expect-error: Module exists with all of those exports
 import { db, Rili, eq } from "astro:db";
 import type { RiliObject, RiliArray } from "@/types";
 

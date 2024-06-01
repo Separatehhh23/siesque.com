@@ -76,7 +76,7 @@ export function hideCard() {
   isShowingCard.set(false);
 }
 
-export const highScore = persistentAtom(
+export const highScore = persistentAtom<{ score: number }>(
   "highScore",
   { score: 0 },
   { encode: JSON.stringify, decode: JSON.parse },
@@ -99,4 +99,14 @@ export function toggleExperiment(experiment: keyof Experiments) {
     ...experiments.get(),
     [experiment]: !experiments.get()[experiment],
   });
+}
+
+export const username = persistentAtom<{ name: string }>(
+  "username",
+  { name: "" },
+  { encode: JSON.stringify, decode: JSON.parse },
+);
+
+export function setUsername(_username: string) {
+  username.set({ name: _username });
 }
