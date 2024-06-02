@@ -9,8 +9,8 @@ export default defineConfig({
             clientSecret: import.meta.env.GITHUB_CLIENT_SECRET,
         }),
         Google({
-            id: import.meta.env.GOOGLE_CLIENT_ID,
-            secret: import.meta.env.GOOGLE_CLIENT_SECRET
+            clientId: import.meta.env.GOOGLE_CLIENT_ID,
+            clientSecret: import.meta.env.GOOGLE_CLIENT_SECRET
         })
     ],
 });
