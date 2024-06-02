@@ -4,6 +4,7 @@ import {
   useState,
   useContext,
   createContext,
+  lazy,
 } from "react";
 import {
   useQuery,
@@ -33,15 +34,18 @@ import type { FormEvent, CSSProperties, ReactNode } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { Position, SetState, CastakeLeaderboard } from "@/types";
 
+const ReactQueryDevtoolsProduction = lazy(() =>
+  import("@tanstack/react-query-devtools/build/modern/production.js").then(
+    (d) => ({
+      default: d.ReactQueryDevtools,
+    }),
+  ),
+);
+
 type CastakeMovement = {
   direction: "x" | "y";
   sign: "+" | "-";
 } | null;
-
-// This is some REAL type gymnastics
-type LeaderboardQuery = UseQueryResult<
-  Response & { body: ReadableStream<Array<CastakeLeaderboard>> }
->;
 
 type TUiContext = {
   score: number;
@@ -63,9 +67,6 @@ const CastorSnake = () => {
   const [castakeMovement, setCastakeMovement] = useState<CastakeMovement>(null);
   const [speed, setSpeed] = useState(2);
   const [isUsingAltMovement, setIsUsingAltMovement] = useState(true);
-  const [leaderboardData, setLeaderboardData] = useState<
-    Array<CastakeLeaderboard>
-  >([]);
 
   const _highScore = useStore(highScore);
   const _experiments = useStore(experiments);
@@ -76,10 +77,13 @@ const CastorSnake = () => {
   const rows = 16 as const;
   const tileSize = 50 as const;
 
-  const leaderboardQuery: LeaderboardQuery = useQuery(
+  const leaderboardQuery: UseQueryResult<Array<CastakeLeaderboard>> = useQuery(
     {
       queryKey: ["leaderboard"],
-      queryFn: () => fetch("/api/getCastakeLeaderboard", { method: "GET" }),
+      queryFn: () =>
+        fetch("/api/getCastakeLeaderboard", { method: "GET" }).then((res) =>
+          res.json(),
+        ),
     },
     queryClient,
   );
@@ -92,26 +96,17 @@ const CastorSnake = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username: username, score: score }),
         }),
-      onSuccess: () => {
+      onSuccess: () =>
         queryClient.invalidateQueries({
           queryKey: ["leaderboard"],
-        });
-      },
+        }),
     },
     queryClient,
   );
 
-  useEffect(() => {
-    (async () => {
-      if (leaderboardQuery.isSuccess) {
-        setLeaderboardData(await leaderboardQuery.data.json());
-      }
-    })();
-  }, [leaderboardQuery.isLoading]);
-
   const submitToLeaderboard = async (score: number) => {
     if (_username.name && leaderboardQuery.isSuccess) {
-      const bestScore = leaderboardData.filter(
+      const bestScore = leaderboardQuery.data.filter(
         (entry: CastakeLeaderboard) => entry.username === _username.name,
       );
       if (bestScore?.length === 0) {
@@ -218,16 +213,18 @@ const CastorSnake = () => {
   }, [castakeMovement]);
 
   useEffect(() => {
-    if (checkCollision(castakePos, applePosition)) {
-      const newScore = score + 1;
+    (async () => {
+      if (checkCollision(castakePos, applePosition)) {
+        const newScore = score + 1;
 
-      setApplePosition(generateRandomPosition());
-      setScore(newScore);
-      if (newScore > _highScore.score) {
-        setHighScore(newScore);
+        setApplePosition(generateRandomPosition());
+        setScore(newScore);
+        if (newScore > _highScore.score) {
+          setHighScore(newScore);
+        }
+        await submitToLeaderboard(newScore);
       }
-      submitToLeaderboard(newScore);
-    }
+    })();
   }, [applePosition, castakePos]);
 
   useEffect(() => {
@@ -271,7 +268,7 @@ const CastorSnake = () => {
               </span>
             </p>
           </button>
-          <Leaderboard data={leaderboardData} className="bg-base-200" />
+          <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
         </div>
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
           {isGameOver && (
@@ -334,7 +331,17 @@ const CastorSnake = () => {
           </ErrorBoundary>
         </div>
       </UiContext.Provider>
-      {_experiments.queryDevtools && <ReactQueryDevtools />}
+      {
+        _experiments.queryDevtools && (
+          <ReactQueryDevtools />
+        ) /* Devtools are excluded from production */
+      }
+      {_experiments.queryDevtools && process.env.NODE_ENV !== "development" && (
+        /* Lazy load devtools in production */
+        <Suspense fallback={null}>
+          <ReactQueryDevtoolsProduction />
+        </Suspense>
+      )}
     </QueryClientProvider>
   );
 };
@@ -357,7 +364,7 @@ const TopUI = () => {
         {_UiContext.highScore}
       </CenteredImage>
       <CenteredImage icon={<Rat className="relative h-[38px] w-[38px]" />}>
-        {_UiContext.username ?? "Un otro"}
+        {_UiContext.username ? _UiContext.username : "Un otro"}
       </CenteredImage>
     </div>
   );
@@ -453,15 +460,13 @@ const UsernameSelect = ({ setUsername }: UsernameSelectProps) => {
     event.preventDefault();
     if (currentText) {
       setUsername(currentText);
-      setHide(true);
-    } else {
-      setHide(true);
     }
+    setHide(true);
   }
 
   return (
     <>
-      {!hide ? (
+      {!hide && !_UiContext.username ? (
         <div className="center absolute z-20">
           <BackgroundGradient>
             <form
@@ -486,12 +491,14 @@ const UsernameSelect = ({ setUsername }: UsernameSelectProps) => {
 };
 
 interface LeaderboardProps {
-  data: Array<CastakeLeaderboard>;
+  data: Array<CastakeLeaderboard> | undefined;
   className?: string;
   style?: CSSProperties;
 }
 
 const Leaderboard = ({ data, className, style }: LeaderboardProps) => {
+  if (!data) return null;
+
   return (
     <ErrorBoundary fallback={<p>Error loading leaderboard</p>}>
       <Suspense fallback={<p>Loading leaderboard...</p>}>
@@ -510,7 +517,7 @@ const Leaderboard = ({ data, className, style }: LeaderboardProps) => {
               </Table.Body>
             ))
           ) : (
-            <AltLeaderboardBody key="The only item in the array but react is react" />
+            <AltLeaderboardBody />
           )}
         </Table>
       </Suspense>

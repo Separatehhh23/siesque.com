@@ -5,11 +5,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "astro dev --remote",
-    "start": "astro dev",
+    "start": "astro dev --remote",
     "build": "astro check && astro build --remote",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint \"src/**/*.{js,astro}\" --fix && npx stylelint \"**/*.scss\" --fix",
+    "lint-es": "eslint \"src/**/*.{js,astro}\" --fix",
+    "lint-st":  "npx stylelint \"**/*.scss\" --fix",
     "link": "npx astro login && npx astro link"
   },
   "dependencies": {
