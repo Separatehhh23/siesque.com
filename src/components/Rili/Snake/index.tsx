@@ -1,3 +1,4 @@
+import { Repeat, Check, Rat } from "lucide-react";
 import {
   Suspense,
   useEffect,
@@ -14,7 +15,6 @@ import {
 import { Stage, Sprite, useTick } from "@pixi/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useStore } from "@nanostores/react";
-import { Repeat, Check, Rat } from "lucide-react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import {
@@ -29,6 +29,7 @@ import TileGrid from "./TileGrid";
 import { Table } from "../../Table";
 import { BackgroundGradient } from "../../ui/background-gradient";
 import { cn } from "@/lib/utils";
+import { useScreenDetector } from "@/hooks/useScreenDetector";
 
 import type { FormEvent, CSSProperties, ReactNode } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
@@ -40,6 +41,12 @@ const ReactQueryDevtoolsProduction = lazy(() =>
       default: d.ReactQueryDevtools,
     }),
   ),
+);
+
+const MobileButtons = lazy(() =>
+  import("./MobileButtons").then((d) => ({
+    default: d.MobileButtons,
+  })),
 );
 
 type CastakeMovement = {
@@ -71,6 +78,8 @@ const CastorSnake = () => {
   const _highScore = useStore(highScore);
   const _experiments = useStore(experiments);
   const _username = useStore(username);
+
+  const { isDesktop } = useScreenDetector();
 
   // Constant pointers to constants
   const cols = 16 as const;
@@ -139,26 +148,9 @@ const CastorSnake = () => {
     }
   }, [score]);
 
-  const handleKeyDown = (event: KeyboardEvent) => {
-    const { key } = event;
-    /*
-    setCastakePos((prevPosition) => {
-      switch (key) {
-        case "w":
-          return { ...prevPosition, y: prevPosition.y - tileSize };
-        case "a":
-          return { ...prevPosition, x: prevPosition.x - tileSize };
-        case "s":
-          return { ...prevPosition, y: prevPosition.y + tileSize };
-        case "d":
-          return { ...prevPosition, x: prevPosition.x + tileSize };
-        default:
-          return prevPosition;
-      }
-    });
-    */
+  const handleKeyDown = (e: KeyboardEvent) => {
     setCastakeMovement(() => {
-      switch (key) {
+      switch (e.key) {
         case "w":
           return { direction: "y", sign: "-" };
         case "a":
@@ -167,8 +159,20 @@ const CastorSnake = () => {
           return { direction: "y", sign: "+" };
         case "d":
           return { direction: "x", sign: "+" };
+        case "ArrowUp":
+          e.preventDefault();
+          return { direction: "y", sign: "-" };
+        case "ArrowLeft":
+          e.preventDefault();
+          return { direction: "x", sign: "-" };
+        case "ArrowDown":
+          e.preventDefault();
+          return { direction: "y", sign: "+" };
+        case "ArrowRight":
+          e.preventDefault();
+          return { direction: "x", sign: "+" };
         default:
-          return null;
+          return castakeMovement;
       }
     });
   };
@@ -229,10 +233,10 @@ const CastorSnake = () => {
 
   useEffect(() => {
     if (
-      castakePos.x < 0 ||
-      castakePos.x > 350 ||
-      castakePos.y < 0 ||
-      castakePos.y > 350
+      castakePos.x < -25 ||
+      castakePos.x > 375 ||
+      castakePos.y < -25 ||
+      castakePos.y > 375
     ) {
       setIsGameOver(true);
     }
@@ -247,7 +251,7 @@ const CastorSnake = () => {
           username: _username.name,
         }}
       >
-        <UsernameSelect setUsername={setUsername} />
+        <UsernameSelect />
         <div className="absolute left-2 top-[74px]">
           <button
             className={cn("border-1 btn btn-ghost", {
@@ -268,7 +272,9 @@ const CastorSnake = () => {
               </span>
             </p>
           </button>
-          <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
+          {isDesktop && (
+            <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
+          )}
         </div>
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
           {isGameOver && (
@@ -294,38 +300,47 @@ const CastorSnake = () => {
             <Suspense
               fallback={<p className="text-primary">Loading castake...</p>}
             >
-              <TopUI />
-              <div className="h-[460px] w-[460px] bg-[#568a35]">
-                <Stage
-                  width={400}
-                  height={400}
-                  className="left-0 top-0 translate-x-[30px] translate-y-[30px] transform"
-                >
-                  <TileGrid
-                    tileSize={tileSize}
-                    cols={cols}
-                    rows={rows}
-                    colors={[0xa9d751, 0xa2d049]}
-                  />
-
-                  <Sprite
-                    image="https://www.google.com/logos/fnbx/snake_arcade/v17/apple_00.png"
-                    x={applePosition.x}
-                    y={applePosition.y}
-                    width={40}
-                    height={40}
-                    anchor={-0.1}
-                  />
-
-                  {!isGameOver && (
-                    <Castake
-                      castakeMovement={castakeMovement}
-                      castakePos={castakePos}
-                      setCastakePos={setCastakePos}
-                      speed={speed}
+              <div className="w-[460px]">
+                {!isDesktop && <MobileButtons handler={handleKeyDown} />}
+                <TopUI />
+                <div className="h-[460px] bg-[#568a35]">
+                  <Stage
+                    width={400}
+                    height={400}
+                    className="left-0 top-0 translate-x-[30px] translate-y-[30px] transform"
+                  >
+                    <TileGrid
+                      tileSize={tileSize}
+                      cols={cols}
+                      rows={rows}
+                      colors={[0xa9d751, 0xa2d049]}
                     />
-                  )}
-                </Stage>
+
+                    <Sprite
+                      image="https://www.google.com/logos/fnbx/snake_arcade/v17/apple_00.png"
+                      x={applePosition.x}
+                      y={applePosition.y}
+                      width={40}
+                      height={40}
+                      anchor={-0.1}
+                    />
+
+                    {!isGameOver && (
+                      <Castake
+                        castakeMovement={castakeMovement}
+                        castakePos={castakePos}
+                        setCastakePos={setCastakePos}
+                        speed={speed}
+                      />
+                    )}
+                  </Stage>
+                </div>
+                {!isDesktop && (
+                  <Leaderboard
+                    data={leaderboardQuery.data}
+                    className="absolute mt-4 bg-base-200"
+                  />
+                )}
               </div>
             </Suspense>
           </ErrorBoundary>
@@ -446,11 +461,7 @@ const Castake = ({
   );
 };
 
-interface UsernameSelectProps {
-  setUsername: typeof setUsername;
-}
-
-const UsernameSelect = ({ setUsername }: UsernameSelectProps) => {
+const UsernameSelect = () => {
   const [hide, setHide] = useState(false);
   const [currentText, setCurrentText] = useState("");
 
