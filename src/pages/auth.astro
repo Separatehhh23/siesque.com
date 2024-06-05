@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { SignIn, SignOut } from "auth-astro/components";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+---
+
+<BaseLayout title="Auth" description="Auth">
+  <SignIn provider="github" class="btn btn-primary">Sign in with github</SignIn>
+  <SignIn provider="google" class="btn btn-primary">Sign in with google</SignIn>
+  <SignOut class="btn btn-secondary">Sign out</SignOut>
+  {
+    session && (
+      <>
+        <h1>
+          {session.user.name}, {session.user.email}
+        </h1>
+        <img src={session.user.image} alt="user image" />
+      </>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Experiments } from "@/components/Rili/Experiments";
+---
+
+<BaseLayout
+  title="Experiments"
+  description="Warning: This features aren't supposed to be used"
+>
+  <Experiments client:only="react" />
+</BaseLayout>

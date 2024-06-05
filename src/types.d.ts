@@ -1,7 +1,8 @@
-import type { Dispatch, SetStateAction } from "react";
+import { Graphics } from "@pixi/react";
+import type { ComponentProps, Dispatch, SetStateAction } from "react";
 import type { CollectionEntry } from "astro:content";
 
-interface BlogEntry extends CollectionEntry<"blog">, ArrayFunctions {
+interface BlogEntry extends CollectionEntry<"blog"> {
   id: string;
   slug: string;
   body: string;
@@ -26,4 +27,42 @@ interface RiliObject {
 }
 type RiliArray = RiliObject[];
 
-export type { BlogEntry, Params, ModalElement, RiliObject, RiliArray };
+type DrawGraphics = ComponentProps<typeof Graphics>["draw"];
+
+interface Position {
+  x: number;
+  y: number;
+}
+
+type SetState<T> = Dispatch<SetStateAction<T>>;
+
+interface Experiments {
+  queryDevtools: boolean;
+}
+
+type CastakeLeaderboard = {
+  username: string;
+  score: number;
+};
+
+type RiliGovermentRole = "Founder" | "Co-Founder" | "Salty Springs" | "Castor";
+
+type RiliGoverment = {
+  name: string;
+  role: RiliGovermentRole;
+};
+
+export type {
+  BlogEntry,
+  Params,
+  ModalElement,
+  RiliObject,
+  RiliArray,
+  DrawGraphics,
+  Position,
+  SetState,
+  Experiments,
+  CastakeLeaderboard,
+  RiliGoverment,
+  RiliGovermentRole,
+};

@@ -2,6 +2,8 @@ import { atom } from "nanostores";
 import { persistentAtom } from "@nanostores/persistent";
 import { QueryClient } from "@tanstack/react-query";
 
+import type { Experiments } from "./types";
+
 export const queryClient = new QueryClient();
 
 export const count = atom<number>(
@@ -72,4 +74,39 @@ export function showCard() {
 
 export function hideCard() {
   isShowingCard.set(false);
+}
+
+export const highScore = persistentAtom<{ score: number }>(
+  "highScore",
+  { score: 0 },
+  { encode: JSON.stringify, decode: JSON.parse },
+);
+
+export function setHighScore(score: number) {
+  highScore.set({ score: score });
+}
+
+export const experiments = persistentAtom<Experiments>(
+  "experiments",
+  {
+    queryDevtools: false,
+  },
+  { encode: JSON.stringify, decode: JSON.parse },
+);
+
+export function toggleExperiment(experiment: keyof Experiments) {
+  experiments.set({
+    ...experiments.get(),
+    [experiment]: !experiments.get()[experiment],
+  });
+}
+
+export const username = persistentAtom<{ name: string }>(
+  "username",
+  { name: "" },
+  { encode: JSON.stringify, decode: JSON.parse },
+);
+
+export function setUsername(_username: string) {
+  username.set({ name: _username });
 }
