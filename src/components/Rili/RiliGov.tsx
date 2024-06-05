@@ -43,13 +43,18 @@ export const RiliGov = () => {
     return sortedRiliGov;
   }
 
-  const riliGovQuery: UseQueryResult<Array<RiliGoverment>> = useQuery({
-    queryKey: ["riliGoverment"],
-    queryFn: () =>
-      fetch("/api/getRiliGoverment", { method: "GET" }).then((res) =>
-        res.json().then((riliGov: Array<RiliGoverment>) => sortByRole(riliGov)),
-      ),
-  });
+  const riliGovQuery: UseQueryResult<Array<RiliGoverment>> = useQuery(
+    {
+      queryKey: ["riliGoverment"],
+      queryFn: () =>
+        fetch("/api/getRiliGoverment", { method: "GET" }).then((res) =>
+          res
+            .json()
+            .then((riliGov: Array<RiliGoverment>) => sortByRole(riliGov)),
+        ),
+    },
+    queryClient,
+  );
 
   return (
     <>
