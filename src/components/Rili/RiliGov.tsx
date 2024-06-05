@@ -47,11 +47,9 @@ export const RiliGov = () => {
     {
       queryKey: ["riliGoverment"],
       queryFn: () =>
-        fetch("/api/getRiliGoverment", { method: "GET" }).then((res) =>
-          res
-            .json()
-            .then((riliGov: Array<RiliGoverment>) => sortByRole(riliGov)),
-        ),
+        fetch("/api/getRiliGoverment", { method: "GET" })
+          .then((res) => res.json())
+          .then((riliGov: Array<RiliGoverment>) => sortByRole(riliGov)),
     },
     queryClient,
   );
