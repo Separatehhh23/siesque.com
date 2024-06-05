@@ -4,6 +4,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import { Table } from "../Table";
 import { QueryWrapper } from "../QueryWrapper";
+import { queryClient } from "@/stores";
 
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { RiliGoverment, RiliGovermentRole } from "@/types";
@@ -42,13 +43,18 @@ export const RiliGov = () => {
     return sortedRiliGov;
   }
 
-  const riliGovQuery: UseQueryResult<Array<RiliGoverment>> = useQuery({
-    queryKey: ["riliGoverment"],
-    queryFn: () =>
-      fetch("/api/getRiliGoverment", { method: "GET" }).then((res) =>
-        res.json().then((riliGov: Array<RiliGoverment>) => sortByRole(riliGov)),
-      ),
-  });
+  const riliGovQuery: UseQueryResult<Array<RiliGoverment>> = useQuery(
+    {
+      queryKey: ["riliGoverment"],
+      queryFn: () =>
+        fetch("/api/getRiliGoverment", { method: "GET" }).then((res) =>
+          res
+            .json()
+            .then((riliGov: Array<RiliGoverment>) => sortByRole(riliGov)),
+        ),
+    },
+    queryClient,
+  );
 
   return (
     <QueryWrapper>

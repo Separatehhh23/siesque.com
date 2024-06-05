@@ -72,17 +72,20 @@ const CastorSnake = () => {
   const rows = 16 as const;
   const tileSize = 50 as const;
 
-  const leaderboardQuery: UseQueryResult<Array<CastakeLeaderboard>> = useQuery({
-    queryKey: ["leaderboard"],
-    queryFn: () =>
-      fetch("/api/getCastakeLeaderboard", { method: "GET" })
-        .then((res) => res.json())
-        .then((leaderboard: Array<CastakeLeaderboard>) =>
-          leaderboard.toSorted((l1, l2) =>
-            l1.score < l2.score ? 1 : l1.score > l2.score ? -1 : 0,
+  const leaderboardQuery: UseQueryResult<Array<CastakeLeaderboard>> = useQuery(
+    {
+      queryKey: ["leaderboard"],
+      queryFn: () =>
+        fetch("/api/getCastakeLeaderboard", { method: "GET" })
+          .then((res) => res.json())
+          .then((leaderboard: Array<CastakeLeaderboard>) =>
+            leaderboard.toSorted((l1, l2) =>
+              l1.score < l2.score ? 1 : l1.score > l2.score ? -1 : 0,
+            ),
           ),
-        ),
-  });
+    },
+    queryClient,
+  );
 
   const updateLeaderboard = useMutation(
     {
