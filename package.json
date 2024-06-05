@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint-es": "eslint \"src/**/*.{js,astro}\" --fix",
-    "lint-st":  "npx stylelint \"**/*.scss\" --fix",
+    "lint-st": "npx stylelint \"**/*.scss\" --fix",
     "link": "npx astro login && npx astro link"
   },
   "dependencies": {
