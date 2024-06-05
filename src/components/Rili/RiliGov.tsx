@@ -4,6 +4,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import { Table } from "../Table";
 import { QueryWrapper } from "../QueryWrapper";
+import { queryClient } from "@/stores";
 
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { RiliGoverment, RiliGovermentRole } from "@/types";
