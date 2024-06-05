@@ -71,7 +71,6 @@ export const RiliGov = () => {
             <Suspense fallback={<div>Loading rili goverment...</div>}>
               <Table className="glass w-2/3">
                 <Table.Head className="h-2">
-                  <Table.HeadItem className="text-primary">ID</Table.HeadItem>
                   <Table.HeadItem className="text-primary">Name</Table.HeadItem>
                   <Table.HeadItem className="text-primary">Role</Table.HeadItem>
                 </Table.Head>
@@ -90,9 +89,6 @@ export const RiliGov = () => {
                   )
                 ) : (
                   <Table.Body>
-                    <Table.BodyItem className="text-secondary">
-                      N/A
-                    </Table.BodyItem>
                     <Table.BodyItem className="text-secondary">
                       N/A
                     </Table.BodyItem>
