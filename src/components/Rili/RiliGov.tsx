@@ -96,9 +96,6 @@ export const RiliGov = () => {
                     <Table.BodyItem className="text-secondary">
                       N/A
                     </Table.BodyItem>
-                    <Table.BodyItem className="text-secondary">
-                      N/A
-                    </Table.BodyItem>
                   </Table.Body>
                 )}
               </Table>
