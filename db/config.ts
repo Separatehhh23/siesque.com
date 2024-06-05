@@ -31,7 +31,13 @@ const CastakeLeaderboard = defineTable({
     score: column.number(),
   },
 });
+const RiliGoverment = defineTable({
+  columns: {
+    name: column.text({ primaryKey: true }),
+    role: column.text(),
+  },
+});
 
 export default defineDb({
-  tables: { Comment, Rili, Notes, CastakeLeaderboard },
+  tables: { Comment, Rili, Notes, CastakeLeaderboard, RiliGoverment },
 });

@@ -45,6 +45,13 @@ type CastakeLeaderboard = {
   score: number;
 };
 
+type RiliGovermentRole = "Founder" | "Co-Founder" | "Salty Springs" | "Castor";
+
+type RiliGoverment = {
+  name: string;
+  role: RiliGovermentRole;
+};
+
 export type {
   BlogEntry,
   Params,
@@ -56,4 +63,6 @@ export type {
   SetState,
   Experiments,
   CastakeLeaderboard,
+  RiliGoverment,
+  RiliGovermentRole,
 };
