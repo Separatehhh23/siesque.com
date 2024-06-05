@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { Table } from "../Table";
-import { QueryWrapper } from "../QueryWrapper";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "@/stores";
 
 import type { UseQueryResult } from "@tanstack/react-query";
@@ -57,7 +57,7 @@ export const RiliGov = () => {
   );
 
   return (
-    <QueryWrapper>
+    <>
       <div className="h-screen w-screen">
         <img
           src="../riliGov.webp"
@@ -106,6 +106,7 @@ export const RiliGov = () => {
           </ErrorBoundary>
         </div>
       </div>
-    </QueryWrapper>
+      <ReactQueryDevtools client={queryClient} />
+    </>
   );
 };

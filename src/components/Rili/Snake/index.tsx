@@ -11,6 +11,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { Stage, Sprite, useTick } from "@pixi/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useStore } from "@nanostores/react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import {
   highScore,
@@ -24,7 +25,6 @@ import { Table } from "../../Table";
 import { BackgroundGradient } from "../../ui/background-gradient";
 import { cn } from "@/lib/utils";
 import { useScreenDetector } from "@/hooks/useScreenDetector";
-import { QueryWrapper } from "../../QueryWrapper";
 
 import type { FormEvent, CSSProperties, ReactNode } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
@@ -233,110 +233,109 @@ const CastorSnake = () => {
   }, [castakePos]);
 
   return (
-    <QueryWrapper>
-      <UiContext.Provider
-        value={{
-          score: score,
-          highScore: _highScore.score,
-          username: _username.name,
-        }}
-      >
-        <UsernameSelect />
-        <div className="absolute left-2 top-[74px]">
-          <button
-            className={cn("border-1 btn btn-ghost", {
-              "border-green-500": isUsingAltMovement,
-              "border-blue-500": !isUsingAltMovement,
-            })}
-            onClick={() => setIsUsingAltMovement(!isUsingAltMovement)}
-          >
-            <p>
-              Cambiar movimiento, actual:{" "}
-              <span
-                className={cn({
-                  "text-green-500": isUsingAltMovement,
-                  "text-blue-500": !isUsingAltMovement,
-                })}
-              >
-                {isUsingAltMovement ? "Assist" : "Libre"}
-              </span>
-            </p>
-          </button>
-          {isDesktop && (
-            <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
-          )}
-        </div>
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-          {isGameOver && (
-            <div className="card absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transform bg-base-200 p-6">
-              <h1 className="card-title text-6xl text-primary">Perdiste</h1>
-              <h2 className="text-3xl text-secondary">Eres tan rili</h2>
-              <div className="card-actions">
-                <div className="flex flex-row">
-                  <p className="pr-1 text-2xl">Otra vez?</p>
-                  <button
-                    onClick={retry}
-                    className="flex items-center justify-center rounded-xl bg-secondary p-1 text-white"
-                  >
-                    <Repeat height={20} width={20} />
-                  </button>
-                </div>
+    <UiContext.Provider
+      value={{
+        score: score,
+        highScore: _highScore.score,
+        username: _username.name,
+      }}
+    >
+      <UsernameSelect />
+      <div className="absolute left-2 top-[74px]">
+        <button
+          className={cn("border-1 btn btn-ghost", {
+            "border-green-500": isUsingAltMovement,
+            "border-blue-500": !isUsingAltMovement,
+          })}
+          onClick={() => setIsUsingAltMovement(!isUsingAltMovement)}
+        >
+          <p>
+            Cambiar movimiento, actual:{" "}
+            <span
+              className={cn({
+                "text-green-500": isUsingAltMovement,
+                "text-blue-500": !isUsingAltMovement,
+              })}
+            >
+              {isUsingAltMovement ? "Assist" : "Libre"}
+            </span>
+          </p>
+        </button>
+        {isDesktop && (
+          <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
+        )}
+      </div>
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+        {isGameOver && (
+          <div className="card absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transform bg-base-200 p-6">
+            <h1 className="card-title text-6xl text-primary">Perdiste</h1>
+            <h2 className="text-3xl text-secondary">Eres tan rili</h2>
+            <div className="card-actions">
+              <div className="flex flex-row">
+                <p className="pr-1 text-2xl">Otra vez?</p>
+                <button
+                  onClick={retry}
+                  className="flex items-center justify-center rounded-xl bg-secondary p-1 text-white"
+                >
+                  <Repeat height={20} width={20} />
+                </button>
               </div>
             </div>
-          )}
-          <ErrorBoundary
-            fallback={<p className="text-error">Error loading castake</p>}
+          </div>
+        )}
+        <ErrorBoundary
+          fallback={<p className="text-error">Error loading castake</p>}
+        >
+          <Suspense
+            fallback={<p className="text-primary">Loading castake...</p>}
           >
-            <Suspense
-              fallback={<p className="text-primary">Loading castake...</p>}
-            >
-              <div className="w-[460px]">
-                {!isDesktop && <MobileButtons handler={handleKeyDown} />}
-                <TopUI />
-                <div className="h-[460px] bg-[#568a35]">
-                  <Stage
-                    width={400}
-                    height={400}
-                    className="left-0 top-0 translate-x-[30px] translate-y-[30px] transform"
-                  >
-                    <TileGrid
-                      tileSize={tileSize}
-                      cols={cols}
-                      rows={rows}
-                      colors={[0xa9d751, 0xa2d049]}
-                    />
-
-                    <Sprite
-                      image="https://www.google.com/logos/fnbx/snake_arcade/v17/apple_00.png"
-                      x={applePosition.x}
-                      y={applePosition.y}
-                      width={40}
-                      height={40}
-                      anchor={-0.1}
-                    />
-
-                    {!isGameOver && (
-                      <Castake
-                        castakeMovement={castakeMovement}
-                        castakePos={castakePos}
-                        setCastakePos={setCastakePos}
-                        speed={speed}
-                      />
-                    )}
-                  </Stage>
-                </div>
-                {!isDesktop && (
-                  <Leaderboard
-                    data={leaderboardQuery.data}
-                    className="absolute mt-4 bg-base-200"
+            <div className="w-[460px]">
+              {!isDesktop && <MobileButtons handler={handleKeyDown} />}
+              <TopUI />
+              <div className="h-[460px] bg-[#568a35]">
+                <Stage
+                  width={400}
+                  height={400}
+                  className="left-0 top-0 translate-x-[30px] translate-y-[30px] transform"
+                >
+                  <TileGrid
+                    tileSize={tileSize}
+                    cols={cols}
+                    rows={rows}
+                    colors={[0xa9d751, 0xa2d049]}
                   />
-                )}
+
+                  <Sprite
+                    image="https://www.google.com/logos/fnbx/snake_arcade/v17/apple_00.png"
+                    x={applePosition.x}
+                    y={applePosition.y}
+                    width={40}
+                    height={40}
+                    anchor={-0.1}
+                  />
+
+                  {!isGameOver && (
+                    <Castake
+                      castakeMovement={castakeMovement}
+                      castakePos={castakePos}
+                      setCastakePos={setCastakePos}
+                      speed={speed}
+                    />
+                  )}
+                </Stage>
               </div>
-            </Suspense>
-          </ErrorBoundary>
-        </div>
-      </UiContext.Provider>
-    </QueryWrapper>
+              {!isDesktop && (
+                <Leaderboard
+                  data={leaderboardQuery.data}
+                  className="absolute mt-4 bg-base-200"
+                />
+              )}
+            </div>
+          </Suspense>
+        </ErrorBoundary>
+      </div>
+      <ReactQueryDevtools client={queryClient} />
+    </UiContext.Provider>
   );
 };
 
