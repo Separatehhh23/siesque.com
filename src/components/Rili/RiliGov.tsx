@@ -67,39 +67,47 @@ export const RiliGov = () => {
       </div>
       <div className="absolute top-16 z-20 flex h-screen w-screen justify-center">
         <div className="mt-8 flex h-2/3 w-screen justify-center">
-          <ErrorBoundary fallback={<div>Error loading rili goverment...</div>}>
-            <Suspense fallback={<div>Loading rili goverment...</div>}>
-              <Table className="glass w-2/3">
-                <Table.Head className="h-2">
-                  <Table.HeadItem className="text-primary">Name</Table.HeadItem>
-                  <Table.HeadItem className="text-primary">Role</Table.HeadItem>
-                </Table.Head>
-                {riliGovQuery.isSuccess ? (
-                  riliGovQuery.data.map(
-                    (riliGov: RiliGoverment, index: number) => (
-                      <Table.Body key={index} className="h-2">
-                        <Table.BodyItem className="text-secondary">
-                          {riliGov.name}
-                        </Table.BodyItem>
-                        <Table.BodyItem className="text-secondary">
-                          {riliGov.role}
-                        </Table.BodyItem>
-                      </Table.Body>
-                    ),
-                  )
-                ) : (
-                  <Table.Body>
-                    <Table.BodyItem className="text-secondary">
-                      N/A
-                    </Table.BodyItem>
-                    <Table.BodyItem className="text-secondary">
-                      N/A
-                    </Table.BodyItem>
-                  </Table.Body>
-                )}
-              </Table>
-            </Suspense>
-          </ErrorBoundary>
+          <div className="glass w-2/3 rounded-lg">
+            <ErrorBoundary
+              fallback={<div>Error loading rili goverment...</div>}
+            >
+              <Suspense fallback={<div>Loading rili goverment...</div>}>
+                <Table>
+                  <Table.Head className="h-2">
+                    <Table.HeadItem className="text-primary">
+                      Name
+                    </Table.HeadItem>
+                    <Table.HeadItem className="text-primary">
+                      Role
+                    </Table.HeadItem>
+                  </Table.Head>
+                  {riliGovQuery.isSuccess ? (
+                    riliGovQuery.data.map(
+                      (riliGov: RiliGoverment, index: number) => (
+                        <Table.Body key={index} className="h-2">
+                          <Table.BodyItem className="text-secondary">
+                            {riliGov.name}
+                          </Table.BodyItem>
+                          <Table.BodyItem className="text-secondary">
+                            {riliGov.role}
+                          </Table.BodyItem>
+                        </Table.Body>
+                      ),
+                    )
+                  ) : (
+                    <Table.Body>
+                      <Table.BodyItem className="text-secondary">
+                        N/A
+                      </Table.BodyItem>
+                      <Table.BodyItem className="text-secondary">
+                        N/A
+                      </Table.BodyItem>
+                    </Table.Body>
+                  )}
+                </Table>
+              </Suspense>
+            </ErrorBoundary>
+          </div>
         </div>
       </div>
       <ReactQueryDevtools client={queryClient} />
