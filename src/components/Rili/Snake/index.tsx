@@ -7,20 +7,14 @@ import {
   createContext,
   lazy,
 } from "react";
-import {
-  useQuery,
-  QueryClientProvider,
-  useMutation,
-} from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Stage, Sprite, useTick } from "@pixi/react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useStore } from "@nanostores/react";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import {
   highScore,
   setHighScore,
-  experiments,
   queryClient,
   username,
   setUsername,
@@ -30,18 +24,11 @@ import { Table } from "../../Table";
 import { BackgroundGradient } from "../../ui/background-gradient";
 import { cn } from "@/lib/utils";
 import { useScreenDetector } from "@/hooks/useScreenDetector";
+import { QueryWrapper } from "../../QueryWrapper";
 
 import type { FormEvent, CSSProperties, ReactNode } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { Position, SetState, CastakeLeaderboard } from "@/types";
-
-const ReactQueryDevtoolsProduction = lazy(() =>
-  import("@tanstack/react-query-devtools/build/modern/production.js").then(
-    (d) => ({
-      default: d.ReactQueryDevtools,
-    }),
-  ),
-);
 
 const MobileButtons = lazy(() =>
   import("./MobileButtons").then((d) => ({
@@ -76,7 +63,6 @@ const CastorSnake = () => {
   const [isUsingAltMovement, setIsUsingAltMovement] = useState(true);
 
   const _highScore = useStore(highScore);
-  const _experiments = useStore(experiments);
   const _username = useStore(username);
 
   const { isDesktop } = useScreenDetector();
@@ -90,9 +76,13 @@ const CastorSnake = () => {
     {
       queryKey: ["leaderboard"],
       queryFn: () =>
-        fetch("/api/getCastakeLeaderboard", { method: "GET" }).then((res) =>
-          res.json(),
-        ),
+        fetch("/api/getCastakeLeaderboard", { method: "GET" })
+          .then((res) => res.json())
+          .then((leaderboard: Array<CastakeLeaderboard>) =>
+            leaderboard.toSorted((l1, l2) =>
+              l1.score < l2.score ? 1 : l1.score > l2.score ? -1 : 0,
+            ),
+          ),
     },
     queryClient,
   );
@@ -149,7 +139,7 @@ const CastorSnake = () => {
   }, [score]);
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    setCastakeMovement(() => {
+    setCastakeMovement((prevMovement) => {
       switch (e.key) {
         case "w":
           return { direction: "y", sign: "-" };
@@ -172,7 +162,7 @@ const CastorSnake = () => {
           e.preventDefault();
           return { direction: "x", sign: "+" };
         default:
-          return castakeMovement;
+          return prevMovement;
       }
     });
   };
@@ -243,7 +233,7 @@ const CastorSnake = () => {
   }, [castakePos]);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryWrapper>
       <UiContext.Provider
         value={{
           score: score,
@@ -346,18 +336,7 @@ const CastorSnake = () => {
           </ErrorBoundary>
         </div>
       </UiContext.Provider>
-      {
-        _experiments.queryDevtools && (
-          <ReactQueryDevtools />
-        ) /* Devtools are excluded from production */
-      }
-      {_experiments.queryDevtools && process.env.NODE_ENV !== "development" && (
-        /* Lazy load devtools in production */
-        <Suspense fallback={null}>
-          <ReactQueryDevtoolsProduction />
-        </Suspense>
-      )}
-    </QueryClientProvider>
+    </QueryWrapper>
   );
 };
 

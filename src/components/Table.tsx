@@ -21,32 +21,36 @@ const TableRoot = ({ children, className, style }: TableProps) => {
 
 interface TableHeadProps {
   children: Array<ReactElement<typeof TableHeadElement>>;
+  className?: string;
 }
-const TableHead = ({ children }: TableHeadProps) => (
-  <thead>
+const TableHead = ({ children, className }: TableHeadProps) => (
+  <thead className={className}>
     <tr>{children}</tr>
   </thead>
 );
 
 interface TableHeadElementProps {
   children: ReactNode;
+  className?: string;
 }
-const TableHeadElement = ({ children }: TableHeadElementProps) => (
-  <th>{children}</th>
+const TableHeadElement = ({ children, className }: TableHeadElementProps) => (
+  <th className={className}>{children}</th>
 );
 
 interface TableBodyProps {
   children: Array<ReactElement<typeof TableBodyElement>>;
+  className?: string;
 }
-const TableBody = ({ children }: TableBodyProps) => {
-  return <tr>{children}</tr>;
+const TableBody = ({ children, className }: TableBodyProps) => {
+  return <tr className={className}>{children}</tr>;
 };
 
 interface TableBodyElementProps {
   children: ReactNode;
+  className?: string;
 }
-const TableBodyElement = ({ children }: TableBodyElementProps) => {
-  return <td>{children}</td>;
+const TableBodyElement = ({ children, className }: TableBodyElementProps) => {
+  return <td className={className}>{children}</td>;
 };
 
 export const Table = TableRoot as typeof TableRoot & {
