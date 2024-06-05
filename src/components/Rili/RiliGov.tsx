@@ -65,7 +65,7 @@ export const RiliGov = () => {
           className="h-full w-full"
         />
       </div>
-      <div className="absolute top-16 z-20 flex h-screen w-screen justify-center">
+      <div className="absolute top-24 z-20 flex h-screen w-screen justify-center">
         <div className="mt-8 flex h-2/3 w-screen justify-center">
           <div className="glass w-2/3 rounded-lg">
             <ErrorBoundary
