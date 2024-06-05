@@ -31,6 +31,7 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
   const button3 = useRef<HTMLAnchorElement>(null);
   const button4 = useRef<HTMLAnchorElement>(null);
   const button5 = useRef<HTMLAnchorElement>(null);
+  const button6 = useRef<HTMLAnchorElement>(null);
 
   return (
     <div className="flex min-h-screen w-screen items-center justify-center">
@@ -58,7 +59,7 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
 
       <div className="grid h-screen w-screen grid-cols-5 grid-rows-5 gap-4 pl-2 pr-2 pt-2">
         <LinkBox ref={button1} link="/rili/list">
-          Lista Rili
+          Lista rili
         </LinkBox>
         <LinkBox ref={button2} link="/rili/dictionary">
           Diccionario rili
@@ -72,19 +73,24 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
         <LinkBox ref={button5} link="/rili/snake">
           Castor snake
         </LinkBox>
+        <LinkBox ref={button6} link="/rili/goverment">
+          Rili goverment
+        </LinkBox>
       </div>
 
-      {[button1, button2, button3, button4, button5].map((ref, index) => (
-        <Xarrow
-          start={titleRef}
-          end={ref}
-          curveness={0.8}
-          showHead={false}
-          color="#009688"
-          endAnchor="bottom"
-          key={index}
-        />
-      ))}
+      {[button1, button2, button3, button4, button5, button6].map(
+        (ref, index) => (
+          <Xarrow
+            start={titleRef}
+            end={ref}
+            curveness={0.8}
+            showHead={false}
+            color="#009688"
+            endAnchor="bottom"
+            key={index}
+          />
+        ),
+      )}
     </div>
   );
 };
@@ -98,14 +104,17 @@ interface LinkBoxProps {
 const LinkBox = forwardRef<HTMLAnchorElement, LinkBoxProps>(
   ({ children, link, className }: LinkBoxProps, ref) => (
     <div
-      className={cn("flex cursor-pointer flex-col justify-center", className)}
+      className={cn(
+        "z-20 flex cursor-pointer flex-col justify-center",
+        className,
+      )}
     >
-      <a href={link} ref={ref}>
-        <div className="flex flex-row justify-center rounded-3xl border-4 border-accent p-8">
-          <p className="text-text min-w-0 text-wrap sm:text-sm md:text-xl">
-            {children}
-          </p>
-        </div>
+      <a
+        href={link}
+        ref={ref}
+        className="text-text flex min-w-0 flex-row justify-center text-wrap rounded-3xl border-4 border-accent bg-base-200 p-8 sm:text-sm md:text-xl"
+      >
+        {children}
       </a>
     </div>
   ),
