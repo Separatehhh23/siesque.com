@@ -1,0 +1,21 @@
+---
+import { getEntry, type ContentEntryMap } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { RiliArt } from "@/components/Rili/Art";
+
+const { slug } = Astro.params;
+
+const entry = await getEntry<keyof ContentEntryMap, string>({
+  collection: "art" as keyof ContentEntryMap,
+  slug: slug,
+});
+
+if (entry === undefined) return Astro.redirect("/rili/art");
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description=`Riliest art ever: ${entry.data.title} by ${entry.data.author} with score ${entry.data.score}/100`
+>
+  <RiliArt data={entry.data} client:only="react" />
+</BaseLayout>

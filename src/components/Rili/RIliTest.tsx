@@ -30,7 +30,7 @@ const RiliTest: FC = () => {
     if (camellos > 0) {
       setTimeout(() => {
         if (!accepted) setStage(4);
-      }, 2000);
+      }, 500);
     }
   }, [camellos]);
 
@@ -139,7 +139,7 @@ const RiliTest: FC = () => {
         )}
         {accepted && (
           <RiliQuestion question="Eres un rili">
-            <RiliAnswer href="/rili/docs">Ok</RiliAnswer>
+            <RiliAnswer href="/">Ok</RiliAnswer>
             <RiliAnswer onClick={() => setAccepted(false)}>Nah</RiliAnswer>
           </RiliQuestion>
         )}

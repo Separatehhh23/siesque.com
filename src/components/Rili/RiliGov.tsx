@@ -1,3 +1,4 @@
+import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -5,13 +6,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Table } from "../Table";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "@/stores";
-
-import type { UseQueryResult } from "@tanstack/react-query";
-import type { RiliGoverment, RiliGovermentRole } from "@/types";
+import type { RiliGoverment } from "@/types";
 
 export const RiliGov = () => {
   function sortByRole(riliGov: Array<RiliGoverment>) {
-    const sortedRiliGov = riliGov.sort((rgm1, rgm2) => {
+    return riliGov.sort((rgm1, rgm2) => {
       switch (rgm1.role) {
         case "Founder":
           return -1;
@@ -39,8 +38,6 @@ export const RiliGov = () => {
           return 1;
       }
     });
-
-    return sortedRiliGov;
   }
 
   const riliGovQuery: UseQueryResult<Array<RiliGoverment>> = useQuery(

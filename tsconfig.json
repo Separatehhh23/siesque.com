@@ -19,7 +19,9 @@
       ]
     },
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
+    "allowJs": true,
+    "checkJs": true
   },
   "include": [
     "**/*.{astro,tsx,svelte,vue,ts}"
