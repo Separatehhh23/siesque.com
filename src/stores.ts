@@ -89,7 +89,7 @@ export function setHighScore(score: number) {
 export const experiments = persistentAtom<Experiments>(
   "experiments",
   {
-    queryDevtools: false,
+    altLeaderboard: false,
   },
   { encode: JSON.stringify, decode: JSON.parse },
 );

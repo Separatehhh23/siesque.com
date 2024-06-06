@@ -19,20 +19,37 @@ import {
   queryClient,
   username,
   setUsername,
+  experiments,
 } from "@/stores";
 import TileGrid from "./TileGrid";
-import { Table } from "../../Table";
 import { BackgroundGradient } from "../../ui/background-gradient";
 import { cn } from "@/lib/utils";
 import { useScreenDetector } from "@/hooks/useScreenDetector";
 
-import type { FormEvent, CSSProperties, ReactNode } from "react";
+import type { FormEvent, ReactNode } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { Position, SetState, CastakeLeaderboard } from "@/types";
+import type {
+  Position,
+  SetState,
+  CastakeLeaderboard,
+  SimpleCastakeLeaderboard,
+} from "@/types";
 
 const MobileButtons = lazy(() =>
   import("./MobileButtons").then((d) => ({
     default: d.MobileButtons,
+  })),
+);
+
+const Leaderboard = lazy(() =>
+  import("./Leaderboard").then((d) => ({
+    default: d.Leaderboard,
+  })),
+);
+
+const AltLeaderboard = lazy(() =>
+  import("./AltLeaderboard").then((d) => ({
+    default: d.AltLeaderboard,
   })),
 );
 
@@ -64,6 +81,7 @@ const CastorSnake = () => {
 
   const _highScore = useStore(highScore);
   const _username = useStore(username);
+  const _experiments = useStore(experiments);
 
   const { isDesktop } = useScreenDetector();
 
@@ -72,28 +90,63 @@ const CastorSnake = () => {
   const rows = 16 as const;
   const tileSize = 50 as const;
 
-  const leaderboardQuery: UseQueryResult<Array<CastakeLeaderboard>> = useQuery(
-    {
-      queryKey: ["leaderboard"],
-      queryFn: () =>
-        fetch("/api/getCastakeLeaderboard", { method: "GET" })
-          .then((res) => res.json())
-          .then((leaderboard: Array<CastakeLeaderboard>) =>
-            leaderboard.toSorted((l1, l2) =>
-              l1.score < l2.score ? 1 : l1.score > l2.score ? -1 : 0,
-            ),
-          ),
-    },
-    queryClient,
-  );
+  const leaderboardQuery: UseQueryResult<Array<SimpleCastakeLeaderboard>> =
+    useQuery(
+      {
+        queryKey: ["leaderboard"],
+        queryFn: () =>
+          fetch("/api/getCastakeLeaderboard", { method: "GET" })
+            .then((res) => res.json())
+            .then((leaderboard: Array<CastakeLeaderboard>) => {
+              const newArray: Array<SimpleCastakeLeaderboard> = [];
+              const assistLeaderboard: SimpleCastakeLeaderboard = [];
+              const libreLeaderboard: SimpleCastakeLeaderboard = [];
+
+              leaderboard.forEach((l) => {
+                assistLeaderboard.push({
+                  username: l.username,
+                  score: l.scoreAssist,
+                });
+                libreLeaderboard.push({
+                  username: l.username,
+                  score: l.scoreLibre,
+                });
+              });
+
+              assistLeaderboard.sort((l1, l2) =>
+                l1.score < l2.score ? 1 : l1.score > l2.score ? -1 : 0,
+              );
+              libreLeaderboard.sort((l1, l2) =>
+                l1.score < l2.score ? 1 : l1.score > l2.score ? -1 : 0,
+              );
+
+              newArray.push(assistLeaderboard);
+              newArray.push(libreLeaderboard);
+              return newArray;
+            }),
+      },
+      queryClient,
+    );
 
   const updateLeaderboard = useMutation(
     {
-      mutationFn: ({ username, score }: { username: string; score: number }) =>
+      mutationFn: ({
+        username,
+        score,
+        mode,
+      }: {
+        username: string;
+        score: number;
+        mode: "assist" | "libre";
+      }) =>
         fetch("/api/updateCastakeLeaderboard", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: username, score: score }),
+          body: JSON.stringify({
+            username: username,
+            score: score,
+            mode: mode,
+          }),
         }),
       onSuccess: () =>
         queryClient.invalidateQueries({
@@ -105,16 +158,29 @@ const CastorSnake = () => {
 
   const submitToLeaderboard = async (score: number) => {
     if (_username.name && leaderboardQuery.isSuccess) {
-      const bestScore = leaderboardQuery.data.filter(
-        (entry: CastakeLeaderboard) => entry.username === _username.name,
+      const mode = getMode();
+      const modeIndex = mode === "assist" ? 0 : 1;
+
+      const bestScore = leaderboardQuery.data[modeIndex].filter(
+        (entry) => entry.username === _username.name,
       );
       if (bestScore?.length === 0) {
-        updateLeaderboard.mutate({ username: _username.name, score: score });
+        updateLeaderboard.mutate({
+          username: _username.name,
+          score: score,
+          mode,
+        });
       } else if (bestScore[0].score < score) {
-        updateLeaderboard.mutate({ username: _username.name, score: score });
+        updateLeaderboard.mutate({
+          username: _username.name,
+          score: score,
+          mode,
+        });
       }
     }
   };
+
+  const getMode = () => (isUsingAltMovement ? "assist" : "libre");
 
   const generateRandomPosition = (): { x: number; y: number } => {
     const x = Math.floor(Math.random() * cols) * tileSize;
@@ -261,8 +327,17 @@ const CastorSnake = () => {
             </span>
           </p>
         </button>
-        {isDesktop && (
-          <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
+        {isDesktop && !_experiments.altLeaderboard ? (
+          <Suspense fallback={<p>Loading leaderboard...</p>}>
+            <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
+          </Suspense>
+        ) : (
+          <Suspense fallback={<p>Loading leaderboard...</p>}>
+            <AltLeaderboard
+              data={leaderboardQuery.data}
+              className="bg-base-200"
+            />
+          </Suspense>
         )}
       </div>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
@@ -324,12 +399,23 @@ const CastorSnake = () => {
                   )}
                 </Stage>
               </div>
-              {!isDesktop && (
-                <Leaderboard
-                  data={leaderboardQuery.data}
-                  className="absolute mt-4 bg-base-200"
-                />
-              )}
+              {!isDesktop ? (
+                !_experiments.altLeaderboard ? (
+                  <Suspense fallback={<p>Loading leaderboard...</p>}>
+                    <Leaderboard
+                      data={leaderboardQuery.data}
+                      className="absolute mt-4 bg-base-200"
+                    />
+                  </Suspense>
+                ) : (
+                  <Suspense fallback={<p>Loading leaderboard...</p>}>
+                    <AltLeaderboard
+                      data={leaderboardQuery.data}
+                      className="absolute mt-4 bg-base-200"
+                    />
+                  </Suspense>
+                )
+              ) : null}
             </div>
           </Suspense>
         </ErrorBoundary>
@@ -478,48 +564,5 @@ const UsernameSelect = () => {
     </>
   );
 };
-
-interface LeaderboardProps {
-  data: Array<CastakeLeaderboard> | undefined;
-  className?: string;
-  style?: CSSProperties;
-}
-
-const Leaderboard = ({ data, className, style }: LeaderboardProps) => {
-  if (!data) return null;
-
-  return (
-    <ErrorBoundary fallback={<p>Error loading leaderboard</p>}>
-      <Suspense fallback={<p>Loading leaderboard...</p>}>
-        <Table className={className} style={style}>
-          <Table.Head>
-            <Table.HeadItem>Posicion</Table.HeadItem>
-            <Table.HeadItem>Nombre</Table.HeadItem>
-            <Table.HeadItem>Puntos</Table.HeadItem>
-          </Table.Head>
-          {data.length !== 0 ? (
-            data.map((data, index) => (
-              <Table.Body key={index}>
-                <Table.BodyItem>{index + 1}</Table.BodyItem>
-                <Table.BodyItem>{data.username}</Table.BodyItem>
-                <Table.BodyItem>{data.score}</Table.BodyItem>
-              </Table.Body>
-            ))
-          ) : (
-            <AltLeaderboardBody />
-          )}
-        </Table>
-      </Suspense>
-    </ErrorBoundary>
-  );
-};
-
-const AltLeaderboardBody = () => (
-  <Table.Body>
-    <Table.BodyItem>N/A</Table.BodyItem>
-    <Table.BodyItem>N/A</Table.BodyItem>
-    <Table.BodyItem>N/A</Table.BodyItem>
-  </Table.Body>
-);
 
 export default CastorSnake;

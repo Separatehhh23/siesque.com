@@ -28,7 +28,8 @@ const Notes = defineTable({
 const CastakeLeaderboard = defineTable({
   columns: {
     username: column.text({ primaryKey: true }),
-    score: column.number(),
+    scoreAssist: column.number({ default: 0 }),
+    scoreLibre: column.number({ default: 0 }),
   },
 });
 const RiliGoverment = defineTable({

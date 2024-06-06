@@ -1,5 +1,10 @@
 import { Graphics } from "@pixi/react";
-import type { ComponentProps, Dispatch, SetStateAction } from "react";
+import type {
+  ComponentProps,
+  CSSProperties,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import type { CollectionEntry } from "astro:content";
 
 interface BlogEntry extends CollectionEntry<"blog"> {
@@ -36,13 +41,14 @@ interface Position {
 
 type SetState<T> = Dispatch<SetStateAction<T>>;
 
-interface Experiments {
-  queryDevtools: boolean;
-}
+type Experiments = {
+  altLeaderboard: boolean;
+};
 
 type CastakeLeaderboard = {
   username: string;
-  score: number;
+  scoreAssist: number;
+  scoreLibre: number;
 };
 
 type RiliGovermentRole = "Founder" | "Co-Founder" | "Salty Springs" | "Castor";
@@ -50,6 +56,17 @@ type RiliGovermentRole = "Founder" | "Co-Founder" | "Salty Springs" | "Castor";
 type RiliGoverment = {
   name: string;
   role: RiliGovermentRole;
+};
+
+type SimpleCastakeLeaderboard = Array<{
+  username: string;
+  score: number;
+}>;
+
+type LeaderboardProps = {
+  data?: Array<SimpleCastakeLeaderboard>;
+  className?: string;
+  style?: CSSProperties;
 };
 
 export type {
@@ -65,4 +82,6 @@ export type {
   CastakeLeaderboard,
   RiliGoverment,
   RiliGovermentRole,
+  SimpleCastakeLeaderboard,
+  LeaderboardProps,
 };

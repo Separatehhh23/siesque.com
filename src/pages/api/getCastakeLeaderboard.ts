@@ -5,7 +5,7 @@ import type { APIRoute } from "astro";
 import type { CastakeLeaderboard as TCastakeLeaderboard } from "@/types";
 
 export const GET: APIRoute = async ({ request }) => {
-  const leaderboard: TCastakeLeaderboard = await db
+  const leaderboard: Array<TCastakeLeaderboard> = await db
     .select()
     .from(CastakeLeaderboard);
   return new Response(JSON.stringify(leaderboard), {
