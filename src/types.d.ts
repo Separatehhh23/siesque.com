@@ -69,6 +69,15 @@ type LeaderboardProps = {
   style?: CSSProperties;
 };
 
+type ArtData = {
+  title: string;
+  author: string;
+  tags?: Array<string>;
+  score: number;
+  publishDate: string;
+  image: string;
+};
+
 export type {
   BlogEntry,
   Params,
@@ -84,4 +93,5 @@ export type {
   RiliGovermentRole,
   SimpleCastakeLeaderboard,
   LeaderboardProps,
+  ArtData,
 };

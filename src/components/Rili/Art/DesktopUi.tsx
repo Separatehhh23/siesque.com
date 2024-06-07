@@ -1,14 +1,12 @@
-import { ArrowRight } from "lucide-react";
+import CountUp from "react-countup";
+
+import { Image, Tags, formatDate } from "./Shared";
+
+import type { ReactNode } from "react";
+import type { ArtData } from "@/types";
 
 type Props = {
-  data: {
-    title: string;
-    author: string;
-    tags?: string[];
-    score: number;
-    publishDate: string;
-    image: string;
-  };
+  data: ArtData;
 };
 
 export const DesktopUi = ({ data }: Props) => {
@@ -18,32 +16,31 @@ export const DesktopUi = ({ data }: Props) => {
       <div className="top-24 z-20 mb-8 mt-8 flex h-[810px] w-[960px] flex-row justify-center rounded-lg bg-base-200 pb-8">
         <div>
           <div className="flex w-[480px] flex-col justify-around">
-            <h1 className="pl-[30px] pt-[30px] text-primary">{title}</h1>
-            <div className="flex flex-row pl-[30px]">
-              <ArrowRight />
-              <p className="text-secondary">{author}</p>
-            </div>
-            <div className="flex h-9 w-full flex-row pl-[30px]">
-              {tags?.map((tag, index) => (
-                <div
-                  key={index}
-                  className="mb-[30px] mr-2 h-full rounded-lg bg-accent px-2 py-1 text-white"
-                >
-                  {tag}
-                </div>
-              ))}
+            <div className="pl-[30px]">
+              <h1 className=" pt-[30px] text-7xl text-primary">{title}</h1>
+
+              <Tags tags={tags} />
+
+              <Description>Author: {author}</Description>
+              <Description>Date: {formatDate(publishDate)}</Description>
+              <Description>
+                Score: <CountUp end={score} duration={5} />
+              </Description>
             </div>
           </div>
         </div>
         <div className="px-[30px] pt-6">
-          <img
-            src={image}
-            alt={title}
-            width={420}
-            className="aspect-[9/16] rounded-lg"
-          />
+          <Image src={image} alt={title} />
         </div>
       </div>
     </div>
   );
 };
+
+type DescriptionProps = {
+  children: ReactNode;
+};
+
+const Description = ({ children }: DescriptionProps) => (
+  <p className="text-lg text-secondary">{children}</p>
+);

@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 
 import { useScreenDetector } from "@/hooks/useScreenDetector";
 
+import type { ArtData } from "@/types";
+
 const MobileUi = lazy(() =>
   import("./MobileUi").then((d) => ({ default: d.MobileUi })),
 );
@@ -11,14 +13,7 @@ const DesktopUi = lazy(() =>
 );
 
 type Props = {
-  data: {
-    title: string;
-    author: string;
-    tags?: string[];
-    score: number;
-    publishDate: string;
-    image: string;
-  };
+  data: ArtData;
 };
 
 export const RiliArt = ({ data }: Props) => {

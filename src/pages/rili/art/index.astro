@@ -1,3 +1,16 @@
 ---
+import { getCollection } from "astro:content";
 
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Gallery } from "@/components/Rili/Art/Gallery";
+
+import type { ContentEntryMap, CollectionEntry } from "astro:content";
+
+const entries: Array<CollectionEntry<"art">> = await getCollection(
+  "art" as keyof ContentEntryMap,
+);
 ---
+
+<BaseLayout title="Rili art" description="Riliest art in the history of rili">
+  <Gallery data={entries} />
+</BaseLayout>
