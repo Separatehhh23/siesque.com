@@ -24,6 +24,10 @@ export const AltLeaderboard = ({
     largestData.push({ username: leaderboard.username, score: largestScore });
   });
 
+  largestData.sort((l1, l2) =>
+    l1.score < l2.score ? 1 : l1.score > l2.score ? -1 : 0,
+  );
+
   return (
     <ErrorBoundary fallback={<p>Error loading leaderboard</p>}>
       <Suspense fallback={<p>Loading leaderboard...</p>}>

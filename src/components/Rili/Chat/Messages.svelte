@@ -1,16 +1,17 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { pb, currentUser } from "@/lib/pocketbase";
-  import { action } from "nanostores";
+  import autoAnimate from "@formkit/auto-animate";
+
+  import { pb } from "@/lib/pocketbase";
 
   let newMessage: string;
+  let username: string;
   let messages = [];
   let unsubscribe: () => void;
 
   onMount(async () => {
     const resultList = await pb.collection("messages").getList(1, 50, {
       sort: "created",
-      expand: "user",
     });
     messages = resultList.items;
 
@@ -18,39 +19,51 @@
       .collection("messages")
       .subscribe("*", async ({ action, record }) => {
         if (action === "create") {
-          const user = await pb.collection("users").getOne(record.user);
-          record.expand = { user };
           messages = [...messages, record];
-        }
-        if (action === "delete") {
-          messages = messages.filter((m) => m.id !== record.id);
         }
       });
   });
 
   onDestroy(() => {
-    unsubscribe?.();
+    unsubscribe();
   });
 
   async function sendMessage() {
-    const data = {
+    await pb.collection("messages").create({
       text: newMessage,
-      user: $currentUser.id,
-    };
-    const createdMessage = await pb.collection("messages").create(data);
+      author: username,
+    });
   }
 </script>
 
-<div>
-  {#each messages as message (message.id)}
-    <div>
-      <small>Sent by @{message.expand?.user?.username}</small>
-      <p>{message.text}</p>
+<div class="flex h-screen w-screen flex-row justify-center">
+  <div class="mt-8 w-2/3 pt-8">
+    <div class="flex flex-col gap-2" use:autoAnimate>
+      {#each messages as message (message.id)}
+        <div class="rounded-xl bg-base-200 p-2">
+          <p>{message.text}</p>
+          <small>Sent by @{message.author}</small>
+        </div>
+      {/each}
+      <form
+        on:submit|preventDefault={sendMessage}
+        class="join rounded-xl bg-base-200 p-2"
+      >
+        <input
+          placeholder="Message"
+          type="text"
+          class="input join-item"
+          bind:value={newMessage}
+        />
+        <div class="join-item h-full w-1 bg-base-200" />
+        <input
+          placeholder="Username"
+          type="text"
+          class="input join-item"
+          bind:value={username}
+        />
+        <button type="submit" class="btn btn-primary join-item">Send</button>
+      </form>
     </div>
-  {/each}
+  </div>
 </div>
-
-<form on:submit|preventDefault={sendMessage}>
-  <input placeholder="Message" type="text" bind:value={newMessage} />
-  <button type="submit">Send</button>
-</form>
