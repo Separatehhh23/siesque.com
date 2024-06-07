@@ -46,6 +46,7 @@
     "moment": "^2.29.4",
     "nanostores": "^0.9.5",
     "pixi.js": "^8.1.5",
+    "pocketbase": "^0.21.3",
     "postcss-preset-env": "^9.5.4",
     "react": "^18.3.1",
     "react-countup": "^6.5.3",
