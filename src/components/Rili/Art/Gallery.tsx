@@ -15,9 +15,10 @@ export const Gallery = ({ data }: Props) => {
     <div className="flex w-screen flex-row justify-center">
       <div className="mb-8 mt-8 grid w-[90vw] grid-cols-5 gap-12 pb-8 pt-8 ">
         {data.map((art, index) => (
-          <div
+          <a
             key={index}
-            className="center h-[460px] w-[262px] rounded-lg bg-base-200"
+            className="center h-[460px] w-[262px] rounded-lg bg-base-200 no-underline hover:no-underline"
+            href={`/rili/art/${art.id}`}
           >
             <div className="flex flex-col justify-evenly">
               <h1 className="text-xl text-primary">{art.data.title}</h1>
@@ -33,7 +34,7 @@ export const Gallery = ({ data }: Props) => {
               />
               <Tags tags={art.data.tags} />
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
