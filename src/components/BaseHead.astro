@@ -5,7 +5,7 @@ interface Props {
   image?: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, "https://www.pylinker.com");
+const canonicalURL = new URL(Astro.url.pathname, "https://www.siesque.com");
 
 const { title, description, image = "/image.png" } = Astro.props;
 ---
@@ -14,7 +14,7 @@ const { title, description, image = "/image.png" } = Astro.props;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/ico" href="/favicon.ico" />
-<link rel="icon" type="image/ico" href="https://dev.pylinker.com/favicon.ico" />
+<link rel="icon" type="image/ico" href="https://dev.siesque.com/favicon.ico" />
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
@@ -40,20 +40,17 @@ const { title, description, image = "/image.png" } = Astro.props;
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={"https://www.pylinker.com"} />
+<meta property="og:url" content={"https://www.siesque.com"} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta
-  property="og:image"
-  content={new URL(image, "https://www.pylinker.com")}
-/>
+<meta property="og:image" content={new URL(image, "https://www.siesque.com")} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={"https://www.pylinker.com"} />
+<meta property="twitter:url" content={"https://www.siesque.com"} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta
   property="twitter:image"
-  content={new URL(image, "https://www.pylinker.com")}
+  content={new URL(image, "https://www.siesque.com")}
 />

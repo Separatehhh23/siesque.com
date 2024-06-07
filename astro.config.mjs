@@ -11,7 +11,7 @@ import auth from "auth-astro";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://pylinker.com",
+  site: "https://siesque.com",
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "hover"
