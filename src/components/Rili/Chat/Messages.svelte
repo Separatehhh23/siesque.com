@@ -25,7 +25,7 @@
       });
 
     messages = resultList.items
-      .slice(Math.max(resultList.items.length - 20, 0))
+      .slice(Math.max(resultList.items.length - 50, 0))
       .reverse();
   });
 
