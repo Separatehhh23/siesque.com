@@ -20,13 +20,13 @@
       .collection("messages")
       .subscribe("*", async ({ action, record }) => {
         if (action === "create") {
-          messages = [...messages, record];
+          messages = [record, ...messages];
         }
       });
 
-    messages = resultList.items.slice(
-      Math.max(resultList.items.length - 20, 0),
-    );
+    messages = resultList.items
+      .slice(Math.max(resultList.items.length - 20, 0))
+      .reverse();
   });
 
   onDestroy(() => {
@@ -51,19 +51,13 @@
     const resultList = await pb.collection("messages").getList(1, 10000, {
       sort: "created",
     });
-    messages = resultList.items;
+    messages = resultList.items.reverse();
   }
 </script>
 
 <div class="flex min-h-screen w-screen flex-row justify-center">
   <div class="mb-8 mt-8 w-2/3 pb-8 pt-8">
     <div class="flex flex-col gap-2" use:autoAnimate>
-      {#each messages as message (message.id)}
-        <div class="rounded-xl bg-base-200 p-2">
-          <p>{message.text}</p>
-          <small>Sent by @{message.author}</small>
-        </div>
-      {/each}
       <div class="flex w-full flex-row gap-1">
         <form
           on:submit|preventDefault={sendMessage}
@@ -90,6 +84,12 @@
           >
         </div>
       </div>
+      {#each messages as message (message.id)}
+        <div class="rounded-xl bg-base-200 p-2">
+          <p>{message.text}</p>
+          <small>Sent by @{message.author}</small>
+        </div>
+      {/each}
     </div>
   </div>
 </div>
