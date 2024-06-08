@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { CastorList } from "@/components/Rili/CastorList";
+---
+
+<BaseLayout
+  title="Castor list"
+  description="Riliest list containing castor people"
+  image="/beaver.webp"
+>
+  <CastorList client:only="react" />
+</BaseLayout>

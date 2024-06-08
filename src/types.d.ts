@@ -78,6 +78,12 @@ type ArtData = {
   image: string;
 };
 
+type CastorListRole = "Mesopotamico" | "Ceboiah" | "Castor";
+type CastorList = Array<{
+  name: string;
+  role: CastorListRole;
+}>;
+
 export type {
   BlogEntry,
   Params,
@@ -94,4 +100,6 @@ export type {
   SimpleCastakeLeaderboard,
   LeaderboardProps,
   ArtData,
+  CastorList,
+  CastorListRole,
 };

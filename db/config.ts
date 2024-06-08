@@ -38,6 +38,12 @@ const RiliGoverment = defineTable({
     role: column.text(),
   },
 });
+const CastorList = defineTable({
+  columns: {
+    name: column.text({ primaryKey: true }),
+    role: column.text(),
+  },
+});
 
 export default defineDb({
   tables: {
@@ -46,5 +52,6 @@ export default defineDb({
     Notes,
     CastakeLeaderboard,
     RiliGoverment,
+    CastorList,
   },
 });

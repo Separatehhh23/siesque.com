@@ -36,6 +36,7 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
   const button8 = useRef<HTMLAnchorElement>(null);
   const button9 = useRef<HTMLAnchorElement>(null);
   const button10 = useRef<HTMLAnchorElement>(null);
+  const button11 = useRef<HTMLAnchorElement>(null);
 
   return (
     <div className="flex min-h-screen w-screen items-center justify-center">
@@ -92,6 +93,9 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
         <LinkBox ref={button10} link="/rili/chat">
           Chat rili
         </LinkBox>
+        <LinkBox ref={button11} link="/rili/castorlist">
+          Lista castor
+        </LinkBox>
       </div>
 
       {[
@@ -105,6 +109,7 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
         button8,
         button9,
         button10,
+        button11,
       ].map((ref, index) => (
         <Xarrow
           start={titleRef}
