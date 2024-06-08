@@ -36,7 +36,3 @@ export const Tags = ({ tags }: TagsProps) => (
     ))}
   </div>
 );
-
-export function formatDate(date: string) {
-  return moment(date).format("DD/MM/YY");
-}

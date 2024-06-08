@@ -3,6 +3,7 @@
   import autoAnimate from "@formkit/auto-animate";
 
   import { pb } from "@/lib/pocketbase";
+  import { formatDate } from "@/lib/utils";
 
   let newMessage: string;
   let username: string;
@@ -87,7 +88,12 @@
       {#each messages as message (message.id)}
         <div class="rounded-xl bg-base-200 p-2">
           <p>{message.text}</p>
-          <small>Sent by @{message.author}</small>
+          <small
+            >Sent by @{message.author} at {formatDate(
+              message.created,
+              " HH:mm",
+            )}</small
+          >
         </div>
       {/each}
     </div>

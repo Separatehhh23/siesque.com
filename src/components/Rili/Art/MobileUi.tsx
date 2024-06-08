@@ -1,7 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import CountUp from "react-countup";
 
-import { Image, Tags, formatDate } from "./Shared";
+import { Image, Tags } from "./Shared";
+import { formatDate } from "@/lib/utils";
 
 import type { ReactNode } from "react";
 import type { ArtData } from "@/types";
