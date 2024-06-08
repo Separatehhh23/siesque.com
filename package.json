@@ -40,6 +40,7 @@
     "astro": "^4.9.2",
     "auth-astro": "^4.1.1",
     "autoprefixer": "^10.4.19",
+    "bad-words": "^3.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.0.6",
