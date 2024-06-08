@@ -2,8 +2,9 @@
   import { onMount, onDestroy } from "svelte";
   import autoAnimate from "@formkit/auto-animate";
 
-  import { pb } from "../../lib/pocketbase";
-  import { formatDate } from "../../lib/utils";
+  import { pb } from "@/lib/pocketbase";
+  import { formatDate } from "@/lib/utils";
+  import { username as usernameStore, setUsername } from "@/stores";
 
   let newMessage: string;
   let username: string;
@@ -11,8 +12,15 @@
   let unsubscribe: () => void;
   let sending = false;
   let latestMessage: string;
+  let settingUsername = false;
 
   onMount(async () => {
+    if ($usernameStore.name) {
+      username = $usernameStore.name;
+    } else {
+      settingUsername = true;
+    }
+
     const resultList = await pb.collection("messages").getList(1, 10000, {
       sort: "created",
     });
@@ -46,6 +54,9 @@
         sending = false;
       }, 1000);
     }
+    if (settingUsername) {
+      setUsername(username);
+    }
   }
 
   async function showAll() {
@@ -71,12 +82,14 @@
             bind:value={newMessage}
           />
           <div class="join-item h-full w-1 bg-base-200" />
-          <input
-            placeholder="Username"
-            type="text"
-            class="input join-item"
-            bind:value={username}
-          />
+          {#if !$usernameStore.name}
+            <input
+              placeholder="Username"
+              type="text"
+              class="input join-item"
+              bind:value={username}
+            />
+          {/if}
           <button type="submit" class="btn btn-primary join-item">Send</button>
         </form>
         <div class="justify-self-end rounded-xl bg-base-200 p-2">
