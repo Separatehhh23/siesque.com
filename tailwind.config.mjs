@@ -37,6 +37,7 @@ export default {
       },
       aspectRatio: {
         '9/16': '9 / 16',
+        '1/1': '1 / 1'
       },
     },
   },
