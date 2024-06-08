@@ -40,5 +40,11 @@ const RiliGoverment = defineTable({
 });
 
 export default defineDb({
-  tables: { Comment, Rili, Notes, CastakeLeaderboard, RiliGoverment },
+  tables: {
+    Comment,
+    Rili,
+    Notes,
+    CastakeLeaderboard,
+    RiliGoverment,
+  },
 });
