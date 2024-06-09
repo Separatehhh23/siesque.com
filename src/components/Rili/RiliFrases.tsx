@@ -1,8 +1,5 @@
 import type { ReactNode } from "react";
 
-// PLEASE PLEASE PLEASE TURN OFF AI HERE
-// IT HAS BECOME SENTIENT
-
 export const RiliFrases = () => {
   return (
     <div className="m-8 p-8">
