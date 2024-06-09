@@ -19,9 +19,6 @@ export const RiliFrases = () => {
         <Frase author="El otro" year={2023}>
           Mo
         </Frase>
-        <Frase author="El autocompletrador" year={2024}>
-          No me importa, me importa que me muestres la vida
-        </Frase>
       </div>
     </div>
   );
