@@ -5,7 +5,7 @@ import type { APIRoute } from "astro";
 import type {
   CastakeLeaderboard as TCastakeLeaderboard,
   SimpleCastakeLeaderboard,
-} from "@/types";
+} from "../../types";
 
 export const PUT: APIRoute = async ({ request }) => {
   if (request.headers.get("Content-Type") === "application/json") {

@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { Table } from "../../Table";
 import { AltLeaderboardBody } from "./Shared";
 
-import type { LeaderboardProps } from "@/types";
+import type { LeaderboardProps } from "../../../types";
 
 export const Leaderboard = ({ data, className, style }: LeaderboardProps) => {
   if (!data) return;

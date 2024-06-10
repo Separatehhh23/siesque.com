@@ -2,7 +2,7 @@
 import { db, CastorList, eq } from "astro:db";
 
 import type { APIRoute } from "astro";
-import type { CastorListRole } from "@/types";
+import type { CastorListRole } from "../../types";
 
 export const PATCH: APIRoute = async ({ request }) => {
   if (request.headers.get("content-type") === "application/json") {

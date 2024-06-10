@@ -1,7 +1,7 @@
 import { Image, Tags } from "./Shared";
 import { formatDate } from "@/lib/utils";
 
-import type { ArtData } from "@/types";
+import type { ArtData } from "../../../types";
 
 type Props = {
   data: Array<{

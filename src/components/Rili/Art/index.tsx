@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 
 import { useScreenDetector } from "@/hooks/useScreenDetector";
 
-import type { ArtData } from "@/types";
+import type { ArtData } from "../../../types";
 
 const MobileUi = lazy(() =>
   import("./MobileUi").then((d) => ({ default: d.MobileUi })),

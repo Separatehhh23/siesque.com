@@ -6,7 +6,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Table } from "../Table";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "@/stores";
-import type { RiliGoverment } from "@/types";
+import type { RiliGoverment } from "../../types";
 
 export const RiliGov = () => {
   function sortByRole(riliGov: Array<RiliGoverment>) {

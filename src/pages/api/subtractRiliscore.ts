@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 // @ts-expect-error: Module exists with all of those exports
 import { db, Rili, eq } from "astro:db";
-import type { RiliObject, RiliArray } from "@/types";
+import type { RiliObject, RiliArray } from "../../types";
 
 export const PATCH: APIRoute = async ({ request }) => {
   if (request.headers.get("Content-Type") === "application/json") {

@@ -4,7 +4,7 @@ import { experiments, toggleExperiment } from "@/stores";
 import { Table } from "@/components/Table";
 import { Checkbox } from "../ui/checkbox";
 
-import type { Experiments as TExperiments } from "@/types";
+import type { Experiments as TExperiments } from "../../types";
 
 export const Experiments = () => {
   const $experiments = useStore(experiments);

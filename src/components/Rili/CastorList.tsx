@@ -7,7 +7,7 @@ import { Table } from "../Table";
 import { queryClient } from "@/stores";
 
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { CastorList as TCastorList, CastorListRole } from "@/types";
+import type { CastorList as TCastorList, CastorListRole } from "../../types";
 
 export const CastorList = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);

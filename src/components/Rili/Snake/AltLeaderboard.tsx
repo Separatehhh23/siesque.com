@@ -4,7 +4,10 @@ import { Suspense } from "react";
 import { Table } from "../../Table";
 import { AltLeaderboardBody } from "./Shared";
 
-import type { SimpleCastakeLeaderboard, LeaderboardProps } from "@/types";
+import type {
+  SimpleCastakeLeaderboard,
+  LeaderboardProps,
+} from "../../../types";
 
 export const AltLeaderboard = ({
   data,

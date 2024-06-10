@@ -4,7 +4,7 @@ import { Image, Tags } from "./Shared";
 import { formatDate } from "@/lib/utils";
 
 import type { ReactNode } from "react";
-import type { ArtData } from "@/types";
+import type { ArtData } from "../../../types";
 
 type Props = {
   data: ArtData;

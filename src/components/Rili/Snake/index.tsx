@@ -33,7 +33,7 @@ import type {
   SetState,
   CastakeLeaderboard,
   SimpleCastakeLeaderboard,
-} from "@/types";
+} from "../../../types";
 
 const MobileButtons = lazy(() =>
   import("./MobileButtons").then((d) => ({

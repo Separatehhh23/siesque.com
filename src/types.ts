@@ -86,7 +86,6 @@ type CastorList = Array<{
 
 export type {
   BlogEntry,
-  Params,
   ModalElement,
   RiliObject,
   RiliArray,

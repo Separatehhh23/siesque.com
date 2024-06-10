@@ -2,7 +2,7 @@
 import { db, CastorList } from "astro:db";
 
 import type { APIRoute } from "astro";
-import type { CastorList as TCastorList } from "@/types";
+import type { CastorList as TCastorList } from "../../types";
 
 export const GET: APIRoute = async ({ request }) => {
   const riliGov: TCastorList = await db.select().from(CastorList);

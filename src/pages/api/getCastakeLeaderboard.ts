@@ -2,7 +2,7 @@
 import { db, CastakeLeaderboard } from "astro:db";
 
 import type { APIRoute } from "astro";
-import type { CastakeLeaderboard as TCastakeLeaderboard } from "@/types";
+import type { CastakeLeaderboard as TCastakeLeaderboard } from "../../types";
 
 export const GET: APIRoute = async ({ request }) => {
   const leaderboard: Array<TCastakeLeaderboard> = await db
