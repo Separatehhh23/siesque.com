@@ -32,7 +32,7 @@ const RiliLand = ({ children }: Props) => {
   }, [isHovering]);
 
   const titleRef = useRef<HTMLDivElement>(null);
-  const buttonRef = Array.from({ length: 11 }).map(() =>
+  const buttonRef = Array.from({ length: 10 }).map(() =>
     useRef<HTMLAnchorElement>(null),
   );
 
@@ -94,9 +94,6 @@ const RiliLand = ({ children }: Props) => {
         </LinkBox>
         <LinkBox ref={buttonRef[9]} link="/rili/frases">
           Frases rili
-        </LinkBox>
-        <LinkBox ref={buttonRef[10]} link="/rili/hamurabi">
-          Rilicode hamurabi
         </LinkBox>
       </div>
 
