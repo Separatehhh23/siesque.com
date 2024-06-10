@@ -5,6 +5,7 @@
 
   import { pb } from "@/lib/pocketbase";
   import { formatDate } from "@/lib/utils";
+  import { addExtraBadWords } from "@/lib/addExtraBadWords";
   import { username as usernameStore, setUsername } from "@/stores";
 
   let newMessage: string;
@@ -24,6 +25,7 @@
     }
 
     filter = new Filter();
+    addExtraBadWords(filter);
 
     const resultList = await pb.collection("messages").getList(1, 10000, {
       sort: "created",
@@ -61,6 +63,7 @@
     if (settingUsername) {
       setUsername(username);
     }
+    newMessage = undefined;
   }
 
   async function showAll() {
