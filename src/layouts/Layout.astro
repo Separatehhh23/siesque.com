@@ -32,6 +32,13 @@ if (typeof description !== "string") description = title;
     <SpeedInsights />
 
     <Fragment set:html={head} />
+
+    <script>
+      // Experiment loader
+      import { toggleExperiment } from "@/stores";
+
+      (window as any).toggleExperiment = toggleExperiment;
+    </script>
   </head>
   <body><slot /></body>
 </html>

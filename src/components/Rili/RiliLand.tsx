@@ -1,4 +1,3 @@
-import type { FC, ReactNode } from "react";
 import React, {
   useRef,
   forwardRef,
@@ -8,16 +7,23 @@ import React, {
 } from "react";
 import Draggable from "react-draggable";
 import Xarrow, { useXarrow } from "react-xarrows";
+import { useStore } from "@nanostores/react";
+
 import { cn } from "@/lib/utils";
 import { BackgroundGradient } from "../ui/background-gradient";
 import Title from "../Title";
+import { newMessages } from "@/lib/pocketbase";
+
+import type { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
 }
 
-const RiliLand: FC<Props> = ({ children }: Props) => {
+const RiliLand = ({ children }: Props) => {
   const [isHovering, setIsHovering] = useState(false);
+
+  const messages = useStore(newMessages);
 
   const updateXarrow = useXarrow();
 
@@ -26,18 +32,9 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
   }, [isHovering]);
 
   const titleRef = useRef<HTMLDivElement>(null);
-  const button1 = useRef<HTMLAnchorElement>(null);
-  const button2 = useRef<HTMLAnchorElement>(null);
-  const button3 = useRef<HTMLAnchorElement>(null);
-  const button4 = useRef<HTMLAnchorElement>(null);
-  const button5 = useRef<HTMLAnchorElement>(null);
-  const button6 = useRef<HTMLAnchorElement>(null);
-  const button7 = useRef<HTMLAnchorElement>(null);
-  const button8 = useRef<HTMLAnchorElement>(null);
-  const button9 = useRef<HTMLAnchorElement>(null);
-  const button10 = useRef<HTMLAnchorElement>(null);
-  const button11 = useRef<HTMLAnchorElement>(null);
-  const button12 = useRef<HTMLAnchorElement>(null);
+  const buttonRef = Array.from({ length: 11 }).map(() =>
+    useRef<HTMLAnchorElement>(null),
+  );
 
   return (
     <div className="flex min-h-screen w-screen items-center justify-center">
@@ -64,62 +61,50 @@ const RiliLand: FC<Props> = ({ children }: Props) => {
       </Draggable>
 
       <div className="grid h-screen w-screen grid-cols-5 grid-rows-5 gap-4 pl-2 pr-2 pt-2">
-        <LinkBox ref={button1} link="/rili/list">
+        <LinkBox ref={buttonRef[0]} link="/rili/list">
           Lista rili
         </LinkBox>
-        <LinkBox ref={button2} link="/rili/test">
+        <LinkBox ref={buttonRef[1]} link="/rili/test">
           Test rili
         </LinkBox>
-        <LinkBox ref={button3} link="/rili/docs">
+        <LinkBox ref={buttonRef[2]} link="/rili/docs">
           Documentos rili
         </LinkBox>
-        <LinkBox ref={button4} link="/rili/capcha">
+        <LinkBox ref={buttonRef[3]} link="/rili/capcha">
           Rili capcha
         </LinkBox>
-        <LinkBox ref={button5} link="/rili/snake">
+        <LinkBox ref={buttonRef[4]} link="/rili/snake">
           Castor snake
         </LinkBox>
-        <LinkBox ref={button6} link="/rili/goverment">
+        <LinkBox ref={buttonRef[5]} link="/rili/goverment">
           Rili government
         </LinkBox>
-        <LinkBox ref={button7} link="/rili/experiments">
-          Experiments
-        </LinkBox>
-        <LinkBox ref={button8} link="/rili/art">
-          Arte rili
-        </LinkBox>
-        <LinkBox ref={button9} link="/rili/dictionary">
+        <LinkBox ref={buttonRef[6]} link="/rili/dictionary">
           Diccionario rili
         </LinkBox>
-        <LinkBox ref={button10} link="/rili/chat">
+        <LinkBox
+          ref={buttonRef[7]}
+          link="/rili/chat"
+          cornerIcon={<p>{messages.length}</p>}
+        >
           Chat rili
         </LinkBox>
-        <LinkBox ref={button11} link="/rili/castorlist">
+        <LinkBox ref={buttonRef[8]} link="/rili/castorlist">
           Lista castor
         </LinkBox>
-        <LinkBox ref={button12} link="/rili/frases">
+        <LinkBox ref={buttonRef[9]} link="/rili/frases">
           Frases rili
+        </LinkBox>
+        <LinkBox ref={buttonRef[10]} link="/rili/hamurabi">
+          Rilicode hamurabi
         </LinkBox>
       </div>
 
-      {[
-        button1,
-        button2,
-        button3,
-        button4,
-        button5,
-        button6,
-        button7,
-        button8,
-        button9,
-        button10,
-        button11,
-        button12,
-      ].map((ref, index) => (
+      {buttonRef.map((ref, index) => (
         <Xarrow
           start={titleRef}
           end={ref}
-          curveness={0.8}
+          curveness={Math.PI / (10 / 3)}
           showHead={false}
           color="#009688"
           endAnchor="bottom"
@@ -134,10 +119,11 @@ interface LinkBoxProps {
   children: ReactNode;
   link: string;
   className?: string;
+  cornerIcon?: ReactNode;
 }
 
 const LinkBox = forwardRef<HTMLAnchorElement, LinkBoxProps>(
-  ({ children, link, className }: LinkBoxProps, ref) => (
+  ({ children, link, className, cornerIcon }: LinkBoxProps, ref) => (
     <div
       className={cn(
         "z-20 flex cursor-pointer flex-col justify-center",
@@ -149,6 +135,7 @@ const LinkBox = forwardRef<HTMLAnchorElement, LinkBoxProps>(
         ref={ref}
         className="text-text flex min-w-0 flex-row justify-center text-wrap rounded-3xl border-4 border-accent bg-base-200 p-8 sm:text-sm md:text-xl"
       >
+        <div>{cornerIcon}</div>
         {children}
       </a>
     </div>
