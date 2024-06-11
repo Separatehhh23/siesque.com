@@ -10,9 +10,18 @@
   url("/fonts/Inter-VariableFont.ttf") format("ttf");
 }
 
+@font-face {
+  font-family: Geist;
+  font-weight: auto;
+  src: local("Geist"),
+  url("/fonts/GeistVF.woff2") format("woff2"),
+  url("/fonts/GeistVF.woff") format("woff"),
+  url("/fonts/GeistVF.ttf") format("ttf");
+}
+
 // Default
 body {
-  font-family: Inter, sans-serif;
+  font-family: Geist, sans-serif;
 
   @apply overflow-x-clip overflow-y-visible; /* Remove horizontal scrollbar */
 }

@@ -1,5 +1,5 @@
 ---
-// Import globals.css so that it can be used in every page that imports BaseLayout.astro
+// Import globals.scss so that it can be used in every page
 import "@/styles/global.scss";
 
 import BaseHead from "@/components/BaseHead.astro";
@@ -13,14 +13,11 @@ let {
   head,
   image,
 }: {
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
   head?: HTMLTag;
   image?: string;
 } = Astro.props;
-
-if (typeof title !== "string") title = "Siesque";
-if (typeof description !== "string") description = title;
 ---
 
 <!doctype html>
@@ -35,9 +32,12 @@ if (typeof description !== "string") description = title;
 
     <script>
       // Experiment loader
-      import { toggleExperiment } from "@/stores";
-
-      (window as any).toggleExperiment = toggleExperiment;
+      (window as any).toggleExperiment = import("@/stores").then(
+        (d) => d.toggleExperiment,
+      );
+      (window as any).getExperiments = import("@/stores").then(
+        (d) => d.experiments.get,
+      );
     </script>
   </head>
   <body><slot /></body>
