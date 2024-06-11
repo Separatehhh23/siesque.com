@@ -1,11 +1,10 @@
 ---
-// Import globals.scss so that it can be used in every page
-import "@/styles/global.scss";
-
-import BaseHead from "@/components/BaseHead.astro";
 import { ViewTransitions } from "astro:transitions";
 import type { HTMLTag } from "astro/types";
 import SpeedInsights from "@vercel/speed-insights/astro";
+
+import "@/styles/global.scss";
+import BaseHead from "@/components/BaseHead.astro";
 
 let {
   title,
@@ -31,13 +30,9 @@ let {
     <Fragment set:html={head} />
 
     <script>
-      // Experiment loader
-      (window as any).toggleExperiment = import("@/stores").then(
-        (d) => d.toggleExperiment,
-      );
-      (window as any).getExperiments = import("@/stores").then(
-        (d) => d.experiments.get,
-      );
+      import { attachExperiments } from "@/lib/experiments";
+
+      attachExperiments();
     </script>
   </head>
   <body><slot /></body>

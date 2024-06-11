@@ -27,6 +27,10 @@ const extraBadWords = [
   "soplapollas",
   "verga",
   "pene",
+  "cocs",
+  "caca",
+  "cacas",
+  "dicks",
 ];
 
 export function addExtraBadWords(filter: any) {

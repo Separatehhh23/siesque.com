@@ -19,12 +19,12 @@ import {
   queryClient,
   username,
   setUsername,
-  experiments,
 } from "@/stores";
 import TileGrid from "./TileGrid";
 import { BackgroundGradient } from "../../ui/background-gradient";
 import { cn } from "@/lib/utils";
 import { useScreenDetector } from "@/hooks/useScreenDetector";
+import { experiments } from "@/lib/experiments";
 
 import type { FormEvent, ReactNode } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
@@ -327,7 +327,7 @@ const CastorSnake = () => {
             </span>
           </p>
         </button>
-        {isDesktop && !_experiments.altLeaderboard ? (
+        {isDesktop && !_experiments.altLeaderboard.value ? (
           <Suspense fallback={<p>Loading leaderboard...</p>}>
             <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
           </Suspense>
@@ -400,7 +400,7 @@ const CastorSnake = () => {
                 </Stage>
               </div>
               {!isDesktop ? (
-                !_experiments.altLeaderboard ? (
+                !_experiments.altLeaderboard.value ? (
                   <Suspense fallback={<p>Loading leaderboard...</p>}>
                     <Leaderboard
                       data={leaderboardQuery.data}
