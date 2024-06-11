@@ -132,7 +132,7 @@ const LinkBox = forwardRef<HTMLAnchorElement, LinkBoxProps>(
         ref={ref}
         className="text-text flex min-w-0 flex-row justify-center text-wrap rounded-3xl border-4 border-accent bg-base-200 p-8 sm:text-sm md:text-xl"
       >
-        <div>{cornerIcon}</div>
+        <divc className="-transform translateX-[-50%] transtaleY-[-50%] rounded-xl bg-red-500 p-2">{cornerIcon}</div>
         {children}
       </a>
     </div>
