@@ -22,8 +22,7 @@
 // Default
 body {
   font-family: Geist, sans-serif;
-
-  @apply overflow-x-clip overflow-y-visible; /* Remove horizontal scrollbar */
+  overflow-x: hidden;
 }
 
 h1 {
