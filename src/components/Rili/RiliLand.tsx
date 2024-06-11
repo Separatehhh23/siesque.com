@@ -85,7 +85,7 @@ const RiliLand = ({ children }: Props) => {
         <LinkBox
           ref={buttonRef[7]}
           link="/rili/chat"
-          cornerIcon={<p>{messages.length}</p>}
+          cornerIcon={messages.length}
         >
           Chat rili
         </LinkBox>
@@ -127,12 +127,16 @@ const LinkBox = forwardRef<HTMLAnchorElement, LinkBoxProps>(
         className,
       )}
     >
+      {!!cornerIcon || cornerIcon === 0 && (
+        <div className="absolute rounded-full bg-red-500 p-2 text-white w-[28px] h-[28px] flex justify-center items-center" style={{ transform: "translateY(-42px)" }}>
+          {cornerIcon}
+        </div>
+      )}
       <a
         href={link}
         ref={ref}
         className="text-text flex min-w-0 flex-row justify-center text-wrap rounded-3xl border-4 border-accent bg-base-200 p-8 sm:text-sm md:text-xl"
       >
-        <div>{cornerIcon}</div>
         {children}
       </a>
     </div>
