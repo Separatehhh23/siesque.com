@@ -8,7 +8,7 @@ interface Props {
 
 const GradientTitle = ({ children, className }: Props) => (
   <div className={className}>
-    <div className="flex w-[125%] flex-col bg-gradient-to-br from-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+    <div className="flex w-[125%] bg-gradient-to-br from-cyan-500 to-indigo-500 bg-clip-text text-transparent">
       <Title>{children}</Title>
     </div>
   </div>
@@ -20,8 +20,8 @@ interface TitleProps {
 }
 
 const Title = ({ children, className }: TitleProps) => (
-  <div className={cn("inline-flex", className)}>
-    <h1 className="inline-block font-extrabold sm:text-4xl md:text-8xl xl:text-[10rem]">
+  <div className={cn("flex", className)}>
+    <h1 className="inline-block font-extrabold sm:text-4xl md:text-6xl xl:text-8xl 2xl:text-[10rem]">
       {children}
     </h1>
   </div>
