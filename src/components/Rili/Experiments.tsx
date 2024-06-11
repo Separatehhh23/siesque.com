@@ -1,10 +1,10 @@
 import { useStore } from "@nanostores/react";
 
-import { experiments, toggleExperiment } from "@/stores";
+import { experiments, toggleExperiment } from "@/lib/experiments";
 import { Table } from "@/components/Table";
 import { Checkbox } from "../ui/checkbox";
 
-import type { Experiments as TExperiments } from "../../types";
+import type { Experiments as TExperiments } from "@/lib/experiments";
 
 export const Experiments = () => {
   const $experiments = useStore(experiments);
@@ -32,7 +32,7 @@ export const Experiments = () => {
       {experimentData.map(([key, value]) => (
         <Table.Body key={key}>
           <Table.BodyItem>
-            <Checkbox checked={value} onClick={() => toggleExperiment(key)} />
+            <Checkbox checked={value.value} onClick={() => toggleExperiment(key)} />
           </Table.BodyItem>
           <Table.BodyItem>{key}</Table.BodyItem>
         </Table.Body>
