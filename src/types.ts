@@ -41,10 +41,6 @@ interface Position {
 
 type SetState<T> = Dispatch<SetStateAction<T>>;
 
-type Experiments = {
-  altLeaderboard: boolean;
-};
-
 type CastakeLeaderboard = {
   username: string;
   scoreAssist: number;
@@ -92,7 +88,6 @@ export type {
   DrawGraphics,
   Position,
   SetState,
-  Experiments,
   CastakeLeaderboard,
   RiliGoverment,
   RiliGovermentRole,

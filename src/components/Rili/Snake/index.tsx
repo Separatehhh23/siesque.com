@@ -19,7 +19,6 @@ import {
   queryClient,
   username,
   setUsername,
-  experiments,
 } from "@/stores";
 import TileGrid from "./TileGrid";
 import { BackgroundGradient } from "../../ui/background-gradient";
@@ -33,7 +32,7 @@ import type {
   SetState,
   CastakeLeaderboard,
   SimpleCastakeLeaderboard,
-} from "../../../types";
+} from "@/types";
 
 const MobileButtons = lazy(() =>
   import("./MobileButtons").then((d) => ({
@@ -44,12 +43,6 @@ const MobileButtons = lazy(() =>
 const Leaderboard = lazy(() =>
   import("./Leaderboard").then((d) => ({
     default: d.Leaderboard,
-  })),
-);
-
-const AltLeaderboard = lazy(() =>
-  import("./AltLeaderboard").then((d) => ({
-    default: d.AltLeaderboard,
   })),
 );
 
@@ -81,7 +74,6 @@ const CastorSnake = () => {
 
   const _highScore = useStore(highScore);
   const _username = useStore(username);
-  const _experiments = useStore(experiments);
 
   const { isDesktop } = useScreenDetector();
 
@@ -327,18 +319,11 @@ const CastorSnake = () => {
             </span>
           </p>
         </button>
-        {isDesktop && !_experiments.altLeaderboard ? (
+        {isDesktop ? (
           <Suspense fallback={<p>Loading leaderboard...</p>}>
             <Leaderboard data={leaderboardQuery.data} className="bg-base-200" />
           </Suspense>
-        ) : (
-          <Suspense fallback={<p>Loading leaderboard...</p>}>
-            <AltLeaderboard
-              data={leaderboardQuery.data}
-              className="bg-base-200"
-            />
-          </Suspense>
-        )}
+        ) : null}
       </div>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
         {isGameOver && (
@@ -400,21 +385,12 @@ const CastorSnake = () => {
                 </Stage>
               </div>
               {!isDesktop ? (
-                !_experiments.altLeaderboard ? (
-                  <Suspense fallback={<p>Loading leaderboard...</p>}>
-                    <Leaderboard
-                      data={leaderboardQuery.data}
-                      className="absolute mt-4 bg-base-200"
-                    />
-                  </Suspense>
-                ) : (
-                  <Suspense fallback={<p>Loading leaderboard...</p>}>
-                    <AltLeaderboard
-                      data={leaderboardQuery.data}
-                      className="absolute mt-4 bg-base-200"
-                    />
-                  </Suspense>
-                )
+                <Suspense fallback={<p>Loading leaderboard...</p>}>
+                  <Leaderboard
+                    data={leaderboardQuery.data}
+                    className="absolute mt-4 bg-base-200"
+                  />
+                </Suspense>
               ) : null}
             </div>
           </Suspense>
