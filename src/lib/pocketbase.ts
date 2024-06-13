@@ -23,7 +23,7 @@ await pb.collection("messages").subscribe("*", async ({ action, record }) => {
     newMessages.set({ messages: [...newMessages.get().messages, record] });
   }
 });
-
+/*
 if (
   typeof window !== "undefined" &&
   Array.isArray(
@@ -32,3 +32,4 @@ if (
 ) {
   localStorage.setItem("newMessages", JSON.stringify({ messages: [] }));
 }
+*/
