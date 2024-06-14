@@ -14,12 +14,13 @@ export default defineConfig({
     }),
   ],
   callbacks: {
-    jwt: async ({ user }) => {
+    jwt: async ({ user, token }) => {
       await fetch("/api/addUser", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: user.name }),
       });
+      return token
     },
   },
 });
