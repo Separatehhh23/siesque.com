@@ -17,6 +17,7 @@ export const PUT: APIRoute = async ({ request, clientAddress }) => {
         ip: clientAddress,
       });
     }
+    return new Response("OK", { status: 200 });
   }
   return new Response("Invalid content type", { status: 400 });
 };
