@@ -3,7 +3,7 @@
   import autoAnimate from "@formkit/auto-animate";
   import Filter from "bad-words";
 
-  import { pb, clearAllMessages } from "@/lib/pocketbase";
+  import { pb } from "@/lib/pocketbase";
   import { formatDate } from "@/lib/utils";
   import { addExtraBadWords } from "@/lib/addExtraBadWords";
   import { username as usernameStore, setUsername } from "@/stores";
@@ -18,8 +18,6 @@
   let filter;
 
   onMount(async () => {
-    clearAllMessages();
-
     if ($usernameStore.name) {
       username = $usernameStore.name;
     } else {
@@ -39,7 +37,6 @@
         if (action === "create") {
           messages = [record, ...messages];
         }
-        setTimeout(clearAllMessages, 10);
       });
 
     messages = resultList.items
