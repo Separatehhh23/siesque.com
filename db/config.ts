@@ -44,6 +44,13 @@ const CastorList = defineTable({
     role: column.text(),
   },
 });
+const Users = defineTable({
+  columns: {
+    username: column.text({ primaryKey: true }),
+    admin: column.boolean({ default: false }),
+    ip: column.text({ optional: true }),
+  },
+});
 
 export default defineDb({
   tables: {
@@ -53,5 +60,6 @@ export default defineDb({
     CastakeLeaderboard,
     RiliGoverment,
     CastorList,
+    Users,
   },
 });

@@ -3,7 +3,7 @@ import { persistentAtom } from "@nanostores/persistent";
 
 export const pb = new PocketBase("https://siesque.pockethost.io/");
 
-export const newMessages = persistentAtom(
+export const newMessages = persistentAtom<{ messages: Array<any> }>(
   "newMessages",
   {
     messages: [],
@@ -23,13 +23,10 @@ await pb.collection("messages").subscribe("*", async ({ action, record }) => {
     newMessages.set({ messages: [...newMessages.get().messages, record] });
   }
 });
-/*
+
 if (
   typeof window !== "undefined" &&
-  Array.isArray(
-    JSON.parse(JSON.parse(localStorage.getItem("newMessages") ?? "")),
-  )
+  Array.isArray(JSON.parse(localStorage.getItem("newMessages") ?? ""))
 ) {
   localStorage.setItem("newMessages", JSON.stringify({ messages: [] }));
 }
-*/
