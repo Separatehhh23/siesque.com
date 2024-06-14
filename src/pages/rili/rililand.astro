@@ -1,8 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import RiliLand from "@/components/Rili/RiliLand";
-import { Image } from "astro:assets";
-import RiliLandLogo from "@/assets/RililandLogoNoBg.png";
+import RiliLand from "../../components/Rili/RiliLand";
 ---
 
 <BaseLayout
@@ -10,12 +8,5 @@ import RiliLandLogo from "@/assets/RililandLogoNoBg.png";
   description="The riliest place on uranus"
   image="/RililandLogoNoBg.png"
 >
-  <RiliLand client:only="react">
-    <Image
-      src={RiliLandLogo}
-      alt="RiliLand logo"
-      draggable="false"
-      height="196"
-    />
-  </RiliLand>
+  <RiliLand />
 </BaseLayout>
