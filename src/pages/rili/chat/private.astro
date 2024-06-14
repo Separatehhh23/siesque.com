@@ -1,28 +1,12 @@
 ---
-import { getSession } from "auth-astro/server";
-// @ts-expect-error: Module gets built at build time
-import { db, Users, eq } from "astro:db";
-
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import RiliChatPriv from "@/components/Rili/RiliChatPriv.svelte";
-
-const session = await getSession(Astro.request);
-
-const user = await db
-  .select()
-  .from(Users)
-  .where(eq(Users.name, session?.user?.name))[0];
 ---
 
 <BaseLayout
   title="Rili Chat Private"
   description="Riliest private chat app ever"
 >
-  {
-    user && user.admin ? (
-      <RiliChatPriv client:only="svelte" />
-    ) : (
-      <h1 class="text-4xl text-error">Nah</h1>
-    )
-  }
+  <RiliChatPriv client:only="svelte" />
+  <h1 class="text-4xl text-error">Nah</h1>
 </BaseLayout>

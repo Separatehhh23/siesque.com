@@ -7,7 +7,6 @@ import svelte from "@astrojs/svelte";
 import react from "@astrojs/react";
 import db from "@astrojs/db";
 import svgr from "vite-plugin-svgr";
-import auth from "auth-astro";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +17,7 @@ export default defineConfig({
   },
   integrations: [tailwind({
     applyBaseStyles: false
-  }), sitemap(), mdx(), svelte(), react(), db(), auth()],
+  }), sitemap(), mdx(), svelte(), react(), db()],
   output: "server",
   adapter: vercel({
     speedInsights: true
