@@ -1,41 +1,33 @@
-import React, {
-  useRef,
-  forwardRef,
-  useState,
-  useEffect,
-  Suspense,
-} from "react";
-import Draggable from "react-draggable";
-import { useStore } from "@nanostores/react";
+import React, { forwardRef } from "react";
 import { Lock } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { BackgroundGradient } from "../ui/background-gradient";
-import Title from "../Title";
-import { newMessages } from "@/lib/pocketbase";
 
-import type { ReactNode, CSSProperties } from "react";
+import type { ReactNode } from "react";
 
-interface Props {
-  children: ReactNode;
-}
-
-const RiliLand = ({ children }: Props) => {
-  const messages = useStore(newMessages);
-
+const RiliLand = () => {
   return (
     <div className="m-4 grid grid-cols-3 gap-2 p-4">
       <LinkBox link="/rili/dictionary">Diccionario Rili</LinkBox>
       <LinkBox link="/rili/test">Test Rili</LinkBox>
-      <LinkBox link="/rili/chat" cornerIcon={messages.messages.length}>
-        Chat Rili Publico
-      </LinkBox>
+      <LinkBox link="/rili/chat">Chat Rili Publico</LinkBox>
+      <LinkBox link="/rili/snake">Castake v1</LinkBox>
+      <LinkBox link="/rili/castake">Castake v2 (WIP)</LinkBox>
       <div className="col-span-3 flex h-[28px] items-center justify-center rounded-full border-4 border-secondary bg-base-200 p-8 text-3xl text-secondary">
-        Auth Required <div className="px-1" /> <Lock />
+        Auth Required <SpacedLock />
       </div>
-      <LinkBox link="/rili/list">List Rili</LinkBox>
-      <LinkBox link="/rili/goverment">Rili Goverment</LinkBox>
-      <LinkBox link="/rili/castorlist">Lista Castor</LinkBox>
+      <LinkBox link="/rili/list">
+        List Rili <SpacedLock />
+      </LinkBox>
+      <LinkBox link="/rili/goverment">
+        Rili Goverment <SpacedLock />
+      </LinkBox>
+      <LinkBox link="/rili/castorlist">
+        Lista Castor <SpacedLock />
+      </LinkBox>
+      <LinkBox link="/rili/chat/private">
+        Chat Rili Privado <SpacedLock />
+      </LinkBox>
     </div>
   );
 };
@@ -64,14 +56,24 @@ const LinkBox = forwardRef<HTMLAnchorElement, LinkBoxProps>(
           {cornerIcon}
         </div>
       ) : null}
-      <a href={link} ref={ref}>
-        <p className="flex min-w-0 flex-row justify-center text-wrap rounded-3xl border-4 border-accent bg-base-200 p-8 sm:text-sm md:text-xl">
-          {children}
-        </p>
+      <a
+        href={link}
+        ref={ref}
+        className="flex min-w-0 flex-row justify-center text-wrap rounded-3xl border-4 border-accent bg-base-200 p-8 sm:text-sm md:text-xl"
+      >
+        {children}
+
         {icon}
       </a>
     </div>
   ),
+);
+
+const SpacedLock = () => (
+  <>
+    <div className="px-1" />
+    <Lock />
+  </>
 );
 
 export default RiliLand;
