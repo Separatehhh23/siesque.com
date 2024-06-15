@@ -1,29 +1,8 @@
 <script lang="ts">
   import { pb, currentUser } from "@/lib/pocketbase";
 
-  let username: string;
-  let password: string;
   let windowWidth = window.innerWidth;
   let windowHeight = window.innerHeight;
-
-  async function login() {
-    await pb.collection("users").authWithPassword(username, password);
-  }
-
-  async function signUp() {
-    if (!username || !password) return;
-
-    try {
-      const data = {
-        username,
-        password,
-      };
-      const createdUser = await pb.collection("users").create(data);
-      await login();
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
   function signOut() {
     pb.authStore.clear();
@@ -73,35 +52,11 @@
         </form>
       {:else}
         <form class="card-body" on:submit|preventDefault>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Email</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Username"
-              class="input input-bordered"
-              bind:value={username}
-            />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Password</span>
-            </label>
-            <input
-              type="password"
-              placeholder="Password"
-              class="input input-bordered"
-              bind:value={password}
-            />
-          </div>
           <div class="form-control mt-6 gap-2">
-            <button class="btn btn-primary" on:click={login}>Log In</button>
-            <button class="btn btn-secondary" on:click={signUp}>Sign Up</button>
-            <button class="btn btn-ghost" on:click={signInWithGithub}
+            <button class="btn btn-primary" on:click={signInWithGithub}
               >Sign in with github</button
             >
-            <button class="btn btn-ghost" on:click={signInWithGoogle}
+            <button class="btn btn-primary" on:click={signInWithGoogle}
               >Sign in with google</button
             >
           </div>
