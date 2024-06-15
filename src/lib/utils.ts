@@ -7,5 +7,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDate(date: string, extra?: string) {
-  return moment(date).format(`DD/MM/YY${extra}`);
+  return moment(date).format(`DD/MM/YY${extra ?? ""}`);
 }
