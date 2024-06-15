@@ -3,12 +3,16 @@
 
   let username: string;
   let password: string;
+  let windowWidth = window.innerWidth;
+  let windowHeight = window.innerHeight;
 
   async function login() {
     await pb.collection("users").authWithPassword(username, password);
   }
 
   async function signUp() {
+    if (!username || !password) return;
+
     try {
       const data = {
         username,
@@ -32,19 +36,77 @@
   async function signInWithGoogle() {
     await pb.collection("users").authWithOAuth2({ provider: "google" });
   }
+
+  $: windowWidth = window.innerWidth;
+  $: windowHeight = window.innerHeight;
 </script>
 
-{#if $currentUser}
-  <p>Signed in as {$currentUser.username}</p>
-  <button on:click={signOut}>Sign out</button>
-{:else}
-  <form on:submit|preventDefault>
-    <input placeholder="Username" type="text" bind:value={username} />
-    <input placeholder="Password" type="password" bind:value={password} />
+<div class="flex h-full w-full flex-row">
+  {#each Array.from( { length: Math.ceil(windowWidth / 100) }, ).map((_, i) => i) as xTile (xTile)}
+    <div class="flex h-screen w-[100px] flex-col">
+      {#each Array.from( { length: Math.ceil(windowHeight / 100) }, ).map((_, i) => i) as yTile (yTile)}
+        <img alt="castor" src="/beaver.webp" />
+      {/each}
+    </div>
+  {/each}
+</div>
 
-    <button on:click={login}>Log In</button>
-    <button on:click={signUp}>Sign Up</button>
-    <button on:click={signInWithGithub}>Sign in with github</button>
-    <button on:click={signInWithGoogle}>Sign in with google</button>
-  </form>
-{/if}
+<div class="hero absolute top-16 min-h-screen">
+  <div class="glass hero-content flex-col rounded-xl p-8 lg:flex-row-reverse">
+    <div class="text-center lg:text-left">
+      <h1 class="text-5xl font-bold">Iniciar sesion</h1>
+      <p class="py-6">
+        Inicia sesion si no quieres ser un castor o un <i
+          >Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
+          excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a
+          id nisi</i
+        >
+      </p>
+    </div>
+    <div class="card w-full max-w-sm shrink-0 bg-base-100 shadow-2xl">
+      {#if $currentUser}
+        <form class="card-body" on:submit|preventDefault>
+          <h2>Signed in as {$currentUser.username}</h2>
+          <div class="form-control mt-6 gap-2">
+            <button class="btn btn-primary" on:click={signOut}>Sign out</button>
+          </div>
+        </form>
+      {:else}
+        <form class="card-body" on:submit|preventDefault>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Email</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Username"
+              class="input input-bordered"
+              bind:value={username}
+            />
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Password"
+              class="input input-bordered"
+              bind:value={password}
+            />
+          </div>
+          <div class="form-control mt-6 gap-2">
+            <button class="btn btn-primary" on:click={login}>Log In</button>
+            <button class="btn btn-secondary" on:click={signUp}>Sign Up</button>
+            <button class="btn btn-ghost" on:click={signInWithGithub}
+              >Sign in with github</button
+            >
+            <button class="btn btn-ghost" on:click={signInWithGoogle}
+              >Sign in with google</button
+            >
+          </div>
+        </form>
+      {/if}
+    </div>
+  </div>
+</div>
