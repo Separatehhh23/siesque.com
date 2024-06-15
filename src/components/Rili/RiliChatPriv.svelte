@@ -25,8 +25,8 @@
       .collection("privateMessages")
       .subscribe("*", async ({ action, record }) => {
         if (action === "create") {
-          const user = await pb.collection("users").getOne(record.sender);
-          record.expand = { user };
+          const sender = await pb.collection("users").getOne(record.sender);
+          record.expand = { sender };
           messages = [record, ...messages];
         }
       });
