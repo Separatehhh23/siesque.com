@@ -6,7 +6,8 @@
   import { theme, toggleTheme } from "@/stores";
 
   function signOut() {
-    pb.authStore.clear;
+    pb.authStore.clear();
+    document.getElementById("dropdown").focus();
   }
 </script>
 
@@ -15,6 +16,7 @@
     class="avatar w-12 rounded-full hover:cursor-pointer"
     tabindex="0"
     role="button"
+    id="dropdown"
   >
     {#if $currentUser}
       <UserIcon className="mask mask-circle" />
