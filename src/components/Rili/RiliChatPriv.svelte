@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import autoAnimate from "@formkit/auto-animate";
+  import { Icon, PaperAirplane } from "svelte-hero-icons";
 
   import { pb, currentUser } from "@/lib/pocketbase";
-  import { formatDate } from "@/lib/utils";
+  import { formatDate, cn, getImageURL } from "@/lib/utils";
 
   let newMessage: string;
   let messages = [];
@@ -14,12 +15,13 @@
   onMount(async () => {
     if (!$currentUser || !$currentUser.admin) return;
 
-    const resultList = await pb
+    messages = await pb
       .collection("privateMessages")
-      .getList(1, 10000, {
+      .getList(1, 100, {
         sort: "created",
         expand: "sender",
-      });
+      })
+      .then((records) => records.items);
 
     unsubscribe = await pb
       .collection("privateMessages")
@@ -27,13 +29,15 @@
         if (action === "create") {
           const sender = await pb.collection("users").getOne(record.sender);
           record.expand = { sender };
-          messages = [record, ...messages];
+          messages = [...messages, record];
         }
       });
 
-    messages = resultList.items
-      .slice(Math.max(resultList.items.length - 25, 0))
-      .reverse();
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: "smooth",
+    });
   });
 
   onDestroy(() => {
@@ -56,12 +60,13 @@
   }
 
   async function showAll() {
-    const resultList = await pb
+    messages = await pb
       .collection("privateMessages")
-      .getList(1, 10000, {
+      .getList(1, 1000000, {
         sort: "created",
-      });
-    messages = resultList.items.reverse();
+        expand: "sender",
+      })
+      .then((records) => records.items);
   }
 </script>
 
@@ -72,72 +77,56 @@
 {:else}
   <div class="flex min-h-screen w-screen flex-row justify-center">
     <div class="mb-8 mt-8 w-2/3 pb-8 pt-8">
-      <div class="flex flex-col gap-2" use:autoAnimate>
-        <div class="flex w-full flex-row gap-1">
-          <form
-            on:submit|preventDefault={sendMessage}
-            class="join justify-self-start rounded-xl bg-base-200 p-2"
-          >
-            <input
-              placeholder="Message"
-              type="text"
-              class="input join-item"
-              bind:value={newMessage}
-            />
-            <div class="join-item h-full w-1 bg-base-200" />
-            <button type="submit" class="btn btn-primary join-item">Send</button
-            >
-          </form>
-          <div class="justify-self-end rounded-xl bg-base-200 p-2">
-            <button on:click|preventDefault={showAll} class="btn btn-ghost"
-              >Show all</button
-            >
-          </div>
-        </div>
+      <div use:autoAnimate>
         {#each messages as message (message.id)}
-          <div class="rounded-xl bg-base-200 p-2">
-            <p>{message.text}</p>
-            <small
-              >Sent by @{message.expand?.sender?.name} at {formatDate(
-                message.created,
-                " HH:mm",
-              )}</small
-            >
+          <div
+            class={cn("chat", {
+              "chat-start": message.expand?.sender?.id !== $currentUser.id,
+              "chat-end": message.expand?.sender?.id === $currentUser.id,
+            })}
+          >
+            <div class="avatar chat-image">
+              <div class="w-10 rounded-full">
+                <img
+                  src={message.expand?.sender?.avatar
+                    ? getImageURL(
+                        message.expand?.sender?.collectionId,
+                        message.expand?.sender?.id,
+                        message.expand?.sender?.avatar,
+                      )
+                    : `https://ui-avatars.com/api/?name=${message.expand?.sender?.name}`}
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="chat-header">
+              {message.expand?.sender?.name}
+              <time class="text-xs opacity-50"
+                >{formatDate(message.created, " HH:mm")}</time
+              >
+            </div>
+            <div class="chat-bubble chat-bubble-accent">{message.text}</div>
           </div>
         {/each}
-        <!-- TODO: Change chat to use this --->
-        <!--
-            <div class="chat chat-start">
-              <div class="chat-image avatar">
-                <div class="w-10 rounded-full">
-                  <img alt="Tailwind CSS chat bubble component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                </div>
-              </div>
-              <div class="chat-header">
-                Obi-Wan Kenobi
-                <time class="text-xs opacity-50">12:45</time>
-              </div>
-              <div class="chat-bubble">You were the Chosen One!</div>
-              <div class="chat-footer opacity-50">
-                Delivered
-              </div>
-            </div>
-            <div class="chat chat-end">
-              <div class="chat-image avatar">
-                <div class="w-10 rounded-full">
-                  <img alt="Tailwind CSS chat bubble component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                </div>
-              </div>
-              <div class="chat-header">
-                Anakin
-                <time class="text-xs opacity-50">12:46</time>
-              </div>
-              <div class="chat-bubble">I hate you!</div>
-              <div class="chat-footer opacity-50">
-                Seen at 12:46
-            </div>
-        </div>
-        -->
+      </div>
+      <div
+        class="mt-4 flex w-full items-center gap-2 rounded-full bg-base-200 p-4"
+      >
+        <input
+          class="input input-bordered inline-flex w-full max-w-lg flex-1 items-center rounded-full bg-base-100 px-4 py-2"
+          type="text"
+          placeholder="Soy un castor"
+          bind:value={newMessage}
+        />
+        <button
+          class="btn btn-primary inline-flex max-w-12 flex-1 items-center rounded-full px-3 py-1"
+          on:click={sendMessage}
+          ><div class="h-6 w-6"><Icon src={PaperAirplane} /></div></button
+        >
+        <button
+          class="btn btn-secondary inline-flex items-center rounded-full"
+          on:click={showAll}>Show all</button
+        >
       </div>
     </div>
   </div>
