@@ -98,7 +98,7 @@
           <div class="rounded-xl bg-base-200 p-2">
             <p>{message.text}</p>
             <small
-              >Sent by @{message.expand?.sender?.username} at {formatDate(
+              >Sent by @{message.expand?.sender?.name} at {formatDate(
                 message.created,
                 " HH:mm",
               )}</small
