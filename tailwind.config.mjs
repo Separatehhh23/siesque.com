@@ -92,6 +92,7 @@ export default {
           "accent": "#0061c2",
           "neutral": "#262626",
           "base-100": "#131313",
+          "error": "#ff2700"
         },
       },
     ],

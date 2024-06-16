@@ -14,6 +14,11 @@
 
   async function signInWithGoogle() {
     await pb.collection("users").authWithOAuth2({ provider: "google" });
+    if (!$currentUser.name) {
+      await pb
+        .collection("users")
+        .update($currentUser.id, { name: $currentUser.email.split("@")[0] });
+    }
   }
 
   $: windowWidth = window.innerWidth;
@@ -45,7 +50,7 @@
     <div class="card w-full max-w-sm shrink-0 bg-base-100 shadow-2xl">
       {#if $currentUser}
         <form class="card-body" on:submit|preventDefault>
-          <h2>Signed in as {$currentUser.username}</h2>
+          <h2>Signed in as {$currentUser.name}</h2>
           <div class="form-control mt-6 gap-2">
             <button class="btn btn-primary" on:click={signOut}>Sign out</button>
           </div>
