@@ -4,6 +4,10 @@
   import { pb, currentUser } from "@/lib/pocketbase";
   import UserIcon from "../UserIcon.svelte";
   import { theme, toggleTheme } from "@/stores";
+
+  function signOut() {
+    pb.authStore.clear;
+  }
 </script>
 
 <div class="dropdown dropdown-end">
@@ -46,7 +50,7 @@
     </li>
     <li>
       {#if $currentUser}
-        <button class="text-accent" on:click={pb.authStore.clear}>
+        <button class="text-accent" on:click={signOut}>
           <div class="h-7 w-7" />
           Sign out
         </button>
