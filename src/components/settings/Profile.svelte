@@ -3,8 +3,8 @@
 
   import SettingsLayout from "./SettingsLayout.svelte";
   import Input from "../Input.svelte";
-  import UserIcon from "../UserIcon.svelte";
   import { pb, currentUser } from "@/lib/pocketbase";
+  import { getImageURL } from "@/lib/utils";
 
   export let path: string;
 
@@ -84,7 +84,17 @@
             </span>
           </label>
           <div class="w-32 rounded-full">
-            <UserIcon />
+            <img
+              src={$currentUser.avatar
+                ? getImageURL(
+                    $currentUser.collectionId,
+                    $currentUser.id,
+                    $currentUser.avatar,
+                  )
+                : `https://ui-avatars.com/api/?name=${$currentUser.name}`}
+              alt="Profile avatar"
+              id="avatar-preview"
+            />
           </div>
         </label>
         <input
@@ -100,7 +110,7 @@
       </div>
       <Input
         id="name"
-        label="name"
+        label="Display name"
         disabled={loading}
         value={$currentUser.name}
       />

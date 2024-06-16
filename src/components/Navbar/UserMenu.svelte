@@ -2,7 +2,7 @@
   import { Icon, Cog6Tooth, Sun, Moon } from "svelte-hero-icons";
 
   import { pb, currentUser } from "@/lib/pocketbase";
-  import UserIcon from "../UserIcon.svelte";
+  import UserIcon from "./UserIcon.svelte";
   import { theme, toggleTheme } from "@/stores";
 
   function signOut() {

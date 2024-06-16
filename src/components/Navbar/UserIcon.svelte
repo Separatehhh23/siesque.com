@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { currentUser } from "@/lib/pocketbase";
-  import { getImageURL } from "@/lib/utils";
+  import { currentUser } from "../../lib/pocketbase";
+  import { getImageURL } from "../../lib/utils";
 
   export let className = "";
 </script>
