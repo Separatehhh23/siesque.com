@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount, onDestroy } from "svelte";
+
   import { pb, currentUser } from "@/lib/pocketbase";
 
   let windowWidth = window.innerWidth;
@@ -21,8 +23,18 @@
     }
   }
 
-  $: windowWidth = window.innerWidth;
-  $: windowHeight = window.innerHeight;
+  function handleResize() {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+  }
+
+  onMount(() => {
+    document.addEventListener("resize", handleResize);
+  });
+
+  onDestroy(() => {
+    document.removeEventListener("resize", handleResize);
+  });
 </script>
 
 <div class="flex h-full w-full flex-row">

@@ -84,7 +84,7 @@
             </span>
           </label>
           <div class="w-32 rounded-full">
-            <UserIcon id="avatar-preview" />
+            <UserIcon />
           </div>
         </label>
         <input

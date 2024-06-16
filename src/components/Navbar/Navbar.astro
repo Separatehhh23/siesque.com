@@ -1,6 +1,8 @@
 ---
 import { twMerge } from "tailwind-merge";
 
+import UserMenu from "./UserMenu.svelte";
+
 const {
   isFixed = true,
 }: {
@@ -81,7 +83,7 @@ const isFixedClass = (): string => {
 
   <a class="btn btn-ghost text-secondary" href="/rili/rililand">RiliLand</a>
   <div class="ml-2"></div>
-  <a class="btn btn-ghost text-secondary" href="/rili/">Authorize</a>
+  <UserMenu client:only="svelte" />
   <div class="ml-2"></div>
 
   {

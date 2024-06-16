@@ -20,7 +20,7 @@ let {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" id="app">
   <head>
     <BaseHead title={title} description={description} image={image} />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -28,6 +28,16 @@ let {
     <SpeedInsights />
 
     <Fragment set:html={head} />
+
+    <script>
+      import { theme } from "@/stores";
+
+      const app = document.getElementById("app");
+
+      theme.subscribe((value) => {
+        app.setAttribute("data-theme", value);
+      });
+    </script>
   </head>
   <body><slot /></body>
 </html>

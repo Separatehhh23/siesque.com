@@ -2,7 +2,7 @@
   import { currentUser } from "@/lib/pocketbase";
   import { getImageURL } from "@/lib/utils";
 
-  export let id: string;
+  export let className = "";
 </script>
 
 <img
@@ -14,5 +14,6 @@
       )
     : `https://ui-avatars.com/api/?name=${$currentUser.name}`}
   alt="Profile avatar"
-  {id}
+  id="avatar-preview"
+  class={className}
 />

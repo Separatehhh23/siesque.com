@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 
 const RiliLand = () => {
   return (
-    <div className="m-4 grid grid-cols-3 gap-2 p-4">
+    <div className="m-4 grid grid-cols-3 gap-2 p-4 sm:grid-cols-2">
       <LinkBox link="/rili/dictionary">Diccionario Rili</LinkBox>
       <LinkBox link="/rili/test">Test Rili</LinkBox>
       <LinkBox link="/rili/chat">Chat Rili Publico</LinkBox>
