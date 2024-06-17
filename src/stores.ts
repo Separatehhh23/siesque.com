@@ -103,9 +103,3 @@ export const theme = atom<"light" | "dark">(
 export function toggleTheme() {
   theme.set(theme.get() === "light" ? "dark" : "light");
 }
-
-window
-  .matchMedia("(prefers-color-scheme: dark)")
-  .addEventListener("change", (event) => {
-    theme.set(event.matches ? "dark" : "light");
-  });

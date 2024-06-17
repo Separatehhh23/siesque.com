@@ -2,9 +2,10 @@
   import { onMount, onDestroy } from "svelte";
   import autoAnimate from "@formkit/auto-animate";
   import { Icon, PaperAirplane } from "svelte-hero-icons";
+  import moment from "moment";
 
   import { pb, currentUser } from "@/lib/pocketbase";
-  import { formatDate, cn, getImageURL } from "@/lib/utils";
+  import { cn, getImageURL } from "@/lib/utils";
 
   let newMessage: string;
   let messages = [];
@@ -30,26 +31,43 @@
           const sender = await pb.collection("users").getOne(record.sender);
           record.expand = { sender };
           messages = [...messages, record];
+          if (sender.id === $currentUser.id) {
+            scroll();
+          }
         }
       });
 
+    document.addEventListener("keydown", handleEnter);
+    scroll();
+    document.getElementById("message-bar").focus();
+  });
+
+  onDestroy(() => {
+    document.removeEventListener("keydown", handleEnter);
+    unsubscribe();
+  });
+
+  function handleEnter(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      console.log("fire");
+      sendMessage();
+    }
+  }
+
+  function scroll() {
     window.scrollTo({
       top: document.body.scrollHeight,
       left: 0,
       behavior: "smooth",
     });
-  });
-
-  onDestroy(() => {
-    unsubscribe();
-  });
+  }
 
   async function sendMessage() {
-    if (!sending && latestMessage !== newMessage) {
+    if (!sending && newMessage.trim() && latestMessage !== newMessage) {
       sending = true;
       latestMessage = newMessage;
       await pb.collection("privateMessages").create({
-        text: newMessage,
+        text: newMessage.trim(),
         sender: $currentUser.id,
       });
       setTimeout(() => {
@@ -57,6 +75,7 @@
       }, 1000);
     }
     newMessage = undefined;
+    document.getElementById("message-bar").focus();
   }
 
   async function showAll() {
@@ -67,6 +86,13 @@
         expand: "sender",
       })
       .then((records) => records.items);
+  }
+
+  function shouldCreateBorder(msg, msgArr: Array<any>): boolean {
+    const index = messages.findIndex((_message) => _message.id === msg.id);
+    const before = msgArr[index - 1 < 0 ? 0 : index - 1];
+
+    return moment(before.created).day() !== moment(msg.created).day();
   }
 </script>
 
@@ -79,6 +105,13 @@
     <div class="mb-8 mt-8 w-2/3 pb-8 pt-8">
       <div use:autoAnimate>
         {#each messages as message (message.id)}
+          {#if shouldCreateBorder(message, messages)}
+            <div class="divider divider-secondary w-full">
+              <time class="text-secondary"
+                >{moment(message.created).format("DD/MM/YYYY")}</time
+              >
+            </div>
+          {/if}
           <div
             class={cn("chat", {
               "chat-start": message.expand?.sender?.id !== $currentUser.id,
@@ -102,7 +135,7 @@
             <div class="chat-header">
               {message.expand?.sender?.name}
               <time class="text-xs opacity-50"
-                >{formatDate(message.created, " HH:mm")}</time
+                >{moment(message.created).format("HH:mm")}</time
               >
             </div>
             <div class="chat-bubble chat-bubble-accent">{message.text}</div>
@@ -116,6 +149,7 @@
           class="input input-bordered inline-flex w-full max-w-lg flex-1 items-center rounded-full bg-base-100 px-4 py-2"
           type="text"
           placeholder="Soy un castor"
+          id="message-bar"
           bind:value={newMessage}
         />
         <button
