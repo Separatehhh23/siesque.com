@@ -23,13 +23,13 @@ export const RiliGov = () => {
             default:
               return -1;
           }
-        case "Salty Springs":
+        case "Co-Founder":
           switch (rgm2.role) {
             case "Founder":
               return 1;
             case "Co-Founder":
               return 1;
-            case "Salty Springs":
+            case "Co-Founder":
               return 0;
             default:
               return -1;
