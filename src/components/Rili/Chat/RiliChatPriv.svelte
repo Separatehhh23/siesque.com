@@ -6,6 +6,7 @@
 
   import { pb, currentUser } from "@/lib/pocketbase";
   import { cn, getImageURL } from "@/lib/utils";
+  import { parseMsg } from "./utils";
 
   let newMessage: string;
   let messages = [];
@@ -138,7 +139,9 @@
                 >{moment(message.created).format("HH:mm")}</time
               >
             </div>
-            <div class="chat-bubble chat-bubble-accent">{message.text}</div>
+            <div class="chat-bubble chat-bubble-accent">
+              {@html parseMsg(message)}
+            </div>
           </div>
         {/each}
       </div>

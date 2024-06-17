@@ -3,10 +3,10 @@
   import autoAnimate from "@formkit/auto-animate";
   import Filter from "bad-words";
 
-  import { pb } from "@/lib/pocketbase";
-  import { formatDate } from "@/lib/utils";
-  import { addExtraBadWords } from "@/lib/addExtraBadWords";
-  import { username as usernameStore, setUsername } from "@/stores";
+  import { pb } from "../../../lib/pocketbase";
+  import { formatDate } from "../../../lib/utils";
+  import { addExtraBadWords } from "../../../lib/addExtraBadWords";
+  import { username as usernameStore, setUsername } from "../../../stores";
 
   let newMessage: string;
   let username: string;
