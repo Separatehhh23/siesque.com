@@ -144,7 +144,12 @@
                   {@const user = pb
                     .collection("users")
                     .getFirstListItem(`name='${word.substring(1)}'`)
-                    .catch(() => {})}
+                    .catch(() => ({
+                      id: "$missing",
+                      username: "$missing",
+                      name: "$missing",
+                      avatar: "",
+                    }))}
                   <!-- Id: "mention-[index of message @]-[index of messages loop]" -->
                   <div
                     id="mention-{index}-{i}"
@@ -169,17 +174,19 @@
                           <p>Loading...</p>
                         {:then usr}
                           <div class="h-20 w-20">
-                            <img
-                              src={usr?.avatar
-                                ? getImageURL(
-                                    usr.collectionId,
-                                    usr.id,
-                                    usr.avatar,
-                                  )
-                                : `https://ui-avatars.com/api/?name=${word.substring(1)}`}
-                              alt="Profile avatar"
-                              class="mask mask-circle"
-                            />
+                            <a href="/profile/{usr.id}">
+                              <img
+                                src={usr.avatar
+                                  ? getImageURL(
+                                      usr.collectionId,
+                                      usr.id,
+                                      usr.avatar,
+                                    )
+                                  : `https://ui-avatars.com/api/?name=${word.substring(1)}`}
+                                alt="Profile avatar"
+                                class="mask mask-circle"
+                              />
+                            </a>
                           </div>
                           <div class="flex flex-col px-2">
                             <h2 class="text-sm text-accent">
