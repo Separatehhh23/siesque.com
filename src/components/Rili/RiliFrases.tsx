@@ -16,6 +16,9 @@ export const RiliFrases = () => {
         <Frase author="El otro" year={2023}>
           Mo
         </Frase>
+        <Frase author="Spike" year={2018}>
+          I am spike
+        </Frase>
       </div>
     </div>
   );
