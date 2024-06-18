@@ -21,6 +21,7 @@ export const RiliFrases = () => {
         </Frase>
         <Frase author="NiCastorRili" year={2024}>
           Como que prepositorio?
+        </Frase>
       </div> 
     </div>
   );
