@@ -1,12 +1,11 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import autoAnimate from "@formkit/auto-animate";
-  import { Icon, PaperAirplane } from "svelte-hero-icons";
+  import { Icon, PaperAirplane, XMark } from "svelte-hero-icons";
   import moment from "moment";
 
   import { pb, currentUser } from "@/lib/pocketbase";
   import { cn, getImageURL } from "@/lib/utils";
-  import { parseMsg } from "./utils";
 
   let newMessage: string;
   let messages = [];
@@ -105,7 +104,7 @@
   <div class="flex min-h-screen w-screen flex-row justify-center">
     <div class="mb-8 mt-8 w-2/3 pb-8 pt-8">
       <div use:autoAnimate>
-        {#each messages as message (message.id)}
+        {#each messages as message, i (message.id)}
           {#if shouldCreateBorder(message, messages)}
             <div class="divider divider-secondary w-full">
               <time class="text-secondary"
@@ -140,7 +139,77 @@
               >
             </div>
             <div class="chat-bubble chat-bubble-accent">
-              {@html parseMsg(message)}
+              {#each message.text.split(" ") as word, index (index)}
+                {#if word.startsWith("@")}
+                  {@const user = pb
+                    .collection("users")
+                    .getFirstListItem(`name='${word.substring(1)}'`)
+                    .catch(() => {})}
+                  <!-- Id: "mention-[index of message @]-[index of messages loop]" -->
+                  <div
+                    id="mention-{index}-{i}"
+                    popover="manual"
+                    class="h-[512px] max-h-[1536px] w-72 rounded-xl border-2 border-primary bg-base-100"
+                  >
+                    <div class="flex flex-col p-4">
+                      <div class="flex w-full flex-row justify-between">
+                        <h1 class="text-md text-primary">Profile</h1>
+                        <div class="center">
+                          <button
+                            class="h-6 w-6 rounded-full bg-secondary p-1 text-white"
+                            on:click={() =>
+                              document
+                                .getElementById(`mention-${index}-${i}`)
+                                .hidePopover()}><Icon src={XMark} /></button
+                          >
+                        </div>
+                      </div>
+                      <div class="flex w-full flex-row">
+                        {#await user}
+                          <p>Loading...</p>
+                        {:then usr}
+                          <div class="h-20 w-20">
+                            <img
+                              src={usr?.avatar
+                                ? getImageURL(
+                                    usr.collectionId,
+                                    usr.id,
+                                    usr.avatar,
+                                  )
+                                : `https://ui-avatars.com/api/?name=${word.substring(1)}`}
+                              alt="Profile avatar"
+                              class="mask mask-circle"
+                            />
+                          </div>
+                          <div class="flex flex-col px-2">
+                            <h2 class="text-sm text-accent">
+                              {word}
+                            </h2>
+                          </div>
+                        {/await}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    class="text-secondary"
+                    on:click={() => {
+                      const popover = document.getElementById(
+                        `mention-${index}-${i}`,
+                      );
+                      popover.showPopover();
+                      function handle(e) {
+                        if (e.key === "Escape") {
+                          popover.hidePopover();
+                          document.removeEventListener("keydown", handle);
+                        }
+                      }
+                      document.addEventListener("keydown", handle);
+                    }}>{word}</button
+                  >{" "}
+                {:else}
+                  {word}{" "}
+                {/if}
+              {/each}
             </div>
           </div>
         {/each}
