@@ -13,6 +13,7 @@ const RiliLand = () => {
       <LinkBox link="/rili/chat">Chat Rili Publico</LinkBox>
       <LinkBox link="/rili/snake">Castake v1</LinkBox>
       <LinkBox link="/rili/castake">Castake v2 (WIP)</LinkBox>
+      <LinkBox link="/rili/frases">Frases Rili</LinkBox>
       <div className="flex h-[28px] items-center justify-center rounded-full border-4 border-secondary bg-base-200 p-8 text-3xl text-secondary md:col-span-2 xl:col-span-3 2xl:col-span-4">
         Auth Required <SpacedLock />
       </div>
