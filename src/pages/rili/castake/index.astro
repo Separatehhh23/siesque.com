@@ -1,16 +1,21 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro"
-import SelectButton from "@/components/Castake/SelectButton.astro"
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SelectButton from "@/components/Castake/SelectButton.astro";
 ---
 
 <BaseLayout title="Castake" description="Play castake v3">
-    <div class="m-4 p-4 w-full h-screen">
-        <div class="w-full h-full flex justify-center items-center">
-            <div class="bg-base-200 flex flex-col gap-3 w-full max-w-lg">
-                <SelectButton href="/rili/castake/play">Play</SelectButton>
-                <SelectButton href="/rili/castake/play">Play</SelectButton>
-                <SelectButton href="/rili/castake/play">Play</SelectButton>
-            </div>
+  <div class="-pt-16 -mt-16 h-screen w-full">
+    <div class="flex h-full w-full items-center justify-center">
+      <div class="flex w-full max-w-lg flex-col gap-12">
+        <div class="flex flex-row justify-center">
+          <h1 class="text-8xl font-medium text-primary">Castake</h1>
         </div>
+        <div class="flex w-full max-w-lg flex-col gap-3">
+          <SelectButton href="/rili/castake/play">Play</SelectButton>
+          <SelectButton href="/rili/castake/settings">Settings</SelectButton>
+          <SelectButton href="/rili/castake/play">RiliRiliRili</SelectButton>
+        </div>
+      </div>
     </div>
+  </div>
 </BaseLayout>

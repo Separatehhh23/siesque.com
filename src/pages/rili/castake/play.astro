@@ -1,0 +1,10 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Game } from "@/components/Castake/Game";
+---
+
+<Layout title="Castake" description="Play castake v3">
+  <div class="h-screen w-screen">
+    <Game client:only="react" />
+  </div>
+</Layout>
