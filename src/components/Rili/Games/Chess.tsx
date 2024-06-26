@@ -118,6 +118,8 @@ const ChessGrid = () => {
                           })}
                           alt="Chess piece"
                           draggable="false"
+                          height={64}
+                          width={64}
                           src={getPiece(j, i - 1)}
                         />
                       </Draggable>
