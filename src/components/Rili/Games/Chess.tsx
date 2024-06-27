@@ -89,50 +89,51 @@ const ChessGrid = () => {
     <div className="flex flex-row">
       {Array.from({ length: 9 }).map((_, i) => (
         <div className="flex flex-col" key={i}>
-          {Array.from({ length: 9 }).map((_, j) => (
-            <>
-              {i !== 0 ? (
-                j !== 8 ? (
-                  <Cell
-                    className={{
-                      "bg-[#729551]":
-                        (i % 2 === 0 && j % 2 === 0) ||
-                        (i % 2 !== 0 && j % 2 !== 0),
-                      "bg-[#ebebd5]": !(
-                        (i % 2 === 0 && j % 2 === 0) ||
-                        (i % 2 !== 0 && j % 2 !== 0)
-                      ),
-                    }}
-                    key={j}
-                  >
-                    {isPiecedRank(j) && (
-                      <Draggable
-                        grid={[64, 64]}
-                        onStart={() => setDragging(true)}
-                        onStop={() => setDragging(false)}
-                      >
-                        <img
-                          className={cn({
-                            "cursor-grab": !dragging,
-                            "cursor-grabbing": dragging,
-                          })}
-                          alt="Chess piece"
-                          draggable="false"
-                          height={64}
-                          width={64}
-                          src={getPiece(j, i - 1)}
-                        />
-                      </Draggable>
-                    )}
-                  </Cell>
-                ) : (
-                  <Cell key={j}>{mapFile(i - 1)}</Cell>
-                )
+          {Array.from({ length: 9 }).map((_, j) =>
+            /**
+             * i = 0 -> Column with j + 1
+             * i = 1 -> 1st file (0)
+             * i = 8 -> 8th file (7)
+             * j = 0 -> 1st rank (0)
+             * j = 7 -> 8th rank (7)
+             * j = 8 -> Row with mapFile(i - 1)
+             **/
+            i !== 0 ? (
+              j !== 8 ? (
+                <Cell
+                  className={{
+                    "bg-[#729551]": i % 2 === j % 2,
+                    "bg-[#ebebd5]": i % 2 !== j % 2,
+                  }}
+                  key={j}
+                >
+                  {isPiecedRank(j) && (
+                    <Draggable
+                      grid={[64, 64]}
+                      onStart={() => setDragging(true)}
+                      onStop={() => setDragging(false)}
+                    >
+                      <img
+                        className={cn({
+                          "cursor-grab": !dragging,
+                          "cursor-grabbing": dragging,
+                        })}
+                        alt="Chess piece"
+                        draggable="false"
+                        height={64}
+                        width={64}
+                        src={getPiece(j, i - 1)}
+                      />
+                    </Draggable>
+                  )}
+                </Cell>
               ) : (
-                <Cell key={j}>{j !== 8 ? j + 1 : ""}</Cell>
-              )}
-            </>
-          ))}
+                <Cell key={j}>{mapFile(i - 1)}</Cell>
+              )
+            ) : (
+              <Cell key={j}>{j !== 8 ? j + 1 : ""}</Cell>
+            ),
+          )}
         </div>
       ))}
     </div>
