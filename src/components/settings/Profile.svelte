@@ -2,7 +2,7 @@
   import { Icon, Pencil } from "svelte-hero-icons";
 
   import SettingsLayout from "./SettingsLayout.svelte";
-  import Input from "../Input.svelte";
+  import Input from "../ui/Input.svelte";
   import { pb, currentUser } from "@/lib/pocketbase";
   import { getImageURL } from "@/lib/utils";
 

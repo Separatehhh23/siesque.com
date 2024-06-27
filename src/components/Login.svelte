@@ -6,12 +6,23 @@
   let windowWidth = window.innerWidth;
   let windowHeight = window.innerHeight;
 
+  function redirect() {
+    const params = new URLSearchParams(document.location.search);
+    const callback = params.get("callback");
+
+    if (callback) {
+      window.location.pathname = callback;
+    }
+  }
+
   function signOut() {
     pb.authStore.clear();
   }
 
   async function signInWithGithub() {
     await pb.collection("users").authWithOAuth2({ provider: "github" });
+
+    redirect();
   }
 
   async function signInWithGoogle() {
@@ -21,6 +32,8 @@
         .collection("users")
         .update($currentUser.id, { name: $currentUser.email.split("@")[0] });
     }
+
+    redirect();
   }
 
   function handleResize() {
