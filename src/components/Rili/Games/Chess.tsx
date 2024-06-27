@@ -82,7 +82,7 @@ const Cell = ({ className, children }: CellProps) => {
   );
 };
 
-const ChessGrid = () => {
+const ChessBoard = () => {
   const [dragging, setDragging] = useState(false);
 
   return (
@@ -201,7 +201,7 @@ export const Chess = () => {
   return (
     <div className="h-screen w-screen">
       <div className="m-8 flex h-2/3 w-full items-center justify-center gap-2 p-8">
-        <ChessGrid />
+        <ChessBoard />
         <div className="flex h-full w-full max-w-48 flex-col gap-2">
           <Button onClick={() => window.location.reload()}>Reset board</Button>
           <Button onClick={setDefaultScores}>Reset scores</Button>
