@@ -3,9 +3,6 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Tiles from "@/components/Rili/Games/Tiles/Tiles.svelte";
 ---
 
-<BaseLayout
-        title="Rili chess"
-        description="Riliest chess ever, made by Garry Chess"
->
-    <Tiles client:load />
+<BaseLayout title="Rili tiles" description="Just a game with some tiles">
+  <Tiles client:load />
 </BaseLayout>

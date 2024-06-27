@@ -8,9 +8,11 @@ export type Cell<T> = {
   active: boolean;
 };
 
+export type UserColor = "red" | "green" | "blue" | "orange" | "purple";
+
 export type ReducedUser = {
   name: string;
-  color: "red" | "green" | "blue" | "orange" | "purple";
+  color: UserColor;
 };
 
 export type User = ReducedUser & {
