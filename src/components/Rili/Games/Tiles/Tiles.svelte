@@ -42,7 +42,7 @@
             <button
               class={cn("h-16 w-16 cursor-pointer border", {
                 "bg-red-500": color === "red" && active,
-                "bg-green-500": color === "red" && active,
+                "bg-green-500": color === "green" && active,
                 "bg-blue-500": color === "blue" && active,
                 "bg-orange-500": color === "orange" && active,
                 "bg-purple-500": color === "purple" && active,
