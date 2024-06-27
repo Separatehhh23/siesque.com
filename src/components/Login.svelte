@@ -30,7 +30,7 @@
     if (!$currentUser.name) {
       await pb
         .collection("users")
-        .update($currentUser.id, { name: $currentUser.email.split("@")[0] });
+        .update($currentUser.id, { name: $currentUser!.email.split("@")[0] });
     }
 
     redirect();
