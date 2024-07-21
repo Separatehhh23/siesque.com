@@ -1,0 +1,36 @@
+---
+import { cn } from "@/lib/utils";
+
+const {
+  href,
+  image,
+  className,
+}: {
+  href?: string;
+  image?: string;
+  className?: string;
+} = Astro.props;
+
+const color = Math.floor(Math.random() * 5);
+---
+
+<div class="h-32 w-full max-w-lg overflow-clip rounded-xl bg-base-200">
+  <a class="flex cursor-pointer flex-col" href=`/rili/games/${href}`>
+    <div class="h-16 p-2">
+      <h1 class="text-primary"><slot /></h1>
+    </div>
+    <div class="h-16">
+      <div
+        class={cn("h-full w-full flex justify-center items-center", {
+          "bg-green-500": color === 0,
+          "bg-blue-500": color === 1,
+          "bg-orange-500": color === 2,
+          "bg-red-500": color === 3,
+          "bg-purple-500": color === 4,
+        })}
+      >
+        {image && <img alt="Game image" src={image} />}
+      </div>
+    </div></a
+  >
+</div>

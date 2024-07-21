@@ -93,3 +93,13 @@ export const username = persistentAtom<{ name: string }>(
 export function setUsername(_username: string) {
   username.set({ name: _username });
 }
+
+export const theme = atom<"light" | "dark">(
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light",
+);
+
+export function toggleTheme() {
+  theme.set(theme.get() === "light" ? "dark" : "light");
+}

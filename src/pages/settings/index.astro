@@ -1,0 +1,10 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import MyProfile from "@/components/settings/Profile.svelte";
+
+const path = Astro.url.pathname;
+---
+
+<BaseLayout title="My profile" description="Edit your profile here">
+  <MyProfile client:only="svelte" path={path} />
+</BaseLayout>

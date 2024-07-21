@@ -1,7 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import Footer from "@/components/Footer.astro";
-import NavBar from "../components/NavBar.astro";
+import NavBar from "../components/Navbar/Navbar.astro";
 import ElOtroPurchaseCard from "@/components/Rili/ElOtroPurchaseCard.svelte";
 import type { HTMLTag } from "astro/types";
 import { twMerge } from "tailwind-merge";
@@ -28,7 +28,7 @@ const isFixedClass = (): string => (isFixed ? "pt-16" : "");
 ---
 
 <Layout title={title} description={description} head={head} image={image}>
-  <NavBar isFixed={isFixed} />
+  <NavBar isFixed={isFixed} trasition:persist="navbar" />
 
   <div class={twMerge("flex flex-col", isFixedClass())}>
     <main

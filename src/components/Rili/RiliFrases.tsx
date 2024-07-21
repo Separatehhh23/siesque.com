@@ -16,10 +16,16 @@ export const RiliFrases = () => {
         <Frase author="El otro" year={2023}>
           Mo
         </Frase>
-      </div>
+        <Frase author="Spike" year={2024}>
+          I am spike
+        </Frase>
+        <Frase author="NiCastorRili" year={2024}>
+          Como que prepositorio?
+        </Frase>
+      </div> 
     </div>
   );
-};
+};  
 
 type FraseProps = {
   children: ReactNode;

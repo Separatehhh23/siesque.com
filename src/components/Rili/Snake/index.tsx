@@ -34,6 +34,13 @@ import type {
   SimpleCastakeLeaderboard,
 } from "@/types";
 
+// Overrides
+type Window = typeof window & {
+  overrides: {
+    speed: number;
+  };
+};
+
 const MobileButtons = lazy(() =>
   import("./MobileButtons").then((d) => ({
     default: d.MobileButtons,
@@ -289,6 +296,12 @@ const CastorSnake = () => {
       setIsGameOver(true);
     }
   }, [castakePos]);
+
+  useEffect(() => {
+    if ((window as Window)?.overrides?.speed) {
+      setSpeed((window as Window)?.overrides?.speed);
+    }
+  }, [speed]);
 
   return (
     <UiContext.Provider

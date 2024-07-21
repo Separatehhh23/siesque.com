@@ -1,32 +1,11 @@
 import PocketBase from "pocketbase";
-import { persistentAtom } from "@nanostores/persistent";
+import { atom } from "nanostores";
 
 export const pb = new PocketBase("https://siesque.pockethost.io/");
 
-export const newMessages = persistentAtom<{ messages: Array<any> }>(
-  "newMessages",
-  {
-    messages: [],
-  },
-  {
-    encode: JSON.stringify,
-    decode: JSON.parse,
-  },
-);
+export const currentUser = atom(pb.authStore.model);
 
-export function clearAllMessages() {
-  newMessages.set({ messages: [] });
-}
-
-await pb.collection("messages").subscribe("*", async ({ action, record }) => {
-  if (action === "create") {
-    newMessages.set({ messages: [...newMessages.get().messages, record] });
-  }
+pb.authStore.onChange((auth) => {
+  console.log("authStore changed", auth);
+  currentUser.set(pb.authStore.model);
 });
-
-if (
-  typeof window !== "undefined" &&
-  Array.isArray(JSON.parse(localStorage.getItem("newMessages") ?? ""))
-) {
-  localStorage.setItem("newMessages", JSON.stringify({ messages: [] }));
-}

@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Chess } from "@/components/Rili/Games/Chess";
+---
+
+<BaseLayout
+  title="Rili chess"
+  description="Riliest chess ever, made by Garry Chess"
+>
+  <Chess client:load />
+</BaseLayout>

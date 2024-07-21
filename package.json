@@ -5,6 +5,7 @@
   "license": "LGPL-3.0-or-later",
   "scripts": {
     "dev": "astro dev --remote",
+    "dev-": "astro dev",
     "start": "astro dev --remote",
     "build": "astro check && astro build --remote",
     "preview": "astro preview",
@@ -23,8 +24,6 @@
     "@astrojs/svelte": "^5.5.0",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vercel": "^7.6.0",
-    "@auth/core": "^0.18.6",
-    "@excalidraw/excalidraw": "^0.17.6",
     "@formkit/auto-animate": "^0.8.2",
     "@nanostores/persistent": "^0.10.1",
     "@nanostores/react": "^0.7.2",
@@ -38,12 +37,12 @@
     "@types/react-dom": "^18.2.25",
     "@vercel/speed-insights": "^1.0.3",
     "astro": "^4.10.1",
-    "auth-astro": "^4.1.1",
     "autoprefixer": "^10.4.19",
     "bad-words": "^3.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.372.0",
     "mini-svg-data-uri": "^1.4.4",
     "moment": "^2.29.4",
@@ -56,7 +55,6 @@
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
     "react-error-boundary": "^4.0.13",
-    "react-xarrows": "^2.0.2",
     "sass": "^1.69.5",
     "svelte": "^4.2.8",
     "tailwind-merge": "^2.3.0",
@@ -80,6 +78,7 @@
     "stylelint": "^16.3.1",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-standard-scss": "^13.1.0",
+    "svelte-hero-icons": "^5.1.0",
     "vite-plugin-svgr": "^4.2.0"
   }
 }

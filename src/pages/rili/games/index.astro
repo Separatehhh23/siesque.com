@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Game from "@/components/Rili/Games/GameIndexLink.astro";
+---
+
+<BaseLayout title="Rili games" description="The riliest games ever">
+  <div class="m-8 p-8">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+      <Game href="chess" image="/chess.webp">Chess</Game>
+    </div>
+  </div>
+</BaseLayout>
