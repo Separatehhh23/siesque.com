@@ -1,7 +1,6 @@
 <script lang="ts">
   import JSZip from "jszip";
   import { File, Form } from "./ui";
-  import { Simulate } from "react-dom/test-utils";
 
   let file;
   let senders = new Map();
@@ -9,30 +8,51 @@
   let showStats = false;
   let loading = false;
 
+  function getAuthor(splitDate: string[]): [string, string] {
+    let author = "";
+
+    for (const index in splitDate) {
+      const frag = splitDate[index];
+
+      if (index === "0") continue;
+      if (frag.includes(":")) {
+        author += splitDate[index]?.split(":")[0];
+        break;
+      }
+      author += `${frag}-`;
+    }
+
+    if (author.endsWith("-")) {
+      author = author.replace("-", "");
+    }
+
+    const text = splitDate
+      .reduce((previousValue, currentValue) => previousValue + currentValue)
+      .split(author.replace("-", "").trim())
+      .filter((_, i) => i > 0)
+      .join("");
+
+    return [author, text];
+  }
+
   async function processFile(data: string) {
-    const messages = [];
     let dm = false;
 
-    for (const message of data.split("\n")) {
-      messages.push(message);
-    }
+    const messages = data.split("\n");
 
     if (messages[0].startsWith("[")) {
       dm = true;
     }
 
     const splitMessages = messages.map((msg, i) => {
-      const date = msg.split(dm ? "]" : "-")[0].trim();
-      const author = msg
-        .split(dm ? "]" : "-")[1]
-        ?.split(":")[0]
-        .trim();
-      const text = msg
-        .split(dm ? "]" : "-")[1]
-        ?.split(":")
-        .filter((_, i) => i > 0)
-        .join("")
-        .trim();
+      const splitDate = msg.split(dm ? "]" : "-");
+      const splitAuthor = splitDate[1]?.includes(":")
+        ? splitDate[1]?.split(":")
+        : getAuthor(splitDate);
+
+      const date = splitDate[0].trim();
+      const author = splitAuthor[0].trim();
+      const text = splitAuthor[1].trim();
 
       return {
         id: i,
@@ -44,6 +64,8 @@
 
     for (const msg of splitMessages) {
       if (msg.author) {
+        if (msg.author.includes("WhatsApp")) continue;
+
         if (senders.has(msg.author)) {
           const prev = senders.get(msg.author);
           senders.set(msg.author, prev + 1);
@@ -90,7 +112,7 @@
 
   async function handleSubmit(event) {
     sendersHtml = "";
-
+    senders = new Map();
     showStats = false;
     loading = true;
 
@@ -101,7 +123,7 @@
   }
 </script>
 
-<div class="center h-screen w-screen">
+<div class="center my-8 min-h-screen w-screen">
   <div class="rounded-lg bg-base-200 p-8">
     <Form
       handle={handleSubmit}

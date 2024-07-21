@@ -5,6 +5,7 @@
   export let label: string;
   export let className = "";
   export let accept = "";
+  export let value = "";
   export let disabled = false;
   export let required = false;
 </script>
@@ -18,6 +19,7 @@
     class={cn("file-input file-input-bordered w-full max-w-lg", className)}
     name={id}
     {id}
+    {value}
     {accept}
     {disabled}
     {required}
