@@ -5,6 +5,7 @@
   "license": "LGPL-3.0-or-later",
   "scripts": {
     "dev": "astro dev --remote",
+    "dev-": "astro dev",
     "start": "astro dev --remote",
     "build": "astro check && astro build --remote",
     "preview": "astro preview",
@@ -41,6 +42,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.372.0",
     "mini-svg-data-uri": "^1.4.4",
     "moment": "^2.29.4",
