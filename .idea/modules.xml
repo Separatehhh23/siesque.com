@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Pylinker.iml" filepath="$PROJECT_DIR$/.idea/Pylinker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../rili/.idea/rili.iml" filepath="$PROJECT_DIR$/../../rili/.idea/rili.iml" />
     </modules>
   </component>
 </project>
